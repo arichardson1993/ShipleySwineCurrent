@@ -1,0 +1,153 @@
+﻿@model IEnumerable<ShipleySwine.Boar>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Farrowed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LitterSize)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GuaranteedSettle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StressTest)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NameNoSpaces)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sire)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SireFull)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DamFull)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Breed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Featured)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FeaturedOrder)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EarNotch)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TestData)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BredBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OwnedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Farrowed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LitterSize)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GuaranteedSettle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StressTest)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NameNoSpaces)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sire)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SireFull)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DamFull)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Breed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Featured)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FeaturedOrder)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EarNotch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TestData)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BredBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OwnedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Boar_Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Boar_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Boar_Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,117 @@
+﻿@model IEnumerable<ShipleySwine.BredGuilt>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Breed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EarNotch)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BlackCrossGilt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LitterSize)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sire)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SireXBred)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DamEN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SireOfDam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SireOfDamXBred)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateBred)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SvcSire)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SvcSireXBred)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DueDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Breed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EarNotch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BlackCrossGilt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DOB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LitterSize)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sire)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SireXBred)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DamEN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SireOfDam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SireOfDamXBred)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateBred)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SvcSire)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SvcSireXBred)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DueDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BreedId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BreedId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BreedId })
+        </td>
+    </tr>
+}
+
+</table>

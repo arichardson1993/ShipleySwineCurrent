@@ -1,0 +1,186 @@
+﻿@model ShipleySwine.Boar
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Boar</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Farrowed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Farrowed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LitterSize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LitterSize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GuaranteedSettle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GuaranteedSettle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StressTest)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StressTest)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NameNoSpaces)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameNoSpaces)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sire)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sire)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SireFull)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SireFull)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DamFull)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DamFull)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Breed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Breed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Featured)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Featured)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FeaturedOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FeaturedOrder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EarNotch)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EarNotch)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TestData)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TestData)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BredBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BredBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OwnedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OwnedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Boar_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

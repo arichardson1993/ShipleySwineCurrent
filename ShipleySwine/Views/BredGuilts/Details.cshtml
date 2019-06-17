@@ -1,0 +1,138 @@
+﻿@model ShipleySwine.BredGuilt
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BredGuilt</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Breed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Breed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EarNotch)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EarNotch)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BlackCrossGilt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BlackCrossGilt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LitterSize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LitterSize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sire)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sire)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SireXBred)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SireXBred)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DamEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DamEN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SireOfDam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SireOfDam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SireOfDamXBred)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SireOfDamXBred)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateBred)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateBred)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SvcSire)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SvcSire)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SvcSireXBred)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SvcSireXBred)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DueDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DueDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BreedId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

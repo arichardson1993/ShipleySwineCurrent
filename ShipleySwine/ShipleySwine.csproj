@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -120,11 +128,24 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Boar.cs" />
+    <Compile Include="BredGuilt.cs" />
+    <Compile Include="Controllers\BoarsController.cs" />
+    <Compile Include="Controllers\BredGuiltsController.cs" />
+    <Compile Include="Controllers\FAQsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SellingPointController.cs" />
+    <Compile Include="Controllers\SellingPointsController.cs" />
+    <Compile Include="Controllers\WinnersController.cs" />
+    <Compile Include="FAQ.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SellingPoint.cs" />
+    <Compile Include="SellingPoint1.cs" />
+    <Compile Include="ShipleySwineContext.cs" />
+    <Compile Include="Winner.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\breedMenu\Berk.jpg" />
@@ -178,6 +199,36 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Boars\Create.cshtml" />
+    <Content Include="Views\Boars\Delete.cshtml" />
+    <Content Include="Views\Boars\Details.cshtml" />
+    <Content Include="Views\Boars\Edit.cshtml" />
+    <Content Include="Views\Boars\Index.cshtml" />
+    <Content Include="Views\BredGuilts\Create.cshtml" />
+    <Content Include="Views\BredGuilts\Delete.cshtml" />
+    <Content Include="Views\BredGuilts\Details.cshtml" />
+    <Content Include="Views\BredGuilts\Edit.cshtml" />
+    <Content Include="Views\BredGuilts\Index.cshtml" />
+    <Content Include="Views\FAQs\Create.cshtml" />
+    <Content Include="Views\FAQs\Delete.cshtml" />
+    <Content Include="Views\FAQs\Details.cshtml" />
+    <Content Include="Views\FAQs\Edit.cshtml" />
+    <Content Include="Views\FAQs\Index.cshtml" />
+    <Content Include="Views\SellingPoint\Create.cshtml" />
+    <Content Include="Views\SellingPoint\Delete.cshtml" />
+    <Content Include="Views\SellingPoint\Details.cshtml" />
+    <Content Include="Views\SellingPoint\Edit.cshtml" />
+    <Content Include="Views\SellingPoint\Index.cshtml" />
+    <Content Include="Views\SellingPoints\Create.cshtml" />
+    <Content Include="Views\SellingPoints\Delete.cshtml" />
+    <Content Include="Views\SellingPoints\Details.cshtml" />
+    <Content Include="Views\SellingPoints\Edit.cshtml" />
+    <Content Include="Views\SellingPoints\Index.cshtml" />
+    <Content Include="Views\Winners\Create.cshtml" />
+    <Content Include="Views\Winners\Delete.cshtml" />
+    <Content Include="Views\Winners\Details.cshtml" />
+    <Content Include="Views\Winners\Edit.cshtml" />
+    <Content Include="Views\Winners\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
