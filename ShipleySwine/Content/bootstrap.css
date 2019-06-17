@@ -4956,11 +4956,12 @@ a.badge:focus {
   margin-left: 3px;
 }
 .jumbotron {
-  padding-top: 30px;
-  padding-bottom: 30px;
-  margin-bottom: 30px;
-  color: inherit;
-  background-color: #eee;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    background-image: url(../Assets/Images/ssHeader.png);
+    background-size: cover;
+    min-height: 325px;
 }
 .jumbotron h1,
 .jumbotron .h1 {
