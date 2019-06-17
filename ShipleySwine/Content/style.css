@@ -8,8 +8,13 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
-#headerimage {
-    background-image: url(../Assets/Images/ssHeader.png)
+#salealert {
+    text-align:center;
+    font-size:large;
+}
+
+#salealert:hover {
+    background-color: #ffe6e6;
 }
 
 body {
@@ -131,6 +136,7 @@ h6 {
   z-index: 997;
   background: #fff;
   box-shadow: 0px 6px 9px 0px rgba(0, 0, 0, 0.06);
+  margin-bottom: 0px;
 }
 
 #header #logo h1 {

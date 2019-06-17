@@ -127,6 +127,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\breedMenu\Berk.jpg" />
+    <Content Include="Assets\breedMenu\Duroc.jpg" />
+    <Content Include="Assets\breedMenu\Exotic.jpg" />
+    <Content Include="Assets\breedMenu\Hamp.jpg" />
+    <Content Include="Assets\breedMenu\Other.jpg" />
+    <Content Include="Assets\breedMenu\York.jpg" />
     <Content Include="Assets\Images\ssHeader.png" />
     <Content Include="Content\animate.min.css" />
     <Content Include="Content\bootstrap-theme.css" />

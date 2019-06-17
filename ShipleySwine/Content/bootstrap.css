@@ -1121,7 +1121,7 @@ img {
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
   display: block;
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 .img-rounded {
@@ -4956,13 +4956,12 @@ a.badge:focus {
   margin-left: 3px;
 }
 .jumbotron {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    margin-bottom: 30px;
-    background-image: url(../Assets/Images/ssHeader.png);
-    background-size: cover;
-    min-height: 325px;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: #e9ecef;
+    border-radius: 0.3rem;
 }
+
 .jumbotron h1,
 .jumbotron .h1 {
   color: inherit;
