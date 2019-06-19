@@ -26,5 +26,10 @@ namespace ShipleySwine.Controllers
 
             return View();
         }
+
+        public ActionResult Catalog()
+        {
+            return View();
+        }
     }
 }

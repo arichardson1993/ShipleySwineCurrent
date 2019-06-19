@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Index";
+    string imgURL;
+    int counter = 0;
 }
 
 <h2>Index</h2>
@@ -9,145 +11,113 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Farrowed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LitterSize)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GuaranteedSettle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StressTest)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NameNoSpaces)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Sire)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SireFull)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dam)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DamFull)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Breed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Order)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Featured)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FeaturedOrder)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EarNotch)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegNum)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TestData)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BredBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OwnedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Farrowed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LitterSize)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GuaranteedSettle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StressTest)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NameNoSpaces)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Sire)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SireFull)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dam)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DamFull)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Breed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Order)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Featured)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FeaturedOrder)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EarNotch)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegNum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TestData)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BredBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OwnedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Boar_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Boar_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Boar_Id })
-        </td>
-    </tr>
-}
+<div class="container">
 
-</table>
+    <div class="row row-centered">
+        @foreach (var item in Model)
+        {
+            imgURL = "../Boars/" + item.Breed + "/" + item.NameNoSpaces + "/Thumbs/" + item.NameNoSpaces + "1.jpg";
+
+            if (counter == 2)
+            {
+            @:</div>
+            @:<div class="row">
+
+
+
+
+
+
+
+
+                counter = 0;
+            }
+
+            <div class="col-lg-6">
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="@Url.Content(imgURL)" class="card-img" alt="Photo Didnt Load">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <div>
+                                    <div class="text-center">
+                                        <h4 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h4>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <h6 class="card-title">@Html.DisplayFor(modelItem => item.Sire) | @Html.DisplayFor(modelItem => item.Dam)</h6>
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <h4>$ @Html.DisplayFor(modelItem => item.Price)</h4>
+                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            counter++;
+        }
+    </div>
+</div>
+
+@*
+
+        @Html.DisplayFor(modelItem => item.Farrowed)
+        @Html.DisplayFor(modelItem => item.LitterSize)
+
+        @Html.DisplayFor(modelItem => item.GuaranteedSettle)
+        @Html.DisplayFor(modelItem => item.StressTest)
+        @Html.DisplayFor(modelItem => item.NameNoSpaces)
+
+        @Html.DisplayFor(modelItem => item.SireFull)
+
+        @Html.DisplayFor(modelItem => item.DamFull)
+        @Html.DisplayFor(modelItem => item.Breed)
+        @Html.DisplayFor(modelItem => item.Order)
+        @Html.DisplayFor(modelItem => item.Featured)
+        @Html.DisplayFor(modelItem => item.FeaturedOrder)
+        @Html.DisplayFor(modelItem => item.EarNotch)
+        @Html.DisplayFor(modelItem => item.RegNum)
+        @Html.DisplayFor(modelItem => item.TestData)
+        @Html.DisplayFor(modelItem => item.BredBy)
+        @Html.DisplayFor(modelItem => item.OwnedBy)
+        @Html.DisplayFor(modelItem => item.Description)
+
+    @Html.ActionLink("Edit", "Edit", new { id = item.Boar_Id }) |
+    @Html.ActionLink("Details", "Details", new { id = item.Boar_Id }) |
+    @Html.ActionLink("Delete", "Delete", new { id = item.Boar_Id })
+
+*@
+
+@*
+
+        <div class="row">
+    @foreach (var article in Model)
+    {
+        if (counter != 0 && counter % 3 == 0)
+        {
+            @:</div>
+            @:<div class="row">
+        }
+
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img src="@article.Thumbnail" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
+                <div class="caption">
+                    <h3 id="thumbnail-label">@article.Name</h3>
+                    <p>@article.Description</p>
+                </div>
+            </div>
+        </div>
+
+        counter++;
+    }
+
+*@
+
+
+
