@@ -16,5 +16,7 @@ namespace ShipleySwine
         public decimal? SellingPoints_Id { get; set; }
 
         public int ID { get; set; }
+
+        public virtual SellingPoint SellingPoints { get; set; }
     }
 }

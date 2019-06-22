@@ -17,5 +17,7 @@ namespace ShipleySwine
         public decimal? Boar_Id { get; set; }
 
         public virtual Boar Boar { get; set; }
+
+        public virtual ICollection<SellingPoint1> SellingPoints { get; set; }
     }
 }

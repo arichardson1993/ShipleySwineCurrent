@@ -145,6 +145,7 @@
     <Compile Include="SellingPoint.cs" />
     <Compile Include="SellingPoint1.cs" />
     <Compile Include="ShipleySwineContext.cs" />
+    <Compile Include="ViewModels\BoarsIndexViewModel.cs" />
     <Compile Include="Winner.cs" />
   </ItemGroup>
   <ItemGroup>

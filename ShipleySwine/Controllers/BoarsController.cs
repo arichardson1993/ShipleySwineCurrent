@@ -17,7 +17,8 @@ namespace ShipleySwine.Controllers
         // GET: Boars
         public ActionResult Index()
         {
-            return View(db.Boars.ToList());
+            return View(db.Boars.SqlQuery("SELECT [b].*, STUFF((SELECT '* ' + [sp2].[SellingPoint] FROM[dbo].[SellingPoints] AS[sp2] WHERE[sp2].[SellingPoints_Id] = [sp].[SellingPoints_Id] ORDER BY[sp2].[SellingPoint] ASC FOR XML PATH('')), 1, 0, '') AS[AllSellingPoints] FROM[dbo].[Boars] AS[b] INNER JOIN[dbo].[SellingPoint] AS[sp] ON[sp].[Boar_Id] = [b].[Boar_Id]").ToList());
+            //return View(db.Boars.ToList());
         }
 
         // GET: Boars/Details/5

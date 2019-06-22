@@ -24,34 +24,38 @@
             @:</div>
             @:<div class="row">
 
-
-
-
-
-
-
-
                 counter = 0;
             }
 
-            <div class="col-lg-6">
-                <div class="card mb-3" style="max-width: 540px;">
+            <div class="col-lg-6 d-flex">
+                <div class="card mb-3" style="width: 580px;">
                     <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <img src="@Url.Content(imgURL)" class="card-img" alt="Photo Didnt Load">
+                        <div class="col-md-5 flex-fill">
+                            <img style="height: 238px;" src="@Url.Content(imgURL)" class="card-img" alt="Photo Didnt Load">
                         </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
+                        <div class="col-md-7 flex-fill">
+                            <div class="card-body h-100">
                                 <div>
                                     <div class="text-center">
                                         <h4 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h4>
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <h6 class="card-title">@Html.DisplayFor(modelItem => item.Sire) | @Html.DisplayFor(modelItem => item.Dam)</h6>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <h6 class="card-title">Sire: @Html.DisplayFor(modelItem => item.Sire) | Dam: @Html.DisplayFor(modelItem => item.Dam)</h6>
+                                </div>
+                                <div class="listcontainer">
+                                    @foreach (var _it in item.SellingPoints)
+                                    {
+                                        foreach (var _it2 in _it.SellingPoints)
+                                        {
+                                            <ul>
+                                                <li><p class="card-text">@_it2.SellingPoint</p></li>
+                                            </ul>
+                                        }
+                                    }
+                                </div>
+                                <div class="text-center">
                                     <h4>$ @Html.DisplayFor(modelItem => item.Price)</h4>
-                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                                 </div>
                             </div>
                         </div>
