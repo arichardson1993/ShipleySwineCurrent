@@ -1,11 +1,37 @@
 ﻿@model IEnumerable<ShipleySwine.Boar>
 
-
 @{
     ViewBag.Title = "Index";
     string imgURL;
     int counter = 0;
 }
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index - My ASP.NET Application</title>
+
+    <link href="/Content" rel="stylesheet">
+
+    <script src="/Scripts/modernizr-2.8.3.js"></script>
+
+
+
+    <link href="/Content/bootstrap.css" rel="stylesheet">
+    <link href="/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="/Content/animate.min.css" rel="stylesheet">
+    <link href="/Content/ionicons.min.css" rel="stylesheet">
+    <link href="/Content/owl.carousel.min.css" rel="stylesheet">
+    <link href="/Content/magnific-popup.css" rel="stylesheet">
+    <link href="/Content/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/Content/strap4.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <link href="/Content//style.css" rel="stylesheet">
+
+
+
+</head>
 
 <h2>Index</h2>
 
@@ -33,7 +59,7 @@
                 <div class="card mb-3" style="width: 580px;">
                     <div class="row no-gutters">
                         <div class="col-md-5 flex-fill">
-                            <img style="height:initial" src="@Url.Content(imgURL)" class="card-img" alt="Photo Didnt Load">
+                            <img style="height: 238px;" src="@Url.Content(imgURL)" class="card-img" alt="Photo Didnt Load">
                         </div>
                         <div class="col-md-7 flex-fill">
                             <div class="card-body h-100">
@@ -41,9 +67,9 @@
                                     <div class="text-center">
                                         <h2 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h2>
                                     </div>
-                                    <div class="text-center">
-                                        <h4 class="card-title">Sire: @Html.DisplayFor(modelItem => item.Sire) | Dam: @Html.DisplayFor(modelItem => item.Dam)</h4>
-                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <h5 class="card-title">Sire: @Html.DisplayFor(modelItem => item.Sire) | Dam: @Html.DisplayFor(modelItem => item.Dam)</h5>
                                 </div>
                                 <hr />
                                 <div class="listcontainer">

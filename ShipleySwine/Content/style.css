@@ -9,6 +9,43 @@
 # General
 --------------------------------------------------------------*/
 
+.breedMenu {
+    width: 100%;
+    height: 106px;
+    max-height: 106px;
+}
+
+.breedOption {
+    width: 100%;
+    float: left;
+    height: 100px;
+    max-height: 100%;
+    background: center;
+    background-repeat: no-repeat;
+    text-align: center;
+    color: white;
+}
+
+.boarlabel {
+        padding-top: 83px;
+        padding-bottom: 0px;
+        max-height: 100%;
+        font-family: AmericanCaptain, Calibri, sans-serif;
+        font-size: 14pt;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+
+}
+
+    .breedOption:hover {
+        cursor: pointer;
+    }
+
+    .breedOption a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+
 .listcontainer{
     height: 130px;
 }

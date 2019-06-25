@@ -1512,12 +1512,15 @@
     <Content Include="Boars\Yorkshire\WhiteBuffalo\WhiteBuffalo3.jpg" />
     <Content Include="Boars\Yorkshire\WhiteBuffalo\WhiteBuffalo4.jpg" />
     <Content Include="Content\animate.min.css" />
+    <Content Include="Content\blankcss.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.4.css" />
+    <Content Include="Content\lightbox.css" />
+    <Content Include="Content\strap4.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\font-awesome.min2.css" />
     <Content Include="Content\ionicons.min.css" />
     <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\style.css" />
@@ -1590,6 +1593,7 @@
     <Content Include="Views\Winners\Edit.cshtml" />
     <Content Include="Views\Winners\Index.cshtml" />
     <Content Include="Views\Home\Catalog.cshtml" />
+    <Content Include="Views\Boars\SelectBoar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1600,10 +1604,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Map\bootstrap.min.css.map" />
+    <Content Include="Map\bootstrap.css.map" />
+    <Content Include="Map\bootstrap-theme.min.css.map" />
+    <Content Include="Map\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />

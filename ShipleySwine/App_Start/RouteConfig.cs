@@ -18,7 +18,13 @@ namespace ShipleySwine
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-            
+
+            routes.MapRoute(
+                name: "Breed",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Boars", action = "SelectBoar", id = UrlParameter.Optional }
+            );
+
         }
     }
 }

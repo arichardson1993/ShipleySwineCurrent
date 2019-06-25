@@ -23,8 +23,18 @@ namespace ShipleySwine
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/blank.css",
+                      "~/Content/strap4.css",
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/animate.min.css",
+                      "~/Content/ionicons.min.css",
+                      "~/Content/owl.carousel.min.css",
+                      "~/Content/magnific-popup.css",
+                      "~/Content/ionicons.min.css",
+                      "~/Content/style.css",
+                      "~/Content/font-awesome.min2.css"));
         }
     }
 }

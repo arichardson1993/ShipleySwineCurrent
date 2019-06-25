@@ -4,22 +4,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    @* @Styles.Render("~/Content/css") *@
     @Styles.Render("~/Content")
     @Scripts.Render("~/bundles/modernizr")
 
-    <!-- Libraries CSS Files -->
+    <link href="../Content/bootstrap.css" rel="stylesheet">
     <link href="../Content/font-awesome.min.css" rel="stylesheet">
     <link href="../Content/animate.min.css" rel="stylesheet">
     <link href="../Content/ionicons.min.css" rel="stylesheet">
     <link href="../Content/owl.carousel.min.css" rel="stylesheet">
     <link href="../Content/magnific-popup.css" rel="stylesheet">
     <link href="../Content/ionicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../Content/bootstrap.4.css" >
+    <link rel="stylesheet" href="../Content/strap4.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-    <!-- Main Stylesheet File -->
     <link href="../Content//style.css" rel="stylesheet">
+
+
 
 </head>
 <body>
@@ -50,7 +51,7 @@
         <div class="container">
 
             <div id="logo" class="pull-left">
-                <a href="../Home/Index" class="scrollto"><img src="~/Assets/Images/ssHeader.png" height="40px" width="150px"></a>
+                <a href="@Url.Action("Index", "Home")" class="scrollto"><img src="~/Assets/Images/ssHeader.png" height="40px" width="150px"></a>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="#body"><img src="img/logo.png" alt="" title="" /></a>-->
             </div>
@@ -76,6 +77,54 @@
             </nav><!-- #nav-menu-container -->
         </div>
     </header><!-- #header -->
+            <div class="container">
+                <div class="row">
+                    <div class="breedMenu">
+                        <div class ="col-lg-2">
+                            <a href="@Url.Action("SelectBoar", "Boars", new { selectedBreed = "Yorkshire" })">
+                                <div class="breedOption" style="background-image: url(/Assets/breedMenu/york.jpg)">
+                                    <div class="boarlabel">Yorkshire</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="breedOption" style="background-image: url(/Assets/breedMenu/duroc.jpg)">
+                                <a href="@Url.Action("SelectBoar", "Boars", new { selectedBreed = "Duroc" })">
+                                    <div class="boarlabel">Duroc</div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="breedOption" style="background-image: url(/Assets/breedMenu/berk.jpg)">
+                                <a href="@Url.Action("SelectBoar", "Boars", new { selectedBreed = "Berkshire" })">
+                                    <div class="boarlabel">Berkshire</div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="breedOption" style="background-image: url(/Assets/breedMenu/exotic.jpg)">
+                                <a href="@Url.Action("SelectBoar", "Boars", new { selectedBreed = "Exotic" })">
+                                    <div class="boarlabel">Exotic</div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="breedOption" style="background-image: url(/Assets/breedMenu/hamp.jpg)">
+                                <a href="@Url.Action("SelectBoar", "Boars", new { selectedBreed = "Hampshire" })">
+                                    <div class="boarlabel">Hampshire</div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="breedOption" style="background-image: url(/Assets/breedMenu/Other.jpg)">
+                                <a href="@Url.Action("SelectBoar", "Boars", new { selectedBreed = "Other" })">
+                                    <div class="boarlabel">Other</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     @RenderBody()
     @Scripts.Render("~/bundles/jquery")
