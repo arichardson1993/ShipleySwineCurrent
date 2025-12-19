@@ -24,7 +24,7 @@ namespace ShipleySwine.Controllers
         // GET: SellingPoint/Details/5
         public ActionResult Details(decimal id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -64,7 +64,7 @@ namespace ShipleySwine.Controllers
         // GET: SellingPoint/Edit/5
         public ActionResult Edit(decimal id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -97,7 +97,7 @@ namespace ShipleySwine.Controllers
         // GET: SellingPoint/Delete/5
         public ActionResult Delete(decimal id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

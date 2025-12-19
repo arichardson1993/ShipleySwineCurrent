@@ -1,0 +1,42 @@
+﻿@model ShipleySwine.Boar
+@{
+    ViewBag.Title = "InvalidModel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>InvalidModel</h2>
+
+<p>the model being returned is an invalid model</p>
+
+
+    <p>
+        Description: @Model.Description
+    </p>
+    <p>
+        Name: @Model.Name
+    </p>
+    <p>
+        Breed: @Model.Breed
+    </p>
+    <p>
+        Bred By: @Model.BredBy
+    </p>
+    <p>
+        Owned By: @Model.OwnedBy
+    </p>
+    <p>
+        Price: @Model.Price
+    </p>
+    <p>
+       Sire: @Model.Sire
+    </p>
+    <p>
+        Sire Full: @Model.SireFull
+    </p>
+    <p>
+        Dam: @Model.DamFull
+    </p>
+    <p>
+        LitterSize: @Model.LitterSize
+    </p>
+

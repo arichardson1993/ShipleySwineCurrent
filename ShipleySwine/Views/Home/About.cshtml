@@ -1,7 +1,68 @@
 ﻿@{
+
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<link href="~/Content/About.css" rel="stylesheet" />
+
+<div class="container" style="padding-left:15px; padding-right:15px;">
+    <div class="backgroundcolor" @*style="background-color: #f8f9fa;"*@>
+
+        <div class="row pt-4">
+            <div class="col-2"></div>
+            <div class="col-8">
+                @foreach (var image in (IEnumerable<string>)ViewData["AboutImage"])
+                {
+                    @*<iframe class="mySlides text-center align-content-center align-items-center justify-content-center" src="@Url.Content(image)"></iframe>*@
+                    <img style="height:auto !important;" class="mySlides img-responsive" src="@Url.Content(image)" />
+                }
+
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row mt-5 hidden-xs pl-5 pr-5">
+            <div style="height:25rem;" class="col-sm-6 col-md-6 col-lg-6">
+                <iframe aria-hidden="true" frameborder="0" style="width: 100%; height: 100%; top: 0px; left: 0px; border: none;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d97596.79398972994!2d-82.53377072583137!3d40.1445153748006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8838396a2abca11f%3A0xf11e53c58784b516!2sShipley+Swine+Genetics!5e0!3m2!1sen!2sus!4v1564535703512!5m2!1sen!2sus" allowfullscreen></iframe>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="h-100 w-100 justify-content-center align-content-center align-items-center">
+                    <p style="font-size:1.2rem; margin-top:50px;" class="text-center h-100 w-100"><i>We are farmers serving farmers since 1968! For many years we have prided ourselves in breeding stock that will work for our customers. We have put together a very select set of boars that will generate extra structure and muscle with productivity and growth. The boars that we offer semen from on this web site are the same boars that we use in our swine genetic program. Many of these boars are proven to be tremendous sires. We offer them to you to use at reasonable prices.</i></p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 hidden-sm hidden-md hidden-lg pl-5 pr-5">
+            <div style="height:25rem;" class="col-xs-12 mb-5">
+                <iframe aria-hidden="true" frameborder="0" style="width: 100%; height: 100%; top: 0px; left: 0px; border: none;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d97596.79398972994!2d-82.53377072583137!3d40.1445153748006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8838396a2abca11f%3A0xf11e53c58784b516!2sShipley+Swine+Genetics!5e0!3m2!1sen!2sus!4v1564535703512!5m2!1sen!2sus" allowfullscreen></iframe>
+            </div>
+            <div class="col-xs-12">
+                <p class="text-center"><i>We are farmers serving farmers since 1968! For many years we have prided ourselves in breeding stock that will work for our customers. We have put together a very select set of boars that will generate extra structure and muscle with productivity and growth. The boars that we offer semen from on this web site are the same boars that we use in our swine genetic program. Many of these boars are proven to be tremendous sires. We offer them to you to use at reasonable prices. </i></p>
+            </div>
+        </div>
+        <hr />
+        <div class="row text-center align-content-center justify-content-center mt-5">
+            <h2 class="text-center">Our Family Story</h2>
+        </div>
+        <div class="row text-center mt-5 ml-5 mr-5">
+            <p style="font-size:1.2rem;">Randy Shipley wasn’t born into the hog business, he actually came from a dairy background, showing dairy cattle at the Ohio State Fair.  In school, he decided to try something new for an FFA project and bought two bred Duroc gilts in partnership with his parents, Sidney and Rosie Shipley.  Almost 50 years later, he is one of the most well-known figures in the hog industry.   Randy and Sandi were high school sweethearts who were married in 1975. Their son Jason was born in 1979 and daughter Josie in 1982. Sidney and Randy worked on expanding the farm, adding Yorkshire, Hampshires, Berkshires, crossbreds and the occasional Landrace and Hereford.  Randy’s mission from the beginning was to produce hogs that would make the individual breeds better and improve his customers herd.   In the beginning, they sold gilts and boars to commercial producers and hosted multiple production sales every year.  In 1998, the market for hogs dropped dramatically and the Shipleys had to look for new ideas to maintain the farm.  They continued selling bred gilts but instead of hosting large production sales, they sold them privately on the farm.  This allowed the family to renovate the sale barn into a boar stud in 2000 with 10 boars. The boar stud has dramatically expanded since, housing anywhere from 50-60 boars currently with the addition of a second boar stud barn.  Randy has also grown his show pig market, selling show pigs all over the country through private sale on the farm as well as online sales. Their son, Jason came home to the farm to work after graduating from Wilmington College in 2003 and worked with Randy until he passed away from a car accident in 2007. By that time, his father Sidney had scaled significantly back and was near retirement.  Their daughter, Josie and her husband Rick Snyder had been working in town and made the decision to return to the farm with their daughters, Jacey and Joslyn, to work full time with Randy and Sandi. It truly is a family farm operation striving to serve other farmers with the best product, the best customer service and the best results</p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    var slideIndex = 0;
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > x.length) { slideIndex = 1 }
+        x[slideIndex - 1].style.display = "block";
+        setTimeout(carousel, 2000); // Change image every 2 seconds
+    }
+</script>

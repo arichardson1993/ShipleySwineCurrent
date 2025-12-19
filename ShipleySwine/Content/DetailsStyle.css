@@ -1,0 +1,125 @@
+﻿.detailsFont {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.parents {
+    font-size:medium;
+}
+
+.BredByOwnedBy{
+    font-size:1.5rem;
+}
+
+.VerticleBetween{
+    padding-right:20px;
+    border-right:1px solid #ccc;
+}
+
+.tag{
+    margin-left:15px;
+    margin-bottom:3px;
+    text-align:center;
+    font-weight:normal !important;
+}
+
+.data{
+    margin-left:15px;
+    text-align:center;
+    font-weight: normal !important;
+    font-family:
+}
+
+.leftItem{
+    float:right;
+    margin-right:5px;
+}
+
+.rightItem{
+    margin-left: 5px;
+
+}
+
+.col-6 {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    width: 100%;
+    float: left;
+}
+
+.col-12 {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    width: 100%;
+}
+
+.smScreen{
+    text-align:center;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .rightItem{
+        margin-left:0px !important;
+    }
+
+    .rightItem{
+        margin-right:0px !important;
+    }
+
+    .data{
+        margin-left:0px !important;
+        margin-bottom:0px;
+    }
+
+    .parents{
+        font-size:1rem;
+        margin-top:0px;
+    }
+
+    .VerticleBetween {
+        padding-right: 20px;
+        border-right: 1px solid #ccc;
+    }
+
+    .col-6{
+        padding-left:0px !important;
+        padding-right:0px !important;
+        width:100%;
+        float:left;
+    }
+
+    .col-12 {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        width: 100%;
+    }
+
+    .col-9 {
+        text-align:left;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        width: 100%;
+    }
+
+    .col-3 {
+        margin-left:2px;
+        text-align:left;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        width: 100%;
+    }
+
+    .smScreen{
+        text-align:center;
+    }
+
+    .row{
+        margin-top:3px;
+        margin-left:0px !important;
+        margin-right:0px !important;
+    }
+
+    .col-sm-12{
+        text-align:center;
+    }
+}

@@ -2,185 +2,336 @@
 
 @{
     ViewBag.Title = "Details";
+    int count = 1;
+    int num = ViewBag.imagecount;
+    int number = 1;
 }
 
-<h2>Details</h2>
+<head>
+    <link href="~/Content/SlideShow.css" rel="stylesheet">
+    <link href="~/Content/DetailsStyle.css" rel="stylesheet">
+</head>
 
-<div>
-    <h4>Boar</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+<div class="container">
+    <!-- Slideshow container -->
+    <div class="slideshow-container" style="max-height: 800px; max-width:650px;">
+        <!-- Full-width images with number and caption text -->
+        @foreach (var image in (IEnumerable<string>)ViewData["images"])
+        {
+            <div class="mySlides fadee backgroundcolor text-center" style="max-height: 650px; max-width:650px;">
+                <div class="numbertext">@count / @num</div>
+                <img src="@Url.Content(image)" style="width:100%; height:100%; object-fit:contain; max-width:inherit; max-height:inherit;">
+            </div>
+            count++;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+        <!-- Next and previous buttons -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <br>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Farrowed)
-        </dt>
+    <!-- The dots/circles -->
+    <div style="text-align:center">
 
-        <dd>
-            @Html.DisplayFor(model => model.Farrowed)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LitterSize)
-        </dt>
+        @foreach (var image in (IEnumerable<string>)ViewData["images"])
+        {
 
-        <dd>
-            @Html.DisplayFor(model => model.LitterSize)
-        </dd>
+            @*<img class="dot mb-2" src="@Url.Content(image)" height="60" width="100" onclick="currentSlide(@number)" />*@
+            <div class="dot" style="height: 60px; width: 100px;" onclick="currentSlide(@number)">
+                <img style="width:auto; height:100%; object-fit:cover;" class=" mb-2" src="@Url.Content(image)"  />
+                @{number++;}
+            </div>
+            //<span class="dot" onclick="currentSlide(@(i+1))" style="background:url(image)"></span>
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+    </div>
+    <hr />
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+    <div class="jumbotron">
+        <div class="row align-items-center text-center justify-content-center">
+            <h3 class="display-4 text-center">@Html.DisplayFor(model => model.Name)</h3>
+        </div>
+        <div class="row align-items-center text-center justify-content-center">
+            @if ((bool)Model.GuaranteedSettle)
+            {
+                <h4 class="text-center">$@Html.DisplayFor(model => model.Price) /Dose - (Guaranteed Settle)</h4>
+            }
+            else
+            {
+                <h5>$@Html.DisplayFor(model => model.Price)/Dose</h5>
+            }
+        </div>
+        <div class="row">
+            <div class="col-2"> </div>
+            <div class="col-8"><hr /></div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row detailsFont">
+            <div class="parents col-12">
+                <div class="row">
+                    <div class="col-6 VerticleBetween">
+                        <div class="row w-100">
+                            <div class="col-sm-12 col-md-12 col-lg-12 tag">
+                                <strong>Sire:</strong>
+                            </div>
+                            <div class=" col-sm-12 col-md-12 col-lg-12 data">
+                                @Html.DisplayFor(model => model.SireFull)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row w-100">
+                            <div class="col-sm-12 col-md-12 col-lg-12 tag">
+                                <strong>Dam:</strong>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-12 data">
+                                @Html.DisplayFor(model => model.DamFull)
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.GuaranteedSettle)
-        </dt>
+                <hr />
+                <div class="row">
+                    <div class="col-6 VerticleBetween">
+                        <div class="row w-100">
+                            <div class="col-sm-12 col-md-12 col-lg-12 tag">
+                                <strong>Reg Number:</strong>
+                            </div>
+                            <div class=" col-sm-12 col-md-12 col-lg-12 data">
+                                @Html.DisplayFor(model => model.RegNum)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row w-100">
+                            <div class="col-sm-12 col-md-12 col-lg-12 tag">
+                                <strong>EN:</strong>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-12 data">
+                                @Html.DisplayFor(model => model.EarNotch)
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.GuaranteedSettle)
-        </dd>
+                <hr />
+                <div class="row">
+                    <div class="col-6 VerticleBetween">
+                        <div class="row w-100">
+                            <div class="col-sm-12 col-md-12 col-lg-12 tag">
+                                <strong>Farrowed:</strong>
+                            </div>
+                            <div class=" col-sm-12 col-md-12 col-lg-12 data">
+                                @Html.DisplayFor(model => model.Farrowed).ToString().Substring(0, 9)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row w-100">
+                            <div class="col-sm-12 col-md-12 col-lg-12 tag">
+                                <strong>Litter Size:</strong>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-12 data">
+                                @Html.DisplayFor(model => model.LitterSize)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-6 VerticleBetween">
+                        <div class="row w-100">
+                            <div class="col-sm-12 col-md-12 col-lg-12 tag">
+                                <strong>Bred By:</strong>
+                            </div>
+                            <div class=" col-sm-12 col-md-12 col-lg-12 data">
+                                @Html.DisplayFor(model => model.BredBy).ToString().Remove(0, 9)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row w-100">
+                            <div class="col-sm-12 col-md-12 col-lg-12 tag">
+                                <strong>Owned By:</strong>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-12 data">
+                                @Html.DisplayFor(model => model.OwnedBy).ToString().Remove(0, 10)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<hr />
+        <div class="row">
+            <div class="col-6 VerticleBetween">
+                <div class="row w-100">
+                    <div class="col-sm-12 col-md-12 col-lg-12 tag">
+                        <strong>Test Data:</strong>
+                    </div>
+                    <div class=" col-sm-12 col-md-12 col-lg-12 data">
+                        @Html.DisplayFor(model => model.TestData)
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row w-100">
+                    <div class="col-sm-12 col-md-12 col-lg-12 tag">
+                        <strong>EN:</strong>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 data">
+                        @Html.DisplayFor(model => model.EarNotch)
+                    </div>
+                </div>
+            </div>
+        </div>*@
+                <div class="row">
+                    <div class="col-2"> </div>
+                    <div class="col-8"><hr /></div>
+                    <div class="col-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-2"> </div>
+                    <div style="margin-right:15px" class="col-8 tag"><strong class="mr-4">Description:</strong></div>
+                    <div class="col-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-2"> </div>
+                    <div class="col-8 data">@Html.DisplayFor(model => model.Description)</div>
+                    <div class="col-2"></div>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StressTest)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StressTest)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NameNoSpaces)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NameNoSpaces)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Sire)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Sire)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SireFull)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SireFull)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Dam)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Dam)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DamFull)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DamFull)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Breed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Breed)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Order)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Order)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Featured)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Featured)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FeaturedOrder)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FeaturedOrder)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EarNotch)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EarNotch)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RegNum)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RegNum)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TestData)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TestData)
-        </dd>
-
-        <dt>
+            </div>
+        </div>
+        
+        @*<div class="row rightItem">
+            <span class="tag">
+                @Html.DisplayNameFor(model => model.BredBy):
+            </span>
+            <span class="data">
+                @if (Model.BredBy.ToString().Substring(0, 8) == "Bred By:")
+                {
+                    @Html.DisplayFor(model => model.BredBy).ToString().Remove(0, 9)
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.BredBy)
+                }
+            </span>
+        </div>*@
+        @*<dt>
             @Html.DisplayNameFor(model => model.BredBy)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.BredBy)
+            @if (Model.BredBy.ToString().Substring(0, 8) == "Bred By:")
+            {
+                @Html.DisplayFor(model => model.BredBy).ToString().Remove(0, 9)
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.BredBy)
+            }
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OwnedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OwnedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-    </dl>
+        </dl>*@
+    
+    @*<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="5200">
+            <!-- Slide Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+                <li data-target="#myCarousel" data-slide-to="4"></li>
+                <li data-target="#myCarousel" data-slide-to="5"></li>
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <img src="~/Assets/breedMenu/York.jpg" width="200" alt="...">
+                    <div class="carousel-caption">
+                        <h3>Yorkshire</h3>
+                        <p>Caption</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/Assets/breedMenu/Duroc.jpg" width="200" alt="...">
+                    <div class="carousel-caption">
+                        <h3>Duroc</h3>
+                        <p>Caption</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/Assets/breedMenu/Berk.jpg" width="200" alt="...">
+                    <div class="carousel-caption">
+                        <h3>Berkshire</h3>
+                        <p>Caption</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/Assets/breedMenu/Exotic.jpg" width="200" alt="...">
+                    <div class="carousel-caption">
+                        <h3>Exotic</h3>
+                        <p>Caption</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/Assets/breedMenu/Hamp.jpg" width="200" alt="...">
+                    <div class="carousel-caption">
+                        <h3>Hampshire</h3>
+                        <p>Caption</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/Assets/breedMenu/Other.jpg" width="200" alt="...">
+                    <div class="carousel-caption">
+                        <h3>Other</h3>
+                        <p>Caption</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+            <!--end carousel-->
+        </div>*@
+        </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Boar_Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+    } 
+</script>

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ShipleySwine;
+using ShipleySwine.ViewModels;
 
 namespace ShipleySwine.Controllers
 {
@@ -36,8 +37,10 @@ namespace ShipleySwine.Controllers
         }
 
         // GET: SellingPoints/Create
-        public ActionResult Create()
+        public ActionResult Create(decimal? id)
         {
+            ViewBag.SellingPoints_Id = id;
+            ViewBag.ID = db.SellingPoints1.Max(iid => iid.ID)+1;
             return View();
         }
 
@@ -45,17 +48,21 @@ namespace ShipleySwine.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,SellingPoint,SellingPoints_Id")] SellingPoint1 sellingPoint1)
+        public ActionResult Create(SellingPointsCreateViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                db.SellingPoints1.Add(sellingPoint1);
+                //return RedirectToAction("Troubleshooting","SellingPoints" , new { list = vm.sp});
+                db.SellingPoints1.AddRange(vm.sp);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Index", "FileUpload");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
             }
 
-            return View(sellingPoint1);
         }
 
         // GET: SellingPoints/Edit/5
@@ -113,6 +120,11 @@ namespace ShipleySwine.Controllers
             db.SellingPoints1.Remove(sellingPoint1);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Troubleshooting(List<SellingPoint1> list)
+        {
+            return View(list);
         }
 
         protected override void Dispose(bool disposing)

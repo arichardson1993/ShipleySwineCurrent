@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ShipleySwine</RootNamespace>
     <AssemblyName>ShipleySwine</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,6 +55,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -61,11 +63,8 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -107,9 +106,18 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
+  <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -145,8 +153,21 @@
     <Compile Include="SellingPoint.cs" />
     <Compile Include="SellingPoint1.cs" />
     <Compile Include="ShipleySwineContext.cs" />
+    <Compile Include="ViewModels\EditBoarsViewModel.cs" />
+    <Compile Include="ViewModels\AuthenticationViewModel.cs" />
+    <Compile Include="ViewModels\BoarBreedOrderViewModel.cs" />
     <Compile Include="ViewModels\BoarsIndexViewModel.cs" />
+    <Compile Include="ViewModels\BredGuiltsIndexViewModel.cs" />
+    <Compile Include="ViewModels\BreedViewModel.cs" />
+    <Compile Include="ViewModels\ContactEmailViewModel.cs" />
+    <Compile Include="ViewModels\EditOrderViewViewModel.cs" />
+    <Compile Include="ViewModels\EmailViewModel.cs" />
+    <Compile Include="ViewModels\HomePageViewModel.cs" />
+    <Compile Include="ViewModels\SellingPointsCreateViewModel.cs" />
     <Compile Include="Winner.cs" />
+    <Compile Include="Models\FileTypesAttribute.cs" />
+    <Compile Include="Models\FileUpload.cs" />
+    <Compile Include="Models\UserAuthentication.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\breedMenu\Berk.jpg" />
@@ -156,6 +177,15 @@
     <Content Include="Assets\breedMenu\Other.jpg" />
     <Content Include="Assets\breedMenu\York.jpg" />
     <Content Include="Assets\Images\ssHeader.png" />
+    <Content Include="Assets\Images\benjamin-davies-Zm2n2O7Fph4-unsplash.jpg" />
+    <Content Include="Content\About.css" />
+    <Content Include="Content\app.min.css" />
+    <Content Include="Content\BredGilts.css" />
+    <Content Include="Content\DetailsStyle.css" />
+    <Content Include="Content\FailurePage.css" />
+    <Content Include="Content\HomePage.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\SlideShow.css" />
     <Content Include="Boars\Berkshire\AcesHigh\AcesHigh1.jpg" />
     <Content Include="Boars\Berkshire\AcesHigh\AcesHigh2.jpg" />
     <Content Include="Boars\Berkshire\AcesHigh\AcesHigh3.jpg" />
@@ -1516,6 +1546,8 @@
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\lightbox.css" />
+    <Content Include="Content\pure-min.css" />
+    <Content Include="Content\pure.css" />
     <Content Include="Content\strap4.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -1533,6 +1565,7 @@
     <Content Include="Boars\.DS_Store" />
     <Content Include="Boars\Exotic\.DS_Store" />
     <Content Include="Boars\Exotic\PowerLift\.DS_Store" />
+    <Content Include="libman.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\easing.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -1544,10 +1577,18 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\app.min.js" />
+    <Content Include="Scripts\mdb.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\magnific-popup.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\owl.carousel.min.js" />
     <Content Include="Scripts\sticky.js" />
+    <Content Include="Scripts\what-input.js" />
+    <Content Include="Scripts\what-input.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

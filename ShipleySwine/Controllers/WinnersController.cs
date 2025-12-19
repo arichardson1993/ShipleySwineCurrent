@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ShipleySwine;
+using PagedList;
+using PagedList.Mvc;
 
 namespace ShipleySwine.Controllers
 {
@@ -15,9 +18,16 @@ namespace ShipleySwine.Controllers
         private ShipleySwineContext db = new ShipleySwineContext();
 
         // GET: Winners
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.Winners.ToList());
+            var winners = db.Winners.SqlQuery("SELECT DISTINCT ID, Name, Won, Pedigree, Act, ImageURL, WinnerId FROM Winners WHERE ID != '103' GROUP BY ID, Name, Won, Pedigree, Act, ImageURL, WinnerId").ToList();
+            foreach(var winner in winners)
+            {
+                Debug.WriteLine(winner.Name+"  " +winner.ImageURL);
+            }
+            var pagedlist = winners.ToPagedList(page ?? 1, 15);
+            Debug.WriteLine(winners.Count);
+            return View(pagedlist);
         }
 
         // GET: Winners/Details/5

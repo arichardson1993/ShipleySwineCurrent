@@ -23,9 +23,9 @@ namespace ShipleySwine
 
         public DateTime? Farrowed { get; set; }
 
-        public byte? LitterSize { get; set; }
+        public int? LitterSize { get; set; }
 
-        public byte? Price { get; set; }
+        public int? Price { get; set; }
 
         public bool? GuaranteedSettle { get; set; }
 
@@ -50,11 +50,11 @@ namespace ShipleySwine
         [StringLength(255)]
         public string Breed { get; set; }
 
-        public byte? Order { get; set; }
+        public int? Order { get; set; }
 
         public bool? Featured { get; set; }
 
-        public short? FeaturedOrder { get; set; }
+        public int? FeaturedOrder { get; set; }
 
         [StringLength(255)]
         public string EarNotch { get; set; }
@@ -71,8 +71,10 @@ namespace ShipleySwine
         [StringLength(255)]
         public string OwnedBy { get; set; }
 
-        [StringLength(255)]
+        [StringLength(Int32.MaxValue)]
         public string Description { get; set; }
+
+        public DateTime? CreateDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SellingPoint> SellingPoints { get; set; }

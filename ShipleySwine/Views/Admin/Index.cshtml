@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+
+<div class="row">
+    <div class="col-4"></div>
+    <div style="padding: 15px;" class="col-4 backgroundcolor">
+        <div class="list-group">
+            @Html.ActionLink("Create Boar", "Create", "Boars", null, new { @class = "list-group-item" })
+            @Html.ActionLink("Create Bred Guilt", "Create", "BredGilts", null, new { @class = "list-group-item" })
+            @Html.ActionLink("Upload Boar Image", "Index", "FileUpload", null, new { @class = "list-group-item" })
+            @Html.ActionLink("Manage Boars", "Manage", "Boars", null, new { @class = "list-group-item" })
+            @Html.ActionLink("Manage Gilts", "Manage", "BredGilts", null, new { @class = "list-group-item" })
+            @Html.ActionLink("Change Alert Banner", "getBannerForm", "Admin", null, new { @class = "list-group-item" })
+            @Html.ActionLink("Change Boar Order", "ManageOrder", "Boars", null, new { @class = "list-group-item" })
+        </div>
+        <br />
+        <br />
+        <br />
+        <div class="w-100 text-center">
+            @Html.ActionLink("Home","Index","Home", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+    <div class="col-4"></div>
+</div>

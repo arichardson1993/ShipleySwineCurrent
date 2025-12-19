@@ -1,9 +1,15 @@
 ﻿@model IEnumerable<ShipleySwine.Boar>
 
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
     ViewBag.Title = "Index";
     string imgURL;
     int counter = 0;
+    int counter2 = 0;
+    int count2 = 0;
 }
 
 <head>
@@ -17,140 +23,227 @@
 
 
 
-    <link href="/Content/bootstrap.css" rel="stylesheet">
-    <link href="/Content/font-awesome.min.css" rel="stylesheet">
-    <link href="/Content/animate.min.css" rel="stylesheet">
-    <link href="/Content/ionicons.min.css" rel="stylesheet">
-    <link href="/Content/owl.carousel.min.css" rel="stylesheet">
-    <link href="/Content/magnific-popup.css" rel="stylesheet">
-    <link href="/Content/ionicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/Content/strap4.css">
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/animate.min.css" rel="stylesheet">
+    <link href="~/Content/ionicons.min.css" rel="stylesheet">
+    <link href="~/Content/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Content/magnific-popup.css" rel="stylesheet">
+    <link href="~/Content/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/strap4.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-    <link href="/Content//style.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
 
 
 
 </head>
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 
-<div class="container">
-
-    <div class="row row-centered">
-        @foreach (var item in Model)
-        {
-            imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/Thumbs/" + item.NameNoSpaces + "1.jpg";
-
-            if (counter == 2)
+    <div class="col-xl col-lg col-md hidden-sm hidden-xs">
+        <div class="row row-centered">
+            @foreach (var item in Model)
             {
-            @:</div>
-            @:<div class="row">
+                //imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/" + item.NameNoSpaces + "1.jpg";
+                imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/Large/" + item.NameNoSpaces + "1.jpg";
 
 
-                counter = 0;
-            }
+                if (counter == 3)
+                {
+                @:</div>
+                @:<div class="row">
+                    counter = 0;
+                }
+                @*<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 d-flex internet-ex">*@
 
-            <div class="col-lg-6 d-flex">
-                <div class="card mb-3" style="width: 580px;">
-                    <div class="row no-gutters">
-                        <div class="col-md-5 flex-fill">
-                            <img style="height: 238px;" src="@Url.Content(imgURL)" class="card-img" alt="Photo Didnt Load">
-                        </div>
-                        <div class="col-md-7 flex-fill">
-                            <div class="card-body h-100">
-                                <div>
-                                    <div class="text-center">
-                                        <h2 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h2>
+                      
+                          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 d-flex internet-ex">
+                              <a style="color:black;" class="custom-card" href="@Url.Action("Details","Boars", new { id = item.Boar_Id })">
+                                  <div class="card mb-4 border-secondary flex-fill internet-ex-int">
+                                      <div class="card-header text-center bg-secondary text-white"><h2 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h2></div>
+                                      <div class="flex-fill internet-ex-int">
+                                          <div style="padding-top:30px;" class="col-lg-12 col-md-12">
+                                              <img style="height:initial; text-align:center; margin:auto; display:block;" src="@Url.Content(imgURL)" class="card-img" alt="Photo Didnt Load">
+                                          </div>
+                                          <div style="padding-top:20px;" class="col-lg-12 col-md-12 border-secondary">
+                                              <div class="card-body">
+                                                  <div>
+                                                      <div class="text-center">
+                                                          <h5 class="card-title">Sire: @Html.DisplayFor(modelItem => item.Sire) | Dam: @Html.DisplayFor(modelItem => item.Dam)</h5>
+                                                      </div>
+                                                  </div>
+                                                  <hr />
+                                                  <div class="listcontainer h-100">
+                                                      @foreach (var _it in item.SellingPoints)
+                                                      {
+                                                          count2 = 0;
+                                                          foreach (var _it2 in _it.SellingPoints)
+                                                          {
+                                                              if (count2 < 5)
+                                                              {
+                                                                  @: <ul>
+                                                                      @:     <li><p class="card-text">@_it2.SellingPoint</p></li>
+                                                                  @: </ul>
+                                                              }
+                                                              count2++;
+                                                          }
+
+                                                      }
+
+                                                  </div>
+                                                  <div class="text-center justify-content-center align-content-center mt-2 text-white">
+                                                      <a class="text-center justify-content-center align-content-center">@Html.ActionLink("See More", "Details", "Boars", new { id = item.Boar_Id }, new { @class = "btn btn-primary" })</a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="card-footer text-center w-100">
+                                          <p style="margin:auto; font-size:large;">$ @Html.DisplayFor(modelItem => item.Price)</p>
+                                      </div>
+                                  </div>
+                              </a>
+                          </div>
+                     
+                          @*
+        <div class="text-center">
+            <h4>$ @Html.DisplayFor(modelItem => item.Price)</h4>
+        </div>
+                          *@
+                          counter++;
+                          }
+</div>
+    </div>
+    <div class="hidden-xl hidden-lg hidden-md col-sm col-xs">
+        <div class="row row-centered">
+            @foreach (var item in Model)
+            {
+                //imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/" + item.NameNoSpaces + "1.jpg";
+                imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/Large/" + item.NameNoSpaces + "1.jpg";
+
+
+                if (counter2 == 2)
+                {
+                @:</div>
+                @:<div class="row">
+                    counter2 = 0;
+                }
+                <a class="btn-fix" href="@Url.Action("Details", "Boars", new { id = item.Boar_Id })">
+                    @*<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 d-flex internet-ex">*@
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 d-flex internet-ex">
+                        <a style="color:black;" class="custom-card" href="@Url.Action("Details","Boars", new { id = item.Boar_Id })">
+                            <div class="card mb-4 border-secondary flex-fill internet-ex-int">
+                                <div class="card-header text-center bg-secondary text-white"><h2 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h2></div>
+                                <div class="flex-fill internet-ex-int">
+                                    <div style="padding-top:30px;" class="col-lg-12 col-md-12">
+                                        <img style="height:initial; text-align:center; margin:auto; display:block;" src="@Url.Content(imgURL)" class="card-img" alt="Photo Didnt Load">
+                                    </div>
+                                    <div style="padding-top:20px;" class="col-lg-12 col-md-12 border-secondary">
+                                        <div class="card-body">
+                                            <div>
+                                                <div class="text-center">
+                                                    <h5 class="card-title">Sire: @Html.DisplayFor(modelItem => item.Sire) | Dam: @Html.DisplayFor(modelItem => item.Dam)</h5>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="listcontainer h-100">
+                                                @foreach (var _it in item.SellingPoints)
+                                                {
+                                                    count2 = 0;
+                                                    foreach (var _it2 in _it.SellingPoints)
+                                                    {
+                                                        if (count2 < 5)
+                                                        {
+                                                            @: <ul>
+                                                                @:     <li><p class="card-text">@_it2.SellingPoint</p></li>
+                                                            @: </ul>
+                                                        }
+                                                        count2++;
+                                                    }
+
+                                                }
+
+                                            </div>
+                                            <div class="text-center justify-content-center align-content-center mt-2 text-white">
+                                                <a class="text-center justify-content-center align-content-center">@Html.ActionLink("See More", "Details", "Boars", new { id = item.Boar_Id }, new { @class = "btn btn-primary" })</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="text-center">
-                                    <h5 class="card-title">Sire: @Html.DisplayFor(modelItem => item.Sire) | Dam: @Html.DisplayFor(modelItem => item.Dam)</h5>
-                                </div>
-                                <hr />
-                                <div class="listcontainer">
-                                    @foreach (var _it in item.SellingPoints)
-                                    {
-                                        foreach (var _it2 in _it.SellingPoints)
-                                        {
-                                            <ul>
-                                                <li><p class="card-text">@_it2.SellingPoint</p></li>
-                                            </ul>
-                                        }
-                                    }
-                                </div>
-                                <div class="text-center">
-                                    <h4>$ @Html.DisplayFor(modelItem => item.Price)</h4>
+                                <div class="card-footer text-center w-100">
+                                    <p style="margin:auto; font-size:large;">$ @Html.DisplayFor(modelItem => item.Price)</p>
                                 </div>
                             </div>
-                        </div>
+                        </a>
+                    </div>
+                </a>
+                @*
+                    <div class="text-center">
+                        <h4>$ @Html.DisplayFor(modelItem => item.Price)</h4>
+                    </div>
+                *@
+                counter2++;
+            }
+        </div>
+    </div>
+
+
+
+
+    @*
+
+            @Html.DisplayFor(modelItem => item.Farrowed)
+            @Html.DisplayFor(modelItem => item.LitterSize)
+
+            @Html.DisplayFor(modelItem => item.GuaranteedSettle)
+            @Html.DisplayFor(modelItem => item.StressTest)
+            @Html.DisplayFor(modelItem => item.NameNoSpaces)
+
+            @Html.DisplayFor(modelItem => item.SireFull)
+
+            @Html.DisplayFor(modelItem => item.DamFull)
+            @Html.DisplayFor(modelItem => item.Breed)
+            @Html.DisplayFor(modelItem => item.Order)
+            @Html.DisplayFor(modelItem => item.Featured)
+            @Html.DisplayFor(modelItem => item.FeaturedOrder)
+            @Html.DisplayFor(modelItem => item.EarNotch)
+            @Html.DisplayFor(modelItem => item.RegNum)
+            @Html.DisplayFor(modelItem => item.TestData)
+            @Html.DisplayFor(modelItem => item.BredBy)
+            @Html.DisplayFor(modelItem => item.OwnedBy)
+            @Html.DisplayFor(modelItem => item.Description)
+
+        @Html.ActionLink("Edit", "Edit", new { id = item.Boar_Id }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Boar_Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Boar_Id })
+
+    *@
+
+    @*
+
+            <div class="row">
+        @foreach (var article in Model)
+        {
+            if (counter != 0 && counter % 3 == 0)
+            {
+                @:</div>
+                @:<div class="row">
+            }
+
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img src="@article.Thumbnail" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
+                    <div class="caption">
+                        <h3 id="thumbnail-label">@article.Name</h3>
+                        <p>@article.Description</p>
                     </div>
                 </div>
             </div>
 
             counter++;
         }
-    </div>
-</div>
 
-@*
-
-        @Html.DisplayFor(modelItem => item.Farrowed)
-        @Html.DisplayFor(modelItem => item.LitterSize)
-
-        @Html.DisplayFor(modelItem => item.GuaranteedSettle)
-        @Html.DisplayFor(modelItem => item.StressTest)
-        @Html.DisplayFor(modelItem => item.NameNoSpaces)
-
-        @Html.DisplayFor(modelItem => item.SireFull)
-
-        @Html.DisplayFor(modelItem => item.DamFull)
-        @Html.DisplayFor(modelItem => item.Breed)
-        @Html.DisplayFor(modelItem => item.Order)
-        @Html.DisplayFor(modelItem => item.Featured)
-        @Html.DisplayFor(modelItem => item.FeaturedOrder)
-        @Html.DisplayFor(modelItem => item.EarNotch)
-        @Html.DisplayFor(modelItem => item.RegNum)
-        @Html.DisplayFor(modelItem => item.TestData)
-        @Html.DisplayFor(modelItem => item.BredBy)
-        @Html.DisplayFor(modelItem => item.OwnedBy)
-        @Html.DisplayFor(modelItem => item.Description)
-
-    @Html.ActionLink("Edit", "Edit", new { id = item.Boar_Id }) |
-    @Html.ActionLink("Details", "Details", new { id = item.Boar_Id }) |
-    @Html.ActionLink("Delete", "Delete", new { id = item.Boar_Id })
-
-*@
-
-@*
-
-        <div class="row">
-    @foreach (var article in Model)
-    {
-        if (counter != 0 && counter % 3 == 0)
-        {
-            @:</div>
-            @:<div class="row">
-        }
-
-        <div class="col-md-4">
-            <div class="thumbnail">
-                <img src="@article.Thumbnail" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
-                <div class="caption">
-                    <h3 id="thumbnail-label">@article.Name</h3>
-                    <p>@article.Description</p>
-                </div>
-            </div>
-        </div>
-
-        counter++;
-    }
-
-*@
+    *@
 
 
 

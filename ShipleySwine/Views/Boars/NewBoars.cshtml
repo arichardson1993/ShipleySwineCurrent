@@ -1,0 +1,178 @@
+﻿
+@model IEnumerable<ShipleySwine.Boar>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Index";
+    string imgURL;
+    int counter = 0;
+    int count2 = 0;
+}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index - My ASP.NET Application</title>
+
+    <link href="/Content" rel="stylesheet">
+
+    <script src="/Scripts/modernizr-2.8.3.js"></script>
+
+
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/animate.min.css" rel="stylesheet">
+    <link href="~/Content/ionicons.min.css" rel="stylesheet">
+    <link href="~/Content/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Content/magnific-popup.css" rel="stylesheet">
+    <link href="~/Content/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/strap4.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <link href="~/Content/style.css" rel="stylesheet">
+
+
+
+</head>
+
+<div class="col-xl col-lg col-md hidden-sm hidden-xs">
+    <div class="row row-centered">
+        @foreach (var item in Model)
+        {
+            //imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/" + item.NameNoSpaces + "1.jpg";
+            imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/Large/" + item.NameNoSpaces + "1.jpg";
+
+
+            if (counter == 3)
+            {
+            @:</div>
+            @:<div class="row">
+                counter = 0;
+            }
+            @*<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 d-flex internet-ex">*@
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 d-flex internet-ex">
+                <div class="card mb-4 border-secondary flex-fill internet-ex-int">
+                    <div class="card-header text-center bg-secondary text-white"><h2 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h2></div>
+                    <div class="flex-fill internet-ex-int">
+                        <div style="padding-top:30px;" class="col-lg-12 col-md-12">
+                            <img style="height:initial; text-align:center; margin:auto; display:block;" src="@Url.Content(imgURL)" class="card-img" alt="Photo Didnt Load">
+                        </div>
+                        <div style="padding-top:20px;" class="col-lg-12 col-md-12 border-secondary">
+                            <div class="card-body">
+                                <div>
+                                    <div class="text-center">
+                                        <h5 class="card-title">Sire: @Html.DisplayFor(modelItem => item.Sire) | Dam: @Html.DisplayFor(modelItem => item.Dam)</h5>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="listcontainer h-100">
+                                    @foreach (var _it in item.SellingPoints)
+                                    {
+                                        count2 = 0;
+                                        foreach (var _it2 in _it.SellingPoints)
+                                        {
+                                            if (count2 < 5)
+                                            {
+                                                @: <ul>
+                                                    @:     <li><p class="card-text">@_it2.SellingPoint</p></li>
+                                                @: </ul>
+                                            }
+                                            count2++;
+                                        }
+
+                                    }
+
+                                </div>
+                                <div class="text-center justify-content-center align-content-center mt-2 text-white">
+                                    <a class="text-center justify-content-center align-content-center">@Html.ActionLink("See More", "Details", "Boars", new { id = item.Boar_Id }, new { @class = "btn btn-primary" })</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center w-100">
+                        <p style="margin:auto; font-size:large;">$ @Html.DisplayFor(modelItem => item.Price)</p>
+                    </div>
+                </div>
+            </div>
+            @*
+                <div class="text-center">
+                    <h4>$ @Html.DisplayFor(modelItem => item.Price)</h4>
+                </div>
+            *@
+            counter++;
+        }
+    </div>
+</div>
+<div class="hidden-xl hidden-lg hidden-md col-sm col-xs">
+    <div class="row row-centered">
+        @foreach (var item in Model)
+        {
+            //imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/" + item.NameNoSpaces + "1.jpg";
+            imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/Large/" + item.NameNoSpaces + "1.jpg";
+
+
+            if (counter == 2)
+            {
+            @:</div>
+            @:<div class="row">
+                counter = 0;
+            }
+            @*<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 d-flex internet-ex">*@
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 d-flex internet-ex">
+                <div class="card mb-4 border-secondary flex-fill internet-ex-int">
+                    <div class="card-header text-center bg-secondary text-white"><h2 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h2></div>
+                    <div class="flex-fill internet-ex-int">
+                        <div style="padding-top:30px;" class="col-lg-12 col-md-12">
+                            <img style="height:initial; text-align:center; margin:auto; display:block;" src="@Url.Content(imgURL)" class="card-img" alt="Photo Didnt Load">
+                        </div>
+                        <div style="padding-top:20px;" class="col-lg-12 col-md-12 border-secondary">
+                            <div class="card-body">
+                                <div>
+                                    <div class="text-center">
+                                        <h5 class="card-title">Sire: @Html.DisplayFor(modelItem => item.Sire) | Dam: @Html.DisplayFor(modelItem => item.Dam)</h5>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="listcontainer h-100">
+                                    @foreach (var _it in item.SellingPoints)
+                                    {
+                                        count2 = 0;
+                                        foreach (var _it2 in _it.SellingPoints)
+                                        {
+                                            if (count2 < 5)
+                                            {
+                                                @: <ul>
+                                                    @:     <li><p class="card-text">@_it2.SellingPoint</p></li>
+                                                @: </ul>
+                                            }
+                                            count2++;
+                                        }
+
+                                    }
+
+                                </div>
+                                <div class="text-center justify-content-center align-content-center mt-2 text-white">
+                                    <a class="text-center justify-content-center align-content-center">@Html.ActionLink("See More", "Details", "Boars", new { id = item.Boar_Id }, new { @class = "btn btn-primary" })</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center w-100">
+                        <p style="margin:auto; font-size:large;">$ @Html.DisplayFor(modelItem => item.Price)</p>
+                    </div>
+                </div>
+            </div>
+            @*
+                <div class="text-center">
+                    <h4>$ @Html.DisplayFor(modelItem => item.Price)</h4>
+                </div>
+            *@
+            counter++;
+        }
+    </div>
+</div>
+

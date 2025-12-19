@@ -1,4 +1,4 @@
-﻿@model ShipleySwine.SellingPoint1
+﻿@model ShipleySwine.ViewModels.SellingPointsCreateViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -7,42 +7,98 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>SellingPoint1</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.SellingPoint, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SellingPoint, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SellingPoint, "", new { @class = "text-danger" })
+<div style="margin: 30px; padding: 25px;" class="container backgroundcolor">
+
+    <form method="post" action="Create">
+        <table id="tblCustomers" class="table table-striped table-hover table-bordered h-100" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th class="" style="width:1px;">SellingPointId</th>
+                    <th class="" style="width:1px;">ID</th>
+                    <th class="" style="width:1px">Selling Point</th>
+                    <th class="" style="width:1px"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot id="item-list">
+                <tr>
+                    <td class="w-auto"><input name="sp[0].SellingPoints_Id" value="@ViewBag.SellingPoints_Id" class="form-control items" readonly="readonly" /></td>
+                    <td class="w-auto"><input name="sp[0].ID" class="form-control items" value="@ViewBag.ID" readonly="readonly" /></td>
+                    <td class="w-auto"><input name="sp[0].SellingPoint" class="form-control items" /></td>
+                    <td class="w-auto"><a id="trash" href="#" class="text-center m-auto items" onclick="removehead(0)"><img height="15" width="15" src="~/Assets/Images/trash-solid.svg" /></a></td>
+                </tr>
+            </tfoot>
+        </table>
+        <button class="btn btn-secondary" id="add">Add another item</button>
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </form>
+    @*<div class="text-center justify-content-center align-content-center" id="loading-div-background">
+        <a class="text-center justify-content-center align-content-center" href="http://www.lowgif.com/2541a1211e345526.html" target="_blank"><img id="editableimage2" src="http://cdn.lowgif.com/full/2541a1211e345526-where-to-find-plum-plum-organics.gif" border="0" alt="Where To Find Plum Plum Organics" /></a><br>
+        <div>Please wait...</div>
+    </div>*@
+
+
+
+
+    @*@using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>SellingPoint1</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="SellingPoint">Selling Point</label>
+                    <div class="col-md-10">
+                        <input type="text" for/>
+                        @Html.ValidationMessageFor(model => model.SellingPoint, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SellingPoints_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SellingPoints_Id, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SellingPoints_Id, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
             </div>
-        </div>
+        }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SellingPoints_Id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SellingPoints_Id, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SellingPoints_Id, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>*@
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript">
+        var ID = @(ViewBag.ID + 1)
+        $("#add").click(function (e) {
+        e.preventDefault();
+        var i = ($(".items").length) / 4;
+            var n = '<tr> <td class="w-auto"><input name="sp['+i+'].SellingPoints_Id" value="@ViewBag.SellingPoints_Id" class="form-control items" readonly="readonly" /></td>' +
+                '<td class="w-auto"><input name="sp[' +i +'].ID" class="form-control items" value="'+ID+'" readonly="readonly" /></td>' +
+            '<td class="w-auto"><input name="sp['+i+'].SellingPoint" class="form-control items" /></td>'+
+            '<td class="w-auto"><a id="trash' + i +'" href="#" class="text-center m-auto items" onclick="removehead('+i+')"><img height="15" width="15" src="/Assets/Images/trash-solid.svg" /></a></td></tr>'
+                ID = ID + 1;
+        $("#item-list").append(n);
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+        function removehead(i) {
+            var id = "trash" + i;
+            console.log("trash" + i)
+            var element = document.getElementById(id);
+            console.log(element);
+            element.parentNode.parentNode.remove();
+            };
+        });
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        </script>
+    }

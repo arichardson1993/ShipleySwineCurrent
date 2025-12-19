@@ -1,0 +1,68 @@
+﻿@model ShipleySwine.ViewModels.EditOrderViewViewModel
+@{
+    ViewBag.Title = "EditOrder";
+}
+
+<h2>Edit</h2>
+
+<div style="background-color:white;" class="container">
+    @using (@Html.BeginForm("EditOrder", "Boars", FormMethod.Post))
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="hidden">
+                        id
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Order
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 0;
+                }
+                @foreach (var item in Model.something)
+                {
+                    <tr>
+                        <td>
+                            <input name="something[@i].boarid" value="@item.boarid" />
+                        </td>
+                        <td>
+                            <input name="something[@i].boarname" value="@item.boarname" />
+                        </td>
+                        <td>
+                            <input name="something[@i].order" value="@item.order" />
+                        </td>
+                    </tr>
+                    i++;
+                }
+
+
+            </tbody>
+        </table>
+
+        <div>
+            <input class="btn btn-primary w-100 text-center" type="submit" value="Save" />
+        </div>
+    }
+
+
+    <div>
+        @Html.ActionLink("Back to List", "Manage")
+    </div>
+</div>
+@*<form action="/Boars/EditOrder" method="post">
+    @Html.EditorFor(e => e.boarid)
+    @Html.EditorFor(e => e.boarname)
+    @Html.EditorFor(e => e.order)
+    <input type="submit" name="Submit"/>
+</form>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,661 @@
+﻿@model  ShipleySwine.ViewModels.BredGiltsIndexViewModel
+@{
+    ViewBag.Title = "Index";
+    int yorkCount = 0;
+    int berkCount = 0;
+    int durocCount = 0;
+    int hampCount = 0;
+    int exoticCount = 0;
+    int otherCount = 0;
+    int count = 0;
+}
+
+<div @*style="background-color: #f8f9fa;"*@ class="container pb-5 pt-5 mb-5 backgroundcolor">
+    <div style="background-color: #f8f9fa;" class="p-3">
+
+        <div class="row text-center">
+            <div class="col-12">
+                <div class="sellingpointscolor shadow rounded pb-3 pt-3 font-weight-bold">
+                    <h1>Call Today to Preorder your Shipley Bred Gilts the way you want!</h1>
+                    <h3>
+                        <span class="mr-2 phonetextsize text-black-50" style="font-weight:bold; text-decoration:underline;">
+                            <i class="fa fa-phone mr-2"></i>
+                            1-866-376-8986
+                        </span>
+                        <span class="phonetextsize">
+                            (Toll Free) •
+                        </span>
+                        <span class="phonetextsize text-black-50" style=" font-weight:bold; text-decoration:underline; ">
+                            <i class="fa fa-phone mr-2 ml-2"></i>740-745-2911
+                        </span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center mt-4">
+            <div class="col-12">
+                <h1><span style="font-weight: bold;">YOU choose the:</span></h1>
+            </div>
+        </div>
+        <div class="row text-center m-auto">
+            <div class="col-3 m-auto columncolor">
+                <div class="w-100 h-100 m-auto shadow rounded sellingpointscolor">
+                    <div class="sellingpoints">
+                        Price
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 columncolor">
+                <div class="w-100 h-100 m-auto shadow rounded sellingpointscolor">
+                    <div class="sellingpoints">
+                        Breed
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 columncolor">
+                <div class="w-100 h-100 m-auto shadow rounded sellingpointscolor">
+                    <div class="sellingpoints">
+                        Mating
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 columncolor">
+                <div class="w-100 h-100 m-auto shadow rounded sellingpointscolor">
+                    <div class="sellingpoints">
+                        Date
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@*<div class="container">*@
+
+    <section id="tabs">
+	    <div class="container">
+		    <h6 class="section-title h1 text-center mb-5">How is Pricing Determined?</h6>
+		    <div class="row">
+			    <div class="col-xs-15 ">
+				    <nav>
+                        <div class="nav nav-tabs nav-fill text-black-50" id="nav-tab" role="tablist">
+                            @*<a class="nav-item nav-link text-black-50 backgroundcolor rounded" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false"><i style="color:#d9d926;" class="fa fa-star"></i> $2500+</a>*@
+                            <a class="nav-item nav-link active text-black-50 backgroundcolor rounded smallscreengiltnav" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false"><i style="color:#ffd800" class="fa fa-star"></i> $2500+ (Shipley super-elite keepers)</a>
+                            <a class="nav-item nav-link text-black-50 backgroundcolor rounded smallscreengiltnav" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">$1950 (Shipley elite keepers)</a>
+                            <a class="nav-item nav-link text-black-50 backgroundcolor rounded smallscreengiltnav" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">$1550 (Shipley keepers)</a>
+                            <a class="nav-item nav-link text-black-50 backgroundcolor rounded smallscreengiltnav" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">$1050</a>
+                            <a class="nav-item nav-link text-black-50 backgroundcolor rounded smallscreengiltnav" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">$850</a>
+                        </div>
+				    </nav>
+                    <p style="font-weight: bold;">*All bred gilts are guaranteed to farrow at least eight pigs.</p>
+				    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+					    <div style="color: black;" class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <h2 class="text-center">Mid Gilts</h2>
+                            <p class="text-center">The middle cut of gilts. They are nice quality gilts capable of having very good offspring.</p>
+						
+					    </div>
+					    <div style="color: black;" class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <h2 class="text-center">Keeper Gilts</h2>
+                            <p class="text-center">These gilts are good enough to stay here and join the sow herd. (Very nice gilts - sounder, thicker and more muscle - they look the part)</p>
+					    </div>
+					    <div style="color: black;" class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                            <h2 class="text-center">Elite Keeper</h2>
+                            <p class="text-center">The very top end gilts out of some of our very top end sows</p>
+					    </div>
+					    <div style="color: black;" class="tab-pane fade active show" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                            <h2 class="text-center">Super Elite Keeper</h2>
+                            <p class="text-center">Like the Elite Keepers they are very superior in their design but are also out of sows that are <i>very elite</i> in our herd (Sows that Generate). We get asked the question "Can we buy what you are keeping?" Now that we have our sow herd in good shape we can share a few of these gilts. We do not want to sell very many of these girls. From time to time we will list a few of these gilts for sale. In some cases they are <i>better</i> than the elite keepers and they are always out of sows that generate litter after litter. <i>The Best of The Best</i></p>
+					    </div>
+				    </div>
+			
+			    </div>
+		    </div>
+	    </div>
+    </section>
+    <!-- ./Tabs -->
+
+
+    <div class="bd-example">
+        <div class="row">
+            @*<div class="col-4">
+                <nav id="navbar-example3" class="navbar flex-column">
+                    <nav class="nav nav-pills flex-column">
+                        @if (@Model.berkshireGilts.Count != 0)
+                        {
+                            <a style="color: black;" class="nav-link active" href="#Berkshire">Berkshire</a>
+                            <nav class="nav nav-pills flex-column">
+
+
+                                @foreach (var berk in Model.berkshireGilts)
+                                {
+                                    <a style="color: black;" class="nav-link ml-3 my-1" href="#Berkshire-@berkCount">Berkshire - $@berk.Price</a>
+                                    berkCount++;
+                                }
+
+                            </nav>
+                            berkCount = 0;
+                        }
+                        @if (Model.durocCount != 0)
+                        {
+
+                            <a style="color: black;" class="nav-link" href="#Duroc">Duroc</a>
+                            <nav class="nav nav-pills flex-column">
+
+                                @foreach (var duroc in Model.durocGilts)
+                                {
+                                    <a style="color: black;" class="nav-link ml-3 my-1" href="#Duroc-@durocCount">Duroc - $@duroc.Price</a>
+                                    durocCount++;
+                                }
+
+                            </nav>
+                            durocCount = 0;
+                        }
+                        @if (Model.exoticCount != 0)
+                        {
+                            <a style="color: black;" class="nav-link " href="#Exotic">Exotic</a>
+                            <nav class="nav nav-pills flex-column">
+
+                                @foreach (var exotic in Model.exoticGilts)
+                                {
+                                    <a style="color: black;" class="nav-link ml-3 my-1" href="#Exotic-@exoticCount">Exotic - $@exotic.Price</a>
+                                    exoticCount++;
+                                }
+
+                            </nav>
+                            exoticCount = 0;
+                        }
+                        @if (Model.hampCount != 0)
+                        {
+                            <a style="color: black;" class="nav-link" href="#Hampshire">Hampshire</a>
+                            <nav class="nav nav-pills flex-column">
+
+                                @foreach (var hamp in Model.hampshireGilts)
+                                {
+                                    <a style="color: black;" class="nav-link ml-3 my-1" href="#Hampshire-@hampCount">Hampshire - $@hamp.Price</a>
+                                    hampCount++;
+                                }
+
+                            </nav>
+                            hampCount = 0;
+                        }
+                        @if (Model.yorkCount != 0)
+                        {
+                            <a style="color: black;" class="nav-link" href="#Yorkshire">Yorkshire</a>
+                            <nav class="nav nav-pills flex-column">
+
+                                @foreach (var york in Model.yorkshireGilts)
+                                {
+                                    <a style="color: black;" class="nav-link ml-3 my-1 " href="#Yorkshire-@yorkCount">Yorkshire - $@york.Price</a>
+                                    yorkCount++;
+                                }
+
+                            </nav>
+                            yorkCount = 0;
+                        }
+                        @if (Model.otherCount != 0)
+                        {
+                            <a style="color: black;" class="nav-link" href="#Other">Other</a>
+                            <nav class="nav nav-pills flex-column">
+
+                                @foreach (var other in Model.otherGilts)
+                                {
+                                    <a style="color: black;" class="nav-link ml-3 my-1 " href="#Other-@otherCount">Other - $@other.Price</a>
+                                    otherCount++;
+                                }
+
+                            </nav>
+                            otherCount = 0;
+                        }
+                    </nav>
+                </nav>
+            </div>*@
+            @*<div class="col-1"></div>*@
+            <div class="col-12">
+                <div style="overflow-y:auto !important; overflow-x:hidden; " data-spy="scroll" data-target="#navbar-example3" data-offset="50" class="scrollspy-example-2">
+                    @if (Model.berkshireGilts.Count != 0)
+                    {
+                        foreach (var berk in Model.berkshireGilts)
+                        {
+                            <div style="border-bottom: 1px solid black; border-top: 1px solid black; font-size:12.5px; ">
+                                <h2 class="text-center mt-3 bredgiltheader" id="Berkshire-@berkCount">Berkshire</h2>
+                                <div class="text-center bredgiltsprice">$@berk.Price</div>
+                                <div class="text-center bredgiltsEN">EN: @berk.EarNotch</div>
+                                <div class="mt-4"></div>
+                                <div class="row text-center mb-2 font-weight-bold">
+                                    <div class="col-3">
+                                        <div>Sired By:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Sire of Dam:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Farrowed:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Litter Of:</div>
+                                    </div>
+
+                                </div>
+                                <div class="row text-center font-weight-normal">
+                                    <div class="col-3">
+                                        <div style="font-weight: 200 !important;">@berk.Sire</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.SireOfDam</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DOB.ToString().Substring(0, berk.DOB.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.LitterSize</div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row text-center mb-2 font-weight-bold">
+                                    <div class="col-3">
+                                        <div>Bred To:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Date Bred:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Date Due:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>EN of Dam:</div>
+                                    </div>
+                                </div>
+                                <div class="row text-center mb-5 font-weight-normal">
+                                    <div class="col-3">
+                                        <div>@berk.SvcSire</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DateBred.ToString().Substring(0, berk.DateBred.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DueDate.ToString().Substring(0, berk.DueDate.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DamEN</div>
+                                    </div>
+                                </div>
+                                <div class="text-center w-100 align-items-center justify-content-center mb-3">
+                                    <a class="btn btn-info" href="@Url.Action("Email", "BredGilts", new { number = berk.BredGuiltId } )">I'm Interested</a>
+                                </div>
+                            </div>
+                            berkCount++;
+                        }
+                    }
+                    @if (Model.durocCount != 0)
+                    {
+                        foreach (var berk in Model.durocGilts)
+                        {
+                            <div style="border-bottom: 1px solid black; border-top: 1px solid black;  font-size:12.5px;">
+                                <h2 class="text-center mt-3 bredgiltheader" id="Duroc-@durocCount">Duroc</h2>
+                                <div class="text-center bredgiltsprice">$@berk.Price</div>
+                                <div class="text-center bredgiltsEN">EN: @berk.EarNotch</div>
+                                <div class="mt-4"></div>
+                                <div class="row text-center mb-2 font-weight-bold">
+                                    <div class="col-3">
+                                        <div>Sired By:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Sire of Dam:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Farrowed:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Litter Of:</div>
+                                    </div>
+                                </div>
+                                <div class="row text-center font-weight-normal">
+                                    <div class="col-3">
+                                        <div style="font-weight: 200 !important;">@berk.Sire</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.SireOfDam</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DOB.ToString().Substring(0, berk.DOB.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.LitterSize</div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row text-center mb-2 font-weight-bold">
+                                    <div class="col-3">
+                                        <div>Bred To:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Date Bred:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Date Due:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>EN of Dam:</div>
+                                    </div>
+                                </div>
+                                <div class="row text-center mb-5 font-weight-normal">
+                                    <div class="col-3">
+                                        <div>@berk.SvcSire</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DateBred.ToString().Substring(0, berk.DateBred.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DueDate.ToString().Substring(0, berk.DueDate.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DamEN</div>
+                                    </div>
+                                </div>
+                                <div class="text-center w-100 align-items-center justify-content-center mb-3">
+                                    <a class="btn btn-info" href="@Url.Action("Email", "BredGilts", new { number = berk.BredGuiltId } )">I'm Interested</a>
+                                </div>
+                            </div>
+                            durocCount++;
+                        }
+                    }
+                    @if (Model.exoticCount != 0)
+                    {
+                        foreach (var berk in Model.exoticGilts)
+                        {
+                            <div style="border-bottom: 1px solid black; border-top: 1px solid black;  font-size:12.5px;">
+                                <h2 class="text-center mt-3 bredgiltheader" id="Exotic-@exoticCount">Exotic</h2>
+                                <div class="text-center bredgiltsprice">$@berk.Price</div>
+                                <div class="text-center bredgiltsEN">EN: @berk.EarNotch</div>
+                                <div class="mt-4"></div>
+                                <div class="row text-center mb-2 font-weight-bold">
+                                    <div class="col-3">
+                                        <div>Sired By:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Sire of Dam:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Farrowed:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Litter Of:</div>
+                                    </div>
+                                </div>
+                                <div class="row text-center font-weight-normal">
+                                    <div class="col-3">
+                                        <div style="font-weight: 200 !important;">@berk.Sire</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.SireOfDam</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DOB.ToString().Substring(0, berk.DOB.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.LitterSize</div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row text-center mb-2 font-weight-bold">
+                                    <div class="col-3">
+                                        <div>Bred To:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Date Bred:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Date Due:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>EN of Dam:</div>
+                                    </div>
+                                </div>
+                                <div class="row text-center mb-5 font-weight-normal">
+                                    <div class="col-3">
+                                        <div>@berk.SvcSire</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DateBred.ToString().Substring(0, berk.DateBred.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DueDate.ToString().Substring(0, berk.DueDate.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DamEN</div>
+                                    </div>
+                                </div>
+                                <div class="text-center w-100 align-items-center justify-content-center mb-3">
+                                    <a class="btn btn-info" href="@Url.Action("Email", "BredGilts", new { number = berk.BredGuiltId } )">I'm Interested</a>
+                                </div>
+                            </div>
+                            exoticCount++;
+                        }
+                    }
+                    @if (Model.hampCount != 0)
+                    {
+                        foreach (var berk in Model.hampshireGilts)
+                        {
+                            <div style="border-bottom: 1px solid black; border-top: 1px solid black;  font-size:12.5px;">
+                                <h2 class="text-center mt-3 bredgiltheader" id="Hampshire-@hampCount">Hampshire</h2>
+                                <div class="text-center bredgiltsprice">$@berk.Price</div>
+                                <div class="text-center bredgiltsEN">EN: @berk.EarNotch</div>
+                                <div class="mt-4"></div>
+                                <div class="row text-center mb-2 font-weight-bold">
+                                    <div class="col-3">
+                                        <div>Sired By:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Sire of Dam:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Farrowed:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Litter Of:</div>
+                                    </div>
+                                </div>
+                                <div class="row text-center font-weight-normal">
+                                    <div class="col-3">
+                                        <div style="font-weight: 200 !important;">@berk.Sire</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.SireOfDam</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DOB.ToString().Substring(0, berk.DOB.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.LitterSize</div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row text-center mb-2 font-weight-bold">
+                                    <div class="col-3">
+                                        <div>Bred To:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Date Bred:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Date Due:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>EN of Dam:</div>
+                                    </div>
+                                </div>
+                                <div class="row text-center mb-5 font-weight-normal">
+                                    <div class="col-3">
+                                        <div>@berk.SvcSire</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DateBred.ToString().Substring(0, berk.DateBred.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DueDate.ToString().Substring(0, berk.DueDate.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DamEN</div>
+                                    </div>
+                                </div>
+                                <div class="text-center w-100 align-items-center justify-content-center mb-3">
+                                    <a class="btn btn-info" href="@Url.Action("Email", "BredGilts", new { number = berk.BredGuiltId } )">I'm Interested</a>
+                                </div>
+                            </div>
+                            hampCount++;
+                        }
+                    }
+                    @if (Model.yorkCount != 0)
+                    {
+                        foreach (var berk in Model.yorkshireGilts)
+                        {
+                            <div style="border-bottom: 1px solid black; border-top: 1px solid black;  font-size:12.5px;">
+                                <h2 class="text-center mt-3 bredgiltheader" id="Yorkshire-@yorkCount">Yorkshire</h2>
+                                <div class="text-center bredgiltsprice">$@berk.Price</div>
+                                <div class="text-center bredgiltsEN">EN: @berk.EarNotch</div>
+                                <div class="mt-4"></div>
+                                <div class="row text-center mb-2 font-weight-bold">
+                                    <div class="col-3">
+                                        <div>Sired By:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Sire of Dam:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Farrowed:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Litter Of:</div>
+                                    </div>
+                                </div>
+                                <div class="row text-center font-weight-normal">
+                                    <div class="col-3">
+                                        <div style="font-weight: 400 !important;">@berk.Sire</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.SireOfDam</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DOB.ToString().Substring(0, berk.DOB.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.LitterSize</div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row text-center mb-2 font-weight-bold">
+                                    <div class="col-3">
+                                        <div>Bred To:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Date Bred:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Date Due:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>EN of Dam:</div>
+                                    </div>
+                                </div>
+                                <div class="row text-center mb-5 font-weight-normal">
+                                    <div class="col-3">
+                                        <div>@berk.SvcSire</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DateBred.ToString().Substring(0, berk.DateBred.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DueDate.ToString().Substring(0, berk.DueDate.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DamEN</div>
+                                    </div>
+                                </div>
+                                <div class="text-center w-100 align-items-center justify-content-center mb-3">
+                                    <a class="btn btn-info" href="@Url.Action("Email", "BredGilts", new { number = berk.BredGuiltId } )">I'm Interested</a>
+                                </div>
+                            </div>
+                            yorkCount++;
+                        }
+                    }
+                    @if (Model.otherCount != 0)
+                    {
+                        foreach (var berk in Model.otherGilts)
+                        {
+                            <div style="border-bottom: 1px solid black; border-top: 1px solid black;  font-size:12.5px;">
+                                <h2 class="text-center mt-3 bredgiltheader" id="Other-@otherCount">@berk.Breed</h2>
+                                <div class="text-center bredgiltsprice">$@berk.Price</div>
+                                <div class="text-center bredgiltsEN">EN: @berk.EarNotch</div>
+                                <div class="mt-4"></div>
+                                <div class="row text-center mb-2 font-weight-bold">
+                                    <div class="col-3">
+                                        <div>Sired By:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Sire of Dam:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Farrowed:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Litter Of:</div>
+                                    </div>
+                                </div>
+                                <div class="row text-center font-weight-normal">
+                                    <div class="col-3">
+                                        <div style="font-weight: 200 !important;">@berk.Sire</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.SireOfDam</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DOB.ToString().Substring(0, berk.DOB.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.LitterSize</div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row text-center mb-2 font-weight-bold">
+                                    <div class="col-3">
+                                        <div>Bred To:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Date Bred:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>Date Due:</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>EN of Dam:</div>
+                                    </div>
+                                </div>
+                                <div class="row text-center mb-5 font-weight-normal">
+                                    <div class="col-3">
+                                        <div>@berk.SvcSire</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DateBred.ToString().Substring(0, berk.DateBred.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DueDate.ToString().Substring(0, berk.DueDate.ToString().Length - 12)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div>@berk.DamEN</div>
+                                    </div>
+                                </div>
+                                <div class="text-center w-100 align-items-center justify-content-center mb-3">
+                                    <a class="btn btn-info" href="@Url.Action("Email", "BredGilts", new { number = berk.BredGuiltId } )">I'm Interested</a>
+                                </div>
+                            </div>
+                            otherCount++;
+                        }
+                    }
+                    </div>
+            </div>
+            @*<div class="col-1"></div>*@
+        </div>
+    </div>
+@*</div>*@
+</div>
+<!-- Tabs -->

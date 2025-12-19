@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ShipleySwine.Boar>
+@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div style="background-color:white">
+
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="text-center">
+                    <th>Name</th>
+                    <th>Breed</th>
+                    <th>Price</th>
+                    <th>Sire</th>
+                    <th>Dam</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model)
+                {
+                    <tr class="text-center">
+                        <td>@item.Name</td>
+                        <td>@item.Breed</td>
+                        <td>$ @item.Price</td>
+                        <td>@item.Sire</td>
+                        <td>@item.Dam</td>
+                        <td class="text-center">
+                            <a style="width: 100px;" class=" btn btn-warning" href="@Url.Action("Edit","Boars", new { id = item.Boar_Id})"><i class="fa fa-pencil"> Edit</i></a>
+                            <a style="width: 100px;" class=" btn btn-danger" href="@Url.Action("Delete","Boars", new { id = item.Boar_Id})"><i class="fa fa-trash"> Delete</i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

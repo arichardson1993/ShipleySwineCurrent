@@ -1,0 +1,10 @@
+﻿@model ShipleySwine.Boar
+<option value="">-- Select Boar --</option>
+
+@if (ViewBag.BoarsDD != null)
+{
+    foreach(var item in ViewBag.BoarsDD)
+    {
+        <option value="@item.Text">@item.Text</option>
+    }
+}

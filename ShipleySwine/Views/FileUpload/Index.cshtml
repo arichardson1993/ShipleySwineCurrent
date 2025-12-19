@@ -1,0 +1,96 @@
+﻿@model ShipleySwine.Models.FileUpload
+@{
+                /**/
+
+                
+}
+
+<div style="margin:30px;" class="container backgroundcolor">
+
+    @using (Html.BeginForm("UploadFiles", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @*@Html.DropDownList("BreedDD", (IEnumerable<SelectListItem>)ViewBag.breedDD,"-- Select Breed --", new { @class = "form-control" })*@
+                <select class = "form-control form-control-lg" id="BreedDD" name="incomingbreed">
+                    <option value="">-- Select Breed --</option>
+                    @foreach(var item in ViewBag.BreedDD)
+                    {
+                        <option value="@item.Text">@item.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <select class="form-control form-control-lg" id="BoarsDD" name="NameNoSpaces">
+                
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.file, new { htmlAttributes = new { @class = "form-control-file", @type = "file" } })
+                    @Html.ValidationMessageFor(model => model.file, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Upload" class="btn btn-primary" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 text-success">
+                    @ViewBag.FileStatus
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#BreedDD").change(function () {
+            var breed = $(this).val();
+            var link = '@Url.Action("getBoarsList", "FileUpload", new { boarbreed = "-1" })';
+            link = link.replace("-1", breed);
+            
+            $.ajax({
+                type: "post",
+                url: link,
+                //url: "/FileUpload/getBoarsList?boarbreed=" + breed,
+                contentType: "html",
+                success: function (response) {
+                    
+                    $("#BoarsDD").empty();
+                    $("#BoarsDD").append(response);
+                }
+            })
+        })
+
+        //$("#BoarsDD").change(function () {
+        //    var boar = $(this).val();
+            
+        //    $.ajax({
+        //        type: "post",
+        //        url: "/FileUpload/boarDetails?boarName=" + boar,
+        //        contentType: "html",
+        //        success: function (response) {
+        //            console.log(response);
+        //            console.log(response.val);
+        //            $("#boarDetails").empty();
+        //            $("#boarDetails").val(response);
+        //        }
+        //    })
+        //})
+    })
+</script>
+
+
+
+            @*@Html.DropDownList("BoarsDD", new SelectList(""), "-- Select Boar --", new { @class = "form-control" })*@
+            @*<input id="boarDetails" type="text" value="" readonly="readonly" />*@
+            @*@Html.LabelFor(model => model.file, htmlAttributes: new { @class = "control-label col-md-2" })*@

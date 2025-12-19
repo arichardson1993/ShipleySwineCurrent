@@ -25,6 +25,24 @@ namespace ShipleySwine
                 defaults: new { controller = "Boars", action = "SelectBoar", id = UrlParameter.Optional }
             );
 
+            routes.MapRoute(
+                name: "BredGiltId",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "BredGilts", action = "Email", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Admin",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Admin", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Authentication",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Authentication", action = "Login", id = UrlParameter.Optional }
+            );
+
         }
     }
 }

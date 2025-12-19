@@ -1,0 +1,58 @@
+﻿@model ShipleySwine.ViewModels.EmailViewModel
+@{
+    /**/
+
+    /**/
+
+}
+
+<div class="container backgroundcolor" >
+
+    @using (@Html.BeginForm("Email", "BredGuilts", FormMethod.Post))
+    {
+
+
+        <div class="form-group">
+            <h1>You're Interested in the following Bred Gilt!:</h1>
+            @Html.LabelFor(model => model.bg.EarNotch, "Ear Notch")
+            @Html.EditorFor(model => model.bg.EarNotch, new { htmlAttributes = new { @class = "form-control", @Value = Model.bg.EarNotch, @readonly = "readonly" } })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.bg.Breed, "Breed")
+            @Html.EditorFor(model => model.bg.Breed, new { htmlAttributes = new { @class = "form-control", @Value = Model.bg.Breed, @readonly = "readonly" } })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.bg.Price, "Price")
+            @Html.EditorFor(model => model.bg.Price, new { htmlAttributes = new { @class = "form-control", @Value = Model.bg.Price, @readonly = "readonly" } })
+        </div>
+            @Html.HiddenFor(model => model.bg.DOB)
+            @Html.HiddenFor(model => model.bg.DueDate)
+            @Html.HiddenFor(model => model.bg.DateBred)
+            @Html.HiddenFor(model => model.bg.LitterSize)
+            @Html.HiddenFor(model => model.bg.Sire)
+            @Html.HiddenFor(model => model.bg.SireOfDam)
+            @Html.HiddenFor(model => model.bg.SvcSire)
+
+        <h1>Please enter some Information:</h1>
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="text" name="Email" class="form-control" id="formGroupExampleInput">
+        </div>
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input type="text" name="Name" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+        </div>
+        <div class="form-group">
+            <label for="Phone">Phone Number</label>
+            <input type="text" name="Phone" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+        </div>
+        <div class="form-group">
+            <label for="Comments">Comments</label>
+            <textarea name="Comments" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" />
+        </div>
+    }
+</div>
+

@@ -8,10 +8,14 @@ namespace ShipleySwine
 
     public partial class BredGuilt
     {
+        [Key]
+        [Column(TypeName = "numeric")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public decimal BredGuiltId { get; set; }
+
         [StringLength(255)]
         public string Breed { get; set; }
 
-        [Key]
         public byte BreedId { get; set; }
 
         public int? Price { get; set; }
@@ -21,6 +25,7 @@ namespace ShipleySwine
 
         public bool? BlackCrossGilt { get; set; }
 
+        [Column(TypeName = "Date")]
         public DateTime? DOB { get; set; }
 
         public byte? LitterSize { get; set; }
@@ -38,6 +43,7 @@ namespace ShipleySwine
 
         public bool? SireOfDamXBred { get; set; }
 
+        [Column(TypeName = "Date")]
         public DateTime? DateBred { get; set; }
 
         [StringLength(255)]
@@ -45,6 +51,7 @@ namespace ShipleySwine
 
         public bool? SvcSireXBred { get; set; }
 
+        [Column(TypeName = "Date")]
         public DateTime? DueDate { get; set; }
     }
 }

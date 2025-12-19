@@ -1,0 +1,9 @@
+﻿@model ShipleySwine.Boar
+
+@if(ViewBag.boarDetails != null)
+{
+    foreach(var item in ViewBag.boarDetails)
+    {
+        @item.NameNoSpaces
+    }
+}

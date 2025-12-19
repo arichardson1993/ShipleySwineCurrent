@@ -17,7 +17,7 @@ namespace ShipleySwine
         public virtual DbSet<SellingPoint> SellingPoints { get; set; }
         public virtual DbSet<SellingPoint1> SellingPoints1 { get; set; }
         public virtual DbSet<Winner> Winners { get; set; }
-        public virtual DbSet<BredGuilt> BredGuilts { get; set; }
+        public virtual DbSet<BredGuilt> BredGilts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -35,6 +35,10 @@ namespace ShipleySwine
 
             modelBuilder.Entity<SellingPoint1>()
                 .Property(e => e.SellingPoints_Id)
+                .HasPrecision(20, 0);
+
+            modelBuilder.Entity<BredGuilt>()
+                .Property(e => e.BredGuiltId)
                 .HasPrecision(20, 0);
         }
     }

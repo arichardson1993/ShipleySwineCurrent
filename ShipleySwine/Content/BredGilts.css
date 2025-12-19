@@ -1,0 +1,21 @@
+﻿@media (min-width: 320px) and (max-width: 480px) {
+    .phonetextsize{
+        font-size: 1.3rem;
+    }
+}
+
+.sellingpoints {
+    padding-top: 15px;
+}
+
+.sellingpointscolor {
+    background-color: white;
+}
+
+.columncolor {
+    background-color: #f8f9fa;
+    height: 50px;
+    width: 50px;
+}
+
+
