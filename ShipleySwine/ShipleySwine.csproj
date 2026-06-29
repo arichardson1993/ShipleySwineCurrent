@@ -138,8 +138,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Boar.cs" />
     <Compile Include="BredGuilt.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\BoarsController.cs" />
+    <Compile Include="Controllers\BredGiltsController.cs" />
     <Compile Include="Controllers\BredGuiltsController.cs" />
+    <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\FAQsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SellingPointController.cs" />
@@ -240,46 +244,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\_FacebookFeed.cshtml" />
-    <Content Include="Views\Boars\Create.cshtml" />
-    <Content Include="Views\Boars\Delete.cshtml" />
-    <Content Include="Views\Boars\Details.cshtml" />
-    <Content Include="Views\Boars\Edit.cshtml" />
-    <Content Include="Views\Boars\Index.cshtml" />
-    <Content Include="Views\BredGuilts\Create.cshtml" />
-    <Content Include="Views\BredGuilts\Delete.cshtml" />
-    <Content Include="Views\BredGuilts\Details.cshtml" />
-    <Content Include="Views\BredGuilts\Edit.cshtml" />
-    <Content Include="Views\BredGuilts\Index.cshtml" />
-    <Content Include="Views\FAQs\Create.cshtml" />
-    <Content Include="Views\FAQs\Delete.cshtml" />
-    <Content Include="Views\FAQs\Details.cshtml" />
-    <Content Include="Views\FAQs\Edit.cshtml" />
-    <Content Include="Views\FAQs\Index.cshtml" />
-    <Content Include="Views\SellingPoint\Create.cshtml" />
-    <Content Include="Views\SellingPoint\Delete.cshtml" />
-    <Content Include="Views\SellingPoint\Details.cshtml" />
-    <Content Include="Views\SellingPoint\Edit.cshtml" />
-    <Content Include="Views\SellingPoint\Index.cshtml" />
-    <Content Include="Views\SellingPoints\Create.cshtml" />
-    <Content Include="Views\SellingPoints\Delete.cshtml" />
-    <Content Include="Views\SellingPoints\Details.cshtml" />
-    <Content Include="Views\SellingPoints\Edit.cshtml" />
-    <Content Include="Views\SellingPoints\Index.cshtml" />
-    <Content Include="Views\Winners\Create.cshtml" />
-    <Content Include="Views\Winners\Delete.cshtml" />
-    <Content Include="Views\Winners\Details.cshtml" />
-    <Content Include="Views\Winners\Edit.cshtml" />
-    <Content Include="Views\Winners\Index.cshtml" />
-    <Content Include="Views\Home\Catalog.cshtml" />
-    <Content Include="Views\Boars\SelectBoar.cshtml" />
+    <Content Include="Views\**\*.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\turnstile.config" Condition="Exists('App_Data\turnstile.config')" />

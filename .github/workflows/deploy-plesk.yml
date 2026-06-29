@@ -78,23 +78,79 @@ jobs:
             $config,
             [Text.UTF8Encoding]::new($false))
 
-      - name: Build and deploy to Plesk
+      - name: Build deployment package
         shell: pwsh
         run: |
           msbuild .\ShipleySwine\ShipleySwine.csproj `
             /m `
             /p:Configuration=Release `
             /p:DeployOnBuild=true `
-            /p:WebPublishMethod=MSDeploy `
-            /p:MSDeployServiceURL="https://shipleyswine.com:8172/msdeploy.axd?site=shipleyswine.com" `
+            /p:WebPublishMethod=Package `
+            /p:PackageAsSingleFile=true `
             /p:DeployIisAppPath="shipleyswine.com" `
-            /p:UserName="$env:PLESK_USERNAME" `
-            /p:Password="$env:PLESK_PASSWORD" `
-            /p:AuthType=Basic `
-            /p:AllowUntrustedCertificate=false `
             /p:EnableMSDeployAppOffline=true `
             /p:MSDeployUseChecksum=true `
             /p:SkipExtraFilesOnServer=true
+
+      - name: Verify deployment package contents
+        shell: pwsh
+        run: |
+          $packageRoot = "$PWD\ShipleySwine\obj\Release\Package\PackageTmp"
+          $boarVideos = "$packageRoot\Views\Boars\BoarVideos.cshtml"
+          $contactView = "$packageRoot\Views\Home\Contact.cshtml"
+          $turnstileConfig = "$packageRoot\App_Data\turnstile.config"
+          $applicationDll = "$packageRoot\bin\ShipleySwine.dll"
+
+          if (-not (Test-Path -LiteralPath $boarVideos) -or
+              -not (Select-String -LiteralPath $boarVideos -SimpleMatch "BwUTgfIqATo" -Quiet)) {
+            throw "The deployment package does not contain the updated boar videos view."
+          }
+
+          if (-not (Test-Path -LiteralPath $contactView) -or
+              -not (Select-String -LiteralPath $contactView -SimpleMatch "cf-turnstile" -Quiet)) {
+            throw "The deployment package does not contain the Turnstile contact view."
+          }
+
+          if (-not (Test-Path -LiteralPath $turnstileConfig)) {
+            throw "The deployment package does not contain the generated Turnstile configuration."
+          }
+
+          if (-not (Test-Path -LiteralPath $applicationDll)) {
+            throw "The deployment package does not contain ShipleySwine.dll."
+          }
+
+      - name: Deploy package to Plesk
+        shell: pwsh
+        run: |
+          $deployScript = "$PWD\ShipleySwine\obj\Release\Package\ShipleySwine.deploy.cmd"
+          $msDeploy = @(
+            "$env:ProgramFiles\IIS\Microsoft Web Deploy V3\msdeploy.exe",
+            "${env:ProgramFiles(x86)}\IIS\Microsoft Web Deploy V3\msdeploy.exe"
+          ) | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
+
+          if (-not (Test-Path -LiteralPath $deployScript)) {
+            throw "MSBuild did not create the Web Deploy command file."
+          }
+
+          if ([string]::IsNullOrWhiteSpace($msDeploy)) {
+            throw "msdeploy.exe is not installed on the GitHub runner."
+          }
+
+          $env:MSDeployPath = "$(Split-Path -Parent $msDeploy)\"
+
+          & $deployScript `
+            /Y `
+            "/M:https://shipleyswine.com:8172/msdeploy.axd?site=shipleyswine.com" `
+            "/U:$env:PLESK_USERNAME" `
+            "/P:$env:PLESK_PASSWORD" `
+            /A:Basic `
+            -enableRule:AppOffline `
+            -enableRule:DoNotDeleteRule `
+            -useChecksum
+
+          if ($LASTEXITCODE -ne 0) {
+            throw "Web Deploy failed with exit code $LASTEXITCODE."
+          }
 
       - name: Verify live site
         shell: pwsh
@@ -103,21 +159,22 @@ jobs:
           $deployedCommit = git rev-parse HEAD
 
           for ($attempt = 1; $attempt -le 6; $attempt++) {
-            try {
-              $response = Invoke-WebRequest `
-                -Uri $healthUrl `
-                -UseBasicParsing `
-                -MaximumRedirection 5 `
-                -TimeoutSec 20
+            $statusCode = & curl.exe `
+              --fail `
+              --silent `
+              --show-error `
+              --location `
+              --max-time 20 `
+              --output NUL `
+              --write-out "%{http_code}" `
+              $healthUrl
 
-              if ($response.StatusCode -eq 200) {
-                Write-Host "Live-site health check passed for commit $deployedCommit."
-                exit 0
-              }
+            if ($LASTEXITCODE -eq 0 -and $statusCode -eq "200") {
+              Write-Host "Live-site health check passed for commit $deployedCommit."
+              exit 0
             }
-            catch {
-              Write-Warning "Health check attempt $attempt failed: $($_.Exception.Message)"
-            }
+
+            Write-Warning "Health check attempt $attempt returned HTTP $statusCode."
 
             Start-Sleep -Seconds 10
           }
