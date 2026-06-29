@@ -5,15 +5,29 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Mail;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
+using System.Xml;
+using Newtonsoft.Json;
 
 namespace ShipleySwine.Controllers
 {
     public class HomeController : Controller
     {
+        private static readonly object ContactSubmissionLock = new object();
+        private static readonly HttpClient TurnstileHttpClient = new HttpClient
+        {
+            Timeout = TimeSpan.FromSeconds(10)
+        };
+        private const int ContactSubmissionsPerHour = 3;
+        private const string TurnstileAlwaysPassTestSecret = "1x0000000000000000000000000000000AA";
+
         private ShipleySwineContext db = new ShipleySwineContext();
 
         public ActionResult Index()
@@ -72,6 +86,9 @@ namespace ShipleySwine.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+            TurnstileSettings turnstileSettings = LoadTurnstileSettings();
+            ViewBag.TurnstileSiteKey = turnstileSettings.SiteKey;
+            ViewBag.TurnstileEnabled = turnstileSettings.IsConfigured;
 
             return View();
         }
@@ -97,18 +114,229 @@ namespace ShipleySwine.Controllers
         //    }
         //}
 
-        public JsonResult Email(string fullname, string email, string phone, string subject, string comments)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> Email(ContactEmailViewModel vm)
         {
-            string subjectt = subject;
-            Debug.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@----EMAIL" + email + "----@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            string emailBody = "Message From Contact Us:<br><br>Name: " + fullname + "<br>" + "Email: " + email + "<br>" + "Phone: " + phone + "<br><br><br>Comments:<br>" + comments;
-            if (SendEmail(email, subjectt, emailBody) == "true")
+            if (vm == null)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("false");
+            }
+
+            // Silently accept honeypot submissions so bots do not learn how they were blocked.
+            if (!string.IsNullOrWhiteSpace(vm.website))
             {
                 return Json("true");
             }
-            else
+
+            if (!ModelState.IsValid || vm.subject.Contains("\r") || vm.subject.Contains("\n"))
             {
-                return Json(SendEmail(email, subjectt, emailBody));
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("false");
+            }
+
+            TurnstileSettings turnstileSettings = LoadTurnstileSettings();
+            if (turnstileSettings.IsConfigured)
+            {
+                string turnstileToken = Request.Form["cf-turnstile-response"];
+                string expectedHostname = Request.Url == null ? null : Request.Url.Host;
+
+                if (!await VerifyTurnstileAsync(
+                    turnstileSettings.SecretKey,
+                    turnstileToken,
+                    Request.UserHostAddress,
+                    expectedHostname))
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json("false");
+                }
+            }
+
+            string duplicateKey;
+            if (!TryReserveContactSubmission(vm, out duplicateKey))
+            {
+                return Json("true");
+            }
+
+            string emailBody =
+                "Message From Contact Us:<br><br>Name: " + HttpUtility.HtmlEncode(vm.fullname) +
+                "<br>Email: " + HttpUtility.HtmlEncode(vm.email) +
+                "<br>Phone: " + HttpUtility.HtmlEncode(vm.phone) +
+                "<br><br><br>Comments:<br>" + HttpUtility.HtmlEncode(vm.comments).Replace("\r\n", "<br>").Replace("\n", "<br>");
+
+            if (SendEmail(vm.email, vm.subject.Trim(), emailBody))
+            {
+                return Json("true");
+            }
+
+            // Permit a retry when delivery itself failed.
+            HttpRuntime.Cache.Remove(duplicateKey);
+            Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            return Json("false");
+        }
+
+        private bool TryReserveContactSubmission(ContactEmailViewModel vm, out string duplicateKey)
+        {
+            string fingerprint = string.Join("\n", new[]
+            {
+                vm.fullname,
+                vm.email,
+                vm.phone,
+                vm.subject,
+                vm.comments
+            }.Select(value => (value ?? string.Empty).Trim().ToLowerInvariant()));
+
+            duplicateKey = "contact:duplicate:" + HashContactValue(fingerprint);
+            string ipAddress = Request.UserHostAddress ?? "unknown";
+            string rateKey = "contact:rate:" + HashContactValue(ipAddress);
+
+            lock (ContactSubmissionLock)
+            {
+                if (HttpRuntime.Cache[duplicateKey] != null)
+                {
+                    return false;
+                }
+
+                int submissionCount = HttpRuntime.Cache[rateKey] is int
+                    ? (int)HttpRuntime.Cache[rateKey]
+                    : 0;
+
+                if (submissionCount >= ContactSubmissionsPerHour)
+                {
+                    return false;
+                }
+
+                HttpRuntime.Cache.Insert(
+                    rateKey,
+                    submissionCount + 1,
+                    null,
+                    DateTime.UtcNow.AddHours(1),
+                    System.Web.Caching.Cache.NoSlidingExpiration);
+
+                HttpRuntime.Cache.Insert(
+                    duplicateKey,
+                    true,
+                    null,
+                    DateTime.UtcNow.AddHours(24),
+                    System.Web.Caching.Cache.NoSlidingExpiration);
+
+                return true;
+            }
+        }
+
+        private static string HashContactValue(string value)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                return Convert.ToBase64String(sha256.ComputeHash(Encoding.UTF8.GetBytes(value)))
+                    .Replace("/", "_")
+                    .Replace("+", "-");
+            }
+        }
+
+        private static TurnstileSettings LoadTurnstileSettings()
+        {
+            string configPath = HostingEnvironment.MapPath("~/App_Data/turnstile.config");
+            if (string.IsNullOrWhiteSpace(configPath) || !System.IO.File.Exists(configPath))
+            {
+                return new TurnstileSettings();
+            }
+
+            try
+            {
+                XmlDocument document = new XmlDocument();
+                document.Load(configPath);
+
+                XmlNode siteKeyNode = document.SelectSingleNode("/appSettings/add[@key='TurnstileSiteKey']");
+                XmlNode secretKeyNode = document.SelectSingleNode("/appSettings/add[@key='TurnstileSecretKey']");
+
+                return new TurnstileSettings
+                {
+                    SiteKey = siteKeyNode == null ? null : siteKeyNode.Attributes["value"].Value,
+                    SecretKey = secretKeyNode == null ? null : secretKeyNode.Attributes["value"].Value
+                };
+            }
+            catch (Exception exception)
+            {
+                Trace.TraceError("Unable to load Turnstile configuration: {0}", exception);
+                return new TurnstileSettings();
+            }
+        }
+
+        private static async Task<bool> VerifyTurnstileAsync(
+            string secretKey,
+            string token,
+            string remoteIp,
+            string expectedHostname)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return false;
+            }
+
+            try
+            {
+                using (FormUrlEncodedContent content = new FormUrlEncodedContent(new Dictionary<string, string>
+                {
+                    { "secret", secretKey },
+                    { "response", token },
+                    { "remoteip", remoteIp ?? string.Empty }
+                }))
+                using (HttpResponseMessage response = await TurnstileHttpClient.PostAsync(
+                    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+                    content))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return false;
+                    }
+
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    TurnstileVerificationResponse verification =
+                        JsonConvert.DeserializeObject<TurnstileVerificationResponse>(responseBody);
+
+                    if (verification == null || !verification.success)
+                    {
+                        return false;
+                    }
+
+                    // Cloudflare's documented dummy key is valid only for local/test use.
+                    if (string.Equals(secretKey, TurnstileAlwaysPassTestSecret, StringComparison.Ordinal))
+                    {
+                        return true;
+                    }
+
+                    return string.Equals(verification.action, "contact", StringComparison.Ordinal)
+                        && string.Equals(verification.hostname, expectedHostname, StringComparison.OrdinalIgnoreCase);
+                }
+            }
+            catch (Exception exception)
+            {
+                Trace.TraceError("Turnstile verification failed: {0}", exception);
+                return false;
+            }
+        }
+
+        private sealed class TurnstileVerificationResponse
+        {
+            public bool success { get; set; }
+            public string hostname { get; set; }
+            public string action { get; set; }
+        }
+
+        private sealed class TurnstileSettings
+        {
+            public string SiteKey { get; set; }
+            public string SecretKey { get; set; }
+
+            public bool IsConfigured
+            {
+                get
+                {
+                    return !string.IsNullOrWhiteSpace(SiteKey)
+                        && !string.IsNullOrWhiteSpace(SecretKey);
+                }
             }
         }
 
@@ -132,39 +360,41 @@ namespace ShipleySwine.Controllers
             return View();
         }
 
-        public String SendEmail(string fromEmail, string subject, string emailBody)
+        public bool SendEmail(string fromEmail, string subject, string emailBody)
         {
             try
             {
                 //string senderEmail = System.Configuration.ConfigurationManager.AppSettings["SenderEmail"].ToString();
                 //string senderPassword = System.Configuration.ConfigurationManager.AppSettings["SenderPassword"].ToString();
-                string ToEmail = "andrew.richardson.667@gmail.com";
-
                 SmtpClient client = new SmtpClient("relay-hosting.secureserver.net", 25);
                 client.EnableSsl = false;
                 client.Timeout = 100000;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.UseDefaultCredentials = false;
 
-                MailMessage message = new MailMessage();
-                message.From = new MailAddress("office@shipleyswine.com");
-                message.To.Add(new MailAddress("Josie_shipley@yahoo.com"));
-                message.To.Add(new MailAddress("Buckeyeboot@yahoo.com"));
-                message.To.Add(new MailAddress("Shipleyswine@yahoo.com"));
-                message.To.Add(new MailAddress("shipleywebemail@gmail.com"));
-                message.To.Add(new MailAddress("nicholas@t-and-cdata.com"));
-                message.To.Add(new MailAddress("andrew@t-and-cdata.com"));
-                message.Subject = subject;
-                message.Body = emailBody;
-                message.IsBodyHtml = true;
-                client.Send(message);
+                using (MailMessage message = new MailMessage())
+                {
+                    message.From = new MailAddress("office@shipleyswine.com");
+                    message.ReplyToList.Add(new MailAddress(fromEmail));
+                    message.To.Add(new MailAddress("Josie_shipley@yahoo.com"));
+                    message.To.Add(new MailAddress("Buckeyeboot@yahoo.com"));
+                    message.To.Add(new MailAddress("Shipleyswine@yahoo.com"));
+                    message.To.Add(new MailAddress("shipleywebemail@gmail.com"));
+                    message.To.Add(new MailAddress("nicholas@t-and-cdata.com"));
+                    message.To.Add(new MailAddress("andrew@t-and-cdata.com"));
+                    message.Subject = subject;
+                    message.Body = emailBody;
+                    message.IsBodyHtml = true;
+                    client.Send(message);
+                }
 
-                return "true";
+                return true;
             }
             catch (Exception e)
             {
 
-                return $"stacktrace: {e.StackTrace}, inner exception: {e.InnerException}, {e.Message}, {e.Data}";
+                Trace.TraceError("Contact email delivery failed: {0}", e);
+                return false;
             }
         }
 

@@ -1,0 +1,4 @@
+<appSettings>
+  <add key="TurnstileSiteKey" value="YOUR_PUBLIC_SITE_KEY" />
+  <add key="TurnstileSecretKey" value="YOUR_PRIVATE_SECRET_KEY" />
+</appSettings>

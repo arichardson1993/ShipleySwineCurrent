@@ -253,6 +253,9 @@ paket-files/
 .idea/
 *.sln.iml
 
+# Plesk-only Cloudflare Turnstile credentials
+ShipleySwine/App_Data/turnstile.config
+
 # CodeRush
 .cr/
 

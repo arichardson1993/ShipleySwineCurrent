@@ -282,6 +282,7 @@
     <Content Include="Views\Boars\SelectBoar.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\turnstile.config" Condition="Exists('App_Data\turnstile.config')" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>

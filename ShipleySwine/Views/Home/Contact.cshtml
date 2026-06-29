@@ -2,6 +2,10 @@
 @{
     ViewBag.Title = "Contact";
 }
+@if (ViewBag.TurnstileEnabled == true)
+{
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+}
 <div class="container rounded backgroundcolor" @*style="background-color: #f8f9fa;"*@>
 
     @*<div style="margin-top:30px;"></div>
@@ -100,32 +104,44 @@
                         <!-- Body -->
                         @*@using (@Html.BeginForm("Email", "Home", FormMethod.Post))
                         {*@
-                        <form name="emailForm" id="emailForm">
+                        <form name="emailForm" id="emailForm" method="post">
+                            @Html.AntiForgeryToken()
+                            <div aria-hidden="true" style="position:absolute; left:-10000px; width:1px; height:1px; overflow:hidden;">
+                                <label for="form-website">Website</label>
+                                <input type="text" id="form-website" name="website" tabindex="-1" autocomplete="off">
+                            </div>
                             <div class="md-form">
                                 <i class="faa fa-user prefix grey-text active"></i>
-                                <input type="text" id="form-name" class="form-controll" name="fullname" required>
+                                <input type="text" id="form-name" class="form-controll" name="fullname" maxlength="100" required>
                                 <label class="active" for="fullname">Your name</label>
                             </div>
                             <div class="md-form">
                                 <i class="faa fa-envelope prefix grey-text active"></i>
-                                <input name="email" type="text" id="form-email" class="form-controll" required>
+                                <input name="email" type="email" id="form-email" class="form-controll" maxlength="254" required>
                                 <label class="active" for="email">Your email</label>
                             </div>
                             <div class="md-form">
                                 <i class="faa fa-phone prefix grey-text active"></i>
-                                <input name="phone" type="tel" id="form-phone" class="form-controll" required>
+                                <input name="phone" type="tel" id="form-phone" class="form-controll" maxlength="50" required>
                                 <label class="active" for="phone">Your phone</label>
                             </div>
                             <div class="md-form">
                                 <i class="faa fa-tag prefix grey-text active"></i>
-                                <input name="subject" type="text" id="form-Subject" class="form-controll" required>
+                                <input name="subject" type="text" id="form-Subject" class="form-controll" maxlength="150" required>
                                 <label class="active" for="subject">Subject</label>
                             </div>
                             <div class="md-form">
                                 <i class=" faa fa-pencil prefix grey-text active"></i>
-                                <textarea name="comments" id="form-text" class="formtextarea form-controll md-textarea" rows="3" required></textarea>
+                                <textarea name="comments" id="form-text" class="formtextarea form-controll md-textarea" rows="3" maxlength="4000" required></textarea>
                                 <label class="active" for="comments">Send message</label>
                             </div>
+                            @if (ViewBag.TurnstileEnabled == true)
+                            {
+                                <div class="cf-turnstile mb-3"
+                                     data-sitekey="@ViewBag.TurnstileSiteKey"
+                                     data-action="contact"
+                                     data-theme="auto"></div>
+                            }
                             <div class="text-center text-danger mt-3 mb-3" id="errorMessage">
 
                             </div>
@@ -184,18 +200,11 @@
 
 <script type="text/javascript">
 
-    $(function () {
-
-        $("#emailForm").validate({
-            rules: {
-                fullname: "required"
-            },
-            submitHandler: function (form) {
-                form.submit();
-            }
-        });
-
-    });
+    function resetTurnstile() {
+        if (window.turnstile) {
+            window.turnstile.reset();
+        }
+    }
 
     toastr.options = {
         "closeButton": false,
@@ -217,7 +226,9 @@
 
 
 
-    $("#submitButton").click(function () {
+    $("#emailForm").on("submit", function (event) {
+
+        event.preventDefault();
 
         var validForm = true;
         
@@ -280,14 +291,7 @@
             });
 
 
-            $.post('@Url.Action("Email", "Home")',
-            {
-                fullname: $("#form-name").val(),
-                email: $("#form-email").val(),
-                phone: $("#form-phone").val(),
-                subject: $("#form-Subject").val(),
-                comments: $("#form-text").val()
-                },
+            $.post('@Url.Action("Email", "Home")', $("#emailForm").serialize(),
                 function (data, status, jqXHR) {
                     if (data == "true") {
                         toastr.success("Email Successful!");
@@ -299,6 +303,7 @@
                         $("#form-phone").val("");
                         $("#form-Subject").val("");
                         $("#form-text").val("");
+                        resetTurnstile();
                         $("#submitButton").prop("disabled", false);
 
                     } else {
@@ -307,8 +312,14 @@
                         $("#emailSection").busyLoad("hide", {
 
                         });
+                        resetTurnstile();
                         $("#submitButton").prop("disabled", false);
                     }
+            }).fail(function () {
+                toastr.error("Something went wrong, please try again!");
+                $("#emailSection").busyLoad("hide", {});
+                resetTurnstile();
+                $("#submitButton").prop("disabled", false);
             });
         }
 

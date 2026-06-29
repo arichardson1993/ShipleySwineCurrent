@@ -18,6 +18,8 @@ jobs:
     env:
       PLESK_USERNAME: ${{ secrets.PLESK_USERNAME }}
       PLESK_PASSWORD: ${{ secrets.PLESK_PASSWORD }}
+      TURNSTILE_SITE_KEY: ${{ secrets.TURNSTILE_SITE_KEY }}
+      TURNSTILE_SECRET_KEY: ${{ secrets.TURNSTILE_SECRET_KEY }}
 
     steps:
       - name: Check out repository
@@ -39,6 +41,35 @@ jobs:
               [string]::IsNullOrWhiteSpace($env:PLESK_PASSWORD)) {
             throw "Add PLESK_USERNAME and PLESK_PASSWORD as GitHub production environment secrets."
           }
+
+      - name: Create Turnstile production configuration
+        shell: pwsh
+        run: |
+          $hasSiteKey = -not [string]::IsNullOrWhiteSpace($env:TURNSTILE_SITE_KEY)
+          $hasSecretKey = -not [string]::IsNullOrWhiteSpace($env:TURNSTILE_SECRET_KEY)
+
+          if (-not $hasSiteKey -and -not $hasSecretKey) {
+            Write-Host "Turnstile secrets are not configured; Turnstile will remain disabled."
+            exit 0
+          }
+
+          if (-not $hasSiteKey -or -not $hasSecretKey) {
+            throw "Add both TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY to the production environment."
+          }
+
+          $siteKey = [System.Security.SecurityElement]::Escape($env:TURNSTILE_SITE_KEY)
+          $secretKey = [System.Security.SecurityElement]::Escape($env:TURNSTILE_SECRET_KEY)
+          $config = @"
+          <appSettings>
+            <add key="TurnstileSiteKey" value="$siteKey" />
+            <add key="TurnstileSecretKey" value="$secretKey" />
+          </appSettings>
+          "@
+
+          [IO.File]::WriteAllText(
+            "$PWD\ShipleySwine\App_Data\turnstile.config",
+            $config,
+            [Text.UTF8Encoding]::new($false))
 
       - name: Build and deploy to Plesk
         shell: pwsh
