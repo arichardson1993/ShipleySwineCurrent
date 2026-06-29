@@ -1,0 +1,61 @@
+name: Deploy to GoDaddy Plesk
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: plesk-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: windows-latest
+    environment: production
+    env:
+      PLESK_USERNAME: ${{ secrets.PLESK_USERNAME }}
+      PLESK_PASSWORD: ${{ secrets.PLESK_PASSWORD }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Set up NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore .\ShipleySwine.sln -NonInteractive
+
+      - name: Validate deployment credentials
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:PLESK_USERNAME) -or
+              [string]::IsNullOrWhiteSpace($env:PLESK_PASSWORD)) {
+            throw "Add PLESK_USERNAME and PLESK_PASSWORD as GitHub production environment secrets."
+          }
+
+      - name: Build and deploy to Plesk
+        shell: pwsh
+        run: |
+          msbuild .\ShipleySwine\ShipleySwine.csproj `
+            /m `
+            /p:Configuration=Release `
+            /p:DeployOnBuild=true `
+            /p:WebPublishMethod=MSDeploy `
+            /p:MSDeployServiceURL="https://shipleyswine.com:8172/msdeploy.axd?site=shipleyswine.com" `
+            /p:DeployIisAppPath="shipleyswine.com" `
+            /p:UserName="$env:PLESK_USERNAME" `
+            /p:Password="$env:PLESK_PASSWORD" `
+            /p:AuthType=Basic `
+            /p:AllowUntrustedCertificate=false `
+            /p:EnableMSDeployAppOffline=true `
+            /p:SkipExtraFilesOnServer=true

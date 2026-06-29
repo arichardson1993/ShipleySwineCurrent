@@ -1,0 +1,47 @@
+@model IEnumerable<ShipleySwine.ViewModels.FacebookPostViewModel>
+
+<div class="card shadow" style="min-height:420px;">
+    <div class="card-header bg-primary text-white text-center">
+        Facebook Updates
+    </div>
+    <div class="card-body" style="max-height:400px; overflow-y:auto;">
+        @if (Model == null || !Model.GetEnumerator().MoveNext())
+        {
+            <div class="alert alert-info text-center mb-0">
+                Facebook posts are unavailable right now.
+                @if (ViewBag.FbError != null)
+                {
+                    <div class="small text-muted">@ViewBag.FbError</div>
+                }
+                <a href="https://www.facebook.com/shipleyswine" target="_blank" rel="noopener">View on Facebook</a>.
+            </div>
+        }
+        else
+        {
+            foreach (var post in Model)
+            {
+                <div class="mb-3 pb-3 border-bottom">
+                    <div class="small text-muted">
+                        @post.CreatedTime.ToLocalTime().ToString("MMMM dd, yyyy")
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(post.Message))
+                    {
+                        <div>@post.Message</div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(post.ImageUrl))
+                    {
+                        <div class="mt-2">
+                            <img src="@post.ImageUrl" alt="Facebook post image" class="img-fluid rounded">
+                        </div>
+                    }
+                    <div class="mt-2">
+                        <a class="btn btn-outline-primary btn-sm" href="@post.Permalink" target="_blank" rel="noopener">
+                            View on Facebook
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <!-- Pagination removed for now to prevent nested partial rendering; we show only the first page. -->
+</div>
