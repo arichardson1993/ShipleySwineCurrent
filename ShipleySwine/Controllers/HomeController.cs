@@ -20,9 +20,27 @@ namespace ShipleySwine.Controllers
         {
             var fourMonthsAgo = DateTime.Now.AddDays(-120);
             Debug.WriteLine(fourMonthsAgo);
-            var newBoars = db.Boars.Where(createDate => createDate.CreateDate > fourMonthsAgo).ToList();
+            var newBoars = db.Boars
+                .Where(boar => boar.CreateDate > fourMonthsAgo)
+                .ToList();
+
+            // The homepage still needs a boar after the 120-day "new" window expires.
+            // Fall back to the most recently added boar instead of calling Random.Next(0).
+            if (newBoars.Count == 0)
+            {
+                var latestBoar = db.Boars
+                    .OrderByDescending(boar => boar.CreateDate)
+                    .ThenByDescending(boar => boar.Boar_Id)
+                    .FirstOrDefault();
+
+                if (latestBoar != null)
+                {
+                    newBoars.Add(latestBoar);
+                }
+            }
+
             Random rand = new Random();
-            int randomBoar = rand.Next(newBoars.Count);
+            int randomBoar = newBoars.Count > 1 ? rand.Next(newBoars.Count) : 0;
             HomePageViewModel vm = new HomePageViewModel(newBoars, randomBoar);
             foreach(var nboar in newBoars)
             {
