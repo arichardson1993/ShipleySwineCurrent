@@ -1,9 +1,6 @@
 name: Deploy to GoDaddy Plesk
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
@@ -58,4 +55,5 @@ jobs:
             /p:AuthType=Basic `
             /p:AllowUntrustedCertificate=false `
             /p:EnableMSDeployAppOffline=true `
+            /p:MSDeployUseChecksum=true `
             /p:SkipExtraFilesOnServer=true
