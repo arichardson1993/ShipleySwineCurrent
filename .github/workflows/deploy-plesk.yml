@@ -2,6 +2,11 @@ name: Deploy to GoDaddy Plesk
 
 on:
   workflow_dispatch:
+    inputs:
+      deploy_ref:
+        description: Git branch, tag, or commit SHA to deploy
+        required: true
+        default: main
 
 permissions:
   contents: read
@@ -24,6 +29,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.deploy_ref }}
 
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@v2
@@ -88,3 +95,31 @@ jobs:
             /p:EnableMSDeployAppOffline=true `
             /p:MSDeployUseChecksum=true `
             /p:SkipExtraFilesOnServer=true
+
+      - name: Verify live site
+        shell: pwsh
+        run: |
+          $healthUrl = "https://shipleyswine.com/Home/Contact?deploymentCheck=${{ github.run_id }}"
+          $deployedCommit = git rev-parse HEAD
+
+          for ($attempt = 1; $attempt -le 6; $attempt++) {
+            try {
+              $response = Invoke-WebRequest `
+                -Uri $healthUrl `
+                -UseBasicParsing `
+                -MaximumRedirection 5 `
+                -TimeoutSec 20
+
+              if ($response.StatusCode -eq 200) {
+                Write-Host "Live-site health check passed for commit $deployedCommit."
+                exit 0
+              }
+            }
+            catch {
+              Write-Warning "Health check attempt $attempt failed: $($_.Exception.Message)"
+            }
+
+            Start-Sleep -Seconds 10
+          }
+
+          throw "Deployment completed, but the live-site health check failed. Redeploy the previous known-good commit SHA."
