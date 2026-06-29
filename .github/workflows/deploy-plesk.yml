@@ -146,7 +146,7 @@ jobs:
 
           & $msDeploy `
             "-source:package=$packagePath" `
-            "-dest:auto,computerName=https://$pleskServer:8172/msdeploy.axd?site=shipleyswine.com,userName=$env:PLESK_USERNAME,password=$env:PLESK_PASSWORD,authtype=Basic,includeAcls=False" `
+            "-dest:auto,computerName=https://${pleskServer}:8172/msdeploy.axd?site=shipleyswine.com,userName=$env:PLESK_USERNAME,password=$env:PLESK_PASSWORD,authtype=Basic,includeAcls=False" `
             "-verb:sync" `
             "-disableLink:AppPoolExtension" `
             "-disableLink:ContentExtension" `
