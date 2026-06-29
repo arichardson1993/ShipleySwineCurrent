@@ -124,6 +124,7 @@ jobs:
         run: |
           $packagePath = "$PWD\ShipleySwine\obj\Release\Package\ShipleySwine.zip"
           $setParametersPath = "$PWD\ShipleySwine\obj\Release\Package\ShipleySwine.SetParameters.xml"
+          $pleskServer = "a2nwvpweb032.shr.prod.iad2.secureserver.net"
           $msDeploy = @(
             "$env:ProgramFiles\IIS\Microsoft Web Deploy V3\msdeploy.exe",
             "${env:ProgramFiles(x86)}\IIS\Microsoft Web Deploy V3\msdeploy.exe"
@@ -145,7 +146,7 @@ jobs:
 
           & $msDeploy `
             "-source:package=$packagePath" `
-            "-dest:auto,computerName=https://shipleyswine.com:8172/msdeploy.axd?site=shipleyswine.com,userName=$env:PLESK_USERNAME,password=$env:PLESK_PASSWORD,authtype=Basic,includeAcls=False" `
+            "-dest:auto,computerName=https://$pleskServer:8172/msdeploy.axd?site=shipleyswine.com,userName=$env:PLESK_USERNAME,password=$env:PLESK_PASSWORD,authtype=Basic,includeAcls=False" `
             "-verb:sync" `
             "-disableLink:AppPoolExtension" `
             "-disableLink:ContentExtension" `
