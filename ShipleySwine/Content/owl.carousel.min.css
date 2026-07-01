@@ -1,0 +1,13 @@
+.owl-carousel,.owl-carousel .owl-item{-webkit-tap-highlight-color:transparent;position:relative}
+.owl-carousel{display:none;width:100%;z-index:1}
+.owl-carousel.owl-loaded{display:block}
+.owl-carousel .owl-stage{position:relative;-ms-touch-action:pan-y;touch-action:manipulation}
+.owl-carousel .owl-stage:after{content:"";display:block;clear:both}
+.owl-carousel .owl-stage-outer{position:relative;overflow:hidden;-webkit-transform:translate3d(0,0,0)}
+.owl-carousel .owl-item{-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;-ms-backface-visibility:hidden;backface-visibility:hidden;min-height:1px;float:left}
+.owl-carousel.owl-drag .owl-item{-ms-touch-action:pan-y;touch-action:manipulation}
+.owl-carousel .owl-nav.disabled,.owl-carousel .owl-dots.disabled{display:none}
+.owl-carousel .owl-nav .owl-prev,.owl-carousel .owl-nav .owl-next,.owl-carousel .owl-dot{cursor:pointer;user-select:none}
+.owl-carousel .owl-nav button.owl-prev,.owl-carousel .owl-nav button.owl-next,.owl-carousel button.owl-dot{background:none;color:inherit;border:none;padding:0!important;font:inherit}
+.owl-carousel .owl-nav,.owl-carousel .owl-dots{text-align:center}
+.owl-carousel .owl-dot{display:inline-block}

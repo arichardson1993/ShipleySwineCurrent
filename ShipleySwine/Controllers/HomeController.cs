@@ -354,7 +354,10 @@ namespace ShipleySwine.Controllers
                     }
 
                     return string.Equals(verification.action, "contact", StringComparison.Ordinal)
-                        && string.Equals(verification.hostname, expectedHostname, StringComparison.OrdinalIgnoreCase);
+                        && string.Equals(
+                            NormalizeHostname(verification.hostname),
+                            NormalizeHostname(expectedHostname),
+                            StringComparison.OrdinalIgnoreCase);
                 }
             }
             catch (Exception exception)
@@ -369,6 +372,17 @@ namespace ShipleySwine.Controllers
             public bool success { get; set; }
             public string hostname { get; set; }
             public string action { get; set; }
+        }
+
+        private static string NormalizeHostname(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return string.Empty;
+            }
+
+            string normalized = value.Trim().ToLowerInvariant();
+            return normalized.StartsWith("www.", StringComparison.Ordinal) ? normalized.Substring(4) : normalized;
         }
 
         private sealed class TurnstileSettings
