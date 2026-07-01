@@ -127,7 +127,7 @@ namespace ShipleySwine.Models
         {
             return string.IsNullOrWhiteSpace(value)
                 ? null
-                : value.Trim().ToLowerInvariant();
+                : Regex.Replace(value, @"\s+", string.Empty).Trim().ToLowerInvariant();
         }
 
         public static string NormalizePhone(string value)

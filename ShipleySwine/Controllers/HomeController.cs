@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
@@ -131,7 +132,12 @@ namespace ShipleySwine.Controllers
                 return Json("true");
             }
 
-            if (!ModelState.IsValid || vm.subject.Contains("\r") || vm.subject.Contains("\n"))
+            string normalizedEmail = NormalizeEmailAddress(vm.email);
+
+            if (!ModelState.IsValid ||
+                !IsValidEmailAddress(normalizedEmail) ||
+                vm.subject.Contains("\r") ||
+                vm.subject.Contains("\n"))
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json("false");
@@ -147,8 +153,8 @@ namespace ShipleySwine.Controllers
                     blockedEntry.Id,
                     blockedEntry.CreatedUtc);
 
-                Response.StatusCode = (int)HttpStatusCode.Forbidden;
-                return Json("false");
+                // Pretend the submission succeeded so abusive senders do not learn they were blocked.
+                return Json("true");
             }
 
             TurnstileSettings turnstileSettings = LoadTurnstileSettings();
@@ -176,11 +182,11 @@ namespace ShipleySwine.Controllers
 
             string emailBody =
                 "Message From Contact Us:<br><br>Name: " + HttpUtility.HtmlEncode(vm.fullname) +
-                "<br>Email: " + HttpUtility.HtmlEncode(vm.email) +
+                "<br>Email: " + HttpUtility.HtmlEncode(normalizedEmail) +
                 "<br>Phone: " + HttpUtility.HtmlEncode(vm.phone) +
                 "<br><br><br>Comments:<br>" + HttpUtility.HtmlEncode(vm.comments).Replace("\r\n", "<br>").Replace("\n", "<br>");
 
-            if (SendEmail(vm.email, vm.subject.Trim(), emailBody))
+            if (SendEmail(normalizedEmail, vm.subject.Trim(), emailBody))
             {
                 return Json("true");
             }
@@ -247,6 +253,31 @@ namespace ShipleySwine.Controllers
                 return Convert.ToBase64String(sha256.ComputeHash(Encoding.UTF8.GetBytes(value)))
                     .Replace("/", "_")
                     .Replace("+", "-");
+            }
+        }
+
+        private static string NormalizeEmailAddress(string value)
+        {
+            return string.IsNullOrWhiteSpace(value)
+                ? null
+                : Regex.Replace(value, @"\s+", string.Empty).Trim();
+        }
+
+        private static bool IsValidEmailAddress(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            try
+            {
+                MailAddress address = new MailAddress(value);
+                return string.Equals(address.Address, value, StringComparison.OrdinalIgnoreCase);
+            }
+            catch
+            {
+                return false;
             }
         }
 

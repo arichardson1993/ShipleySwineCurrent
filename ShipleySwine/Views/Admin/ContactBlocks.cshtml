@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Contact Blocks";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var vm = Model ?? new ShipleySwine.ViewModels.ContactBlockAdminViewModel();
+    var blocks = vm.Blocks;
 }
 
 <div class="container backgroundcolor">
@@ -10,14 +12,14 @@
             <h2>Contact Blocklist</h2>
             <p class="text-muted">Add an email address, phone number, keyword, or any combination. A matching submission will be rejected before email is sent.</p>
 
-            @if (!string.IsNullOrWhiteSpace(Model?.StatusMessage))
+            @if (!string.IsNullOrWhiteSpace(vm.StatusMessage))
             {
-                <div class="alert alert-success">@Model.StatusMessage</div>
+                <div class="alert alert-success">@vm.StatusMessage</div>
             }
 
-            @if (!string.IsNullOrWhiteSpace(Model?.ErrorMessage))
+            @if (!string.IsNullOrWhiteSpace(vm.ErrorMessage))
             {
-                <div class="alert alert-danger">@Model.ErrorMessage</div>
+                <div class="alert alert-danger">@vm.ErrorMessage</div>
             }
 
             @using (Html.BeginForm("ContactBlocks", "Admin", FormMethod.Post))
@@ -26,19 +28,19 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="Email">Email</label>
-                        <input class="form-control" type="email" id="Email" name="Email" value="@Model?.Email" placeholder="spam@example.com" />
+                        <input class="form-control" type="email" id="Email" name="Email" value="@vm.Email" placeholder="spam@example.com" />
                     </div>
                     <div class="form-group col-md-4">
                         <label for="Phone">Phone</label>
-                        <input class="form-control" type="text" id="Phone" name="Phone" value="@Model?.Phone" placeholder="(555) 123-4567" />
+                        <input class="form-control" type="text" id="Phone" name="Phone" value="@vm.Phone" placeholder="(555) 123-4567" />
                     </div>
                     <div class="form-group col-md-4">
                         <label for="Keyword">Keyword</label>
-                        <input class="form-control" type="text" id="Keyword" name="Keyword" value="@Model?.Keyword" placeholder="qwynn" />
+                        <input class="form-control" type="text" id="Keyword" name="Keyword" value="@vm.Keyword" placeholder="qwynn" />
                     </div>
                     <div class="form-group col-md-4">
                         <label for="Reason">Reason</label>
-                        <input class="form-control" type="text" id="Reason" name="Reason" value="@Model?.Reason" placeholder="Optional note" />
+                        <input class="form-control" type="text" id="Reason" name="Reason" value="@vm.Reason" placeholder="Optional note" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -50,7 +52,7 @@
             <hr />
 
             <h4>Current Blocks</h4>
-            @if (Model?.Blocks == null || Model.Blocks.Count == 0)
+            @if (blocks == null || blocks.Count == 0)
             {
                 <p>No contact blocks yet.</p>
             }
@@ -69,7 +71,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var block in Model.Blocks)
+                            @foreach (var block in blocks)
                             {
                                 <tr>
                                     <td>@block.Email</td>
