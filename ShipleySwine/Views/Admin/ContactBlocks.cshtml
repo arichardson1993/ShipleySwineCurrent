@@ -1,0 +1,90 @@
+@model ShipleySwine.ViewModels.ContactBlockAdminViewModel
+@{
+    ViewBag.Title = "Contact Blocks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container backgroundcolor">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Contact Blocklist</h2>
+            <p class="text-muted">Add an email address, phone number, or both. A matching submission will be rejected before email is sent.</p>
+
+            @if (!string.IsNullOrWhiteSpace(Model?.StatusMessage))
+            {
+                <div class="alert alert-success">@Model.StatusMessage</div>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model?.ErrorMessage))
+            {
+                <div class="alert alert-danger">@Model.ErrorMessage</div>
+            }
+
+            @using (Html.BeginForm("ContactBlocks", "Admin", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="Email">Email</label>
+                        <input class="form-control" type="email" id="Email" name="Email" value="@Model?.Email" placeholder="spam@example.com" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="Phone">Phone</label>
+                        <input class="form-control" type="text" id="Phone" name="Phone" value="@Model?.Phone" placeholder="(555) 123-4567" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="Reason">Reason</label>
+                        <input class="form-control" type="text" id="Reason" name="Reason" value="@Model?.Reason" placeholder="Optional note" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" value="Add Block" />
+                    @Html.ActionLink("Back to Admin", "Index", "Admin", null, new { @class = "btn btn-secondary" })
+                </div>
+            }
+
+            <hr />
+
+            <h4>Current Blocks</h4>
+            @if (Model?.Blocks == null || Model.Blocks.Count == 0)
+            {
+                <p>No contact blocks yet.</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Reason</th>
+                                <th>Created</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var block in Model.Blocks)
+                            {
+                                <tr>
+                                    <td>@block.Email</td>
+                                    <td>@block.Phone</td>
+                                    <td>@block.Reason</td>
+                                    <td>@block.CreatedUtc.ToLocalTime().ToString("g")</td>
+                                    <td class="text-center">
+                                        @using (Html.BeginForm("RemoveContactBlock", "Admin", FormMethod.Post))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@block.Id" />
+                                            <input type="submit" class="btn btn-danger btn-sm" value="Remove" />
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

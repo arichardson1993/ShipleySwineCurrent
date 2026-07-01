@@ -165,12 +165,15 @@
     <Compile Include="ViewModels\BredGuiltsIndexViewModel.cs" />
     <Compile Include="ViewModels\BreedViewModel.cs" />
     <Compile Include="ViewModels\ContactEmailViewModel.cs" />
+    <Compile Include="ViewModels\ContactBlockAdminViewModel.cs" />
     <Compile Include="ViewModels\EditOrderViewViewModel.cs" />
     <Compile Include="ViewModels\EmailViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\SellingPointsCreateViewModel.cs" />
     <Compile Include="Winner.cs" />
     <Compile Include="Models\FileTypesAttribute.cs" />
+    <Compile Include="Models\ContactBlockEntry.cs" />
+    <Compile Include="Models\ContactBlockStore.cs" />
     <Compile Include="Models\FileUpload.cs" />
     <Compile Include="Models\UserAuthentication.cs" />
   </ItemGroup>

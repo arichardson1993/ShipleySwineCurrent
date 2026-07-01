@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using ShipleySwine.Models;
 using System.Xml;
 using Newtonsoft.Json;
 
@@ -133,6 +134,20 @@ namespace ShipleySwine.Controllers
             if (!ModelState.IsValid || vm.subject.Contains("\r") || vm.subject.Contains("\n"))
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("false");
+            }
+
+            ContactBlockEntry blockedEntry;
+            if (ContactBlockStore.IsBlocked(vm.email, vm.phone, out blockedEntry))
+            {
+                Trace.TraceWarning(
+                    "Blocked contact submission from email '{0}' / phone '{1}'. Matched block '{2}' created {3:u}.",
+                    vm.email,
+                    vm.phone,
+                    blockedEntry.Id,
+                    blockedEntry.CreatedUtc);
+
+                Response.StatusCode = (int)HttpStatusCode.Forbidden;
                 return Json("false");
             }
 
