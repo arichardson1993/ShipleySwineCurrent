@@ -9,6 +9,8 @@ namespace ShipleySwine.ViewModels
 
         public string Phone { get; set; }
 
+        public string Keyword { get; set; }
+
         public string Reason { get; set; }
 
         public IReadOnlyList<ContactBlockEntry> Blocks { get; set; }

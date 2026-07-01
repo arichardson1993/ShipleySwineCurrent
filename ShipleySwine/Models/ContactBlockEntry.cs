@@ -10,6 +10,8 @@ namespace ShipleySwine.Models
 
         public string Phone { get; set; }
 
+        public string Keyword { get; set; }
+
         public string Reason { get; set; }
 
         public DateTime CreatedUtc { get; set; }

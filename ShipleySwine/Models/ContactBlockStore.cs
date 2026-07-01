@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Hosting;
+using ShipleySwine.ViewModels;
 
 namespace ShipleySwine.Models
 {
@@ -24,14 +25,17 @@ namespace ShipleySwine.Models
             }
         }
 
-        public static ContactBlockEntry Add(string email, string phone, string reason)
+        public static ContactBlockEntry Add(string email, string phone, string keyword, string reason)
         {
             string normalizedEmail = NormalizeEmail(email);
             string normalizedPhone = NormalizePhone(phone);
+            string normalizedKeyword = NormalizeKeyword(keyword);
 
-            if (string.IsNullOrWhiteSpace(normalizedEmail) && string.IsNullOrWhiteSpace(normalizedPhone))
+            if (string.IsNullOrWhiteSpace(normalizedEmail) &&
+                string.IsNullOrWhiteSpace(normalizedPhone) &&
+                string.IsNullOrWhiteSpace(normalizedKeyword))
             {
-                throw new InvalidOperationException("Provide an email address, a phone number, or both.");
+                throw new InvalidOperationException("Provide an email address, phone number, keyword, or any combination.");
             }
 
             lock (SyncRoot)
@@ -40,7 +44,8 @@ namespace ShipleySwine.Models
 
                 ContactBlockEntry existing = entries.FirstOrDefault(entry =>
                     string.Equals(NormalizeEmail(entry.Email), normalizedEmail, StringComparison.OrdinalIgnoreCase) &&
-                    string.Equals(NormalizePhone(entry.Phone), normalizedPhone, StringComparison.OrdinalIgnoreCase));
+                    string.Equals(NormalizePhone(entry.Phone), normalizedPhone, StringComparison.OrdinalIgnoreCase) &&
+                    string.Equals(NormalizeKeyword(entry.Keyword), normalizedKeyword, StringComparison.OrdinalIgnoreCase));
 
                 if (existing != null)
                 {
@@ -58,6 +63,7 @@ namespace ShipleySwine.Models
                     Id = Guid.NewGuid(),
                     Email = string.IsNullOrWhiteSpace(normalizedEmail) ? null : normalizedEmail,
                     Phone = string.IsNullOrWhiteSpace(normalizedPhone) ? null : normalizedPhone,
+                    Keyword = string.IsNullOrWhiteSpace(normalizedKeyword) ? null : normalizedKeyword,
                     Reason = string.IsNullOrWhiteSpace(reason) ? null : reason.Trim(),
                     CreatedUtc = DateTime.UtcNow
                 };
@@ -84,10 +90,18 @@ namespace ShipleySwine.Models
             }
         }
 
-        public static bool IsBlocked(string email, string phone, out ContactBlockEntry matchedEntry)
+        public static bool IsBlocked(ContactEmailViewModel submission, out ContactBlockEntry matchedEntry)
         {
-            string normalizedEmail = NormalizeEmail(email);
-            string normalizedPhone = NormalizePhone(phone);
+            string normalizedEmail = NormalizeEmail(submission == null ? null : submission.email);
+            string normalizedPhone = NormalizePhone(submission == null ? null : submission.phone);
+            string searchableText = string.Join(" ", new[]
+            {
+                submission == null ? null : submission.fullname,
+                submission == null ? null : submission.email,
+                submission == null ? null : submission.phone,
+                submission == null ? null : submission.subject,
+                submission == null ? null : submission.comments
+            }.Where(value => !string.IsNullOrWhiteSpace(value)).Select(value => value.Trim()));
 
             lock (SyncRoot)
             {
@@ -97,8 +111,12 @@ namespace ShipleySwine.Models
                         string.Equals(NormalizeEmail(entry.Email), normalizedEmail, StringComparison.OrdinalIgnoreCase);
                     bool phoneMatches = string.IsNullOrWhiteSpace(entry.Phone) ||
                         string.Equals(NormalizePhone(entry.Phone), normalizedPhone, StringComparison.OrdinalIgnoreCase);
-                    bool hasCriteria = !string.IsNullOrWhiteSpace(entry.Email) || !string.IsNullOrWhiteSpace(entry.Phone);
-                    return hasCriteria && emailMatches && phoneMatches;
+                    bool keywordMatches = string.IsNullOrWhiteSpace(entry.Keyword) ||
+                        searchableText.IndexOf(entry.Keyword.Trim(), StringComparison.OrdinalIgnoreCase) >= 0;
+                    bool hasCriteria = !string.IsNullOrWhiteSpace(entry.Email) ||
+                        !string.IsNullOrWhiteSpace(entry.Phone) ||
+                        !string.IsNullOrWhiteSpace(entry.Keyword);
+                    return hasCriteria && emailMatches && phoneMatches && keywordMatches;
                 });
 
                 return matchedEntry != null;
@@ -121,6 +139,13 @@ namespace ShipleySwine.Models
 
             string digits = Regex.Replace(value, @"\D", string.Empty);
             return string.IsNullOrWhiteSpace(digits) ? null : digits;
+        }
+
+        public static string NormalizeKeyword(string value)
+        {
+            return string.IsNullOrWhiteSpace(value)
+                ? null
+                : value.Trim().ToLowerInvariant();
         }
 
         private static IEnumerable<ContactBlockEntry> LoadCore()

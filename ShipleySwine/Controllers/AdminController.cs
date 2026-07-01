@@ -92,7 +92,7 @@ namespace ShipleySwine.Controllers
 
             try
             {
-                ContactBlockStore.Add(model?.Email, model?.Phone, model?.Reason);
+                ContactBlockStore.Add(model?.Email, model?.Phone, model?.Keyword, model?.Reason);
                 viewModel.StatusMessage = "Block added.";
                 ModelState.Clear();
             }

@@ -138,10 +138,10 @@ namespace ShipleySwine.Controllers
             }
 
             ContactBlockEntry blockedEntry;
-            if (ContactBlockStore.IsBlocked(vm.email, vm.phone, out blockedEntry))
+            if (ContactBlockStore.IsBlocked(vm, out blockedEntry))
             {
                 Trace.TraceWarning(
-                    "Blocked contact submission from email '{0}' / phone '{1}'. Matched block '{2}' created {3:u}.",
+                    "Blocked contact submission from '{0}' / '{1}'. Matched block '{2}' created {3:u}.",
                     vm.email,
                     vm.phone,
                     blockedEntry.Id,
