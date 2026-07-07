@@ -46,6 +46,7 @@
         {
             //imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/" + item.NameNoSpaces + "1.jpg";
             imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/Large/" + item.NameNoSpaces + "1.jpg";
+            imgURL += "?v=" + System.IO.File.GetLastWriteTimeUtc(Server.MapPath(imgURL)).Ticks;
 
 
             if (counter == 3)
@@ -114,6 +115,7 @@
         {
             //imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/" + item.NameNoSpaces + "1.jpg";
             imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/Large/" + item.NameNoSpaces + "1.jpg";
+            imgURL += "?v=" + System.IO.File.GetLastWriteTimeUtc(Server.MapPath(imgURL)).Ticks;
 
 
             if (counter == 2)

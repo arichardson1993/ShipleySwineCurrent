@@ -3,6 +3,7 @@
         ViewBag.Title = "Shipley Swine Genetics | Home";
         ViewBag.MetaDescription = "Shipley Swine Genetics offers boar semen, new boars, bred gilts, and show pig genetics in Newark, Ohio.";
         string imagesrc = "~/Boars/" + Model.NewBoars[Model.randomBoar].Breed + "/" + Model.NewBoars[Model.randomBoar].NameNoSpaces + "/Large/" + Model.NewBoars[Model.randomBoar].NameNoSpaces + 1 + ".jpg";
+        imagesrc += "?v=" + System.IO.File.GetLastWriteTimeUtc(Server.MapPath(imagesrc)).Ticks;
     }
 <body>
     <div class="col-lg hidden-md hidden-sm hidden-xs">

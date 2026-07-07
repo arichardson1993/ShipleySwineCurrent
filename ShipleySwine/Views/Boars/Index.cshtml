@@ -15,6 +15,7 @@
         @foreach (var item in Model)
         {
             imgURL = "~/Boars/" + item.Breed + "/" + item.NameNoSpaces + "/Large/" + item.NameNoSpaces + "1.jpg";
+            imgURL += "?v=" + System.IO.File.GetLastWriteTimeUtc(Server.MapPath(imgURL)).Ticks;
 
             if (counter == 2)
             {

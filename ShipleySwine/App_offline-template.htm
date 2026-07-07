@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Shipley Swine Genetics | Site Update</title>
+    <style>
+        :root {
+            --ink: #231a17;
+            --wine: #7f211f;
+            --gold: #c89548;
+            --cream: #fffaf0;
+            --muted: #6c5b52;
+        }
+        * { box-sizing: border-box; }
+        html, body { min-height: 100%; }
+        body {
+            margin: 0;
+            display: grid;
+            place-items: center;
+            padding: 28px;
+            color: var(--ink);
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 15% 15%, rgba(200, 149, 72, .24), transparent 28rem),
+                linear-gradient(145deg, #261c19 0%, #3b2822 58%, #6d3329 100%);
+        }
+        .page {
+            width: min(920px, 100%);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 24px;
+            background: var(--cream);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, .42);
+        }
+        .brand-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            padding: 20px 28px;
+            color: #fff;
+            background: var(--wine);
+        }
+        .mark {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(255, 255, 255, .48);
+            border-radius: 50%;
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: clamp(19px, 3vw, 25px);
+            letter-spacing: .025em;
+        }
+        .content {
+            padding: 42px 54px 48px;
+            text-align: center;
+        }
+        .scene {
+            position: relative;
+            width: min(560px, 100%);
+            height: 160px;
+            margin: 0 auto 26px;
+            overflow: hidden;
+        }
+        .boar {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            width: 190px;
+            color: var(--ink);
+            transform: translateX(-50%);
+            animation: walk-across 5.6s ease-in-out infinite;
+        }
+        .boar-body { animation: bob .55s ease-in-out infinite alternate; }
+        .leg-front { transform-origin: 142px 91px; animation: step .55s ease-in-out infinite alternate; }
+        .leg-back { transform-origin: 54px 91px; animation: step .55s ease-in-out infinite alternate-reverse; }
+        .ground {
+            position: absolute;
+            right: 0;
+            bottom: 23px;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(35, 26, 23, .28) 18%, rgba(35, 26, 23, .28) 82%, transparent);
+        }
+        .ground::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 48%;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: -17px 2px 0 -1px var(--gold), 19px 1px 0 -2px var(--gold);
+            animation: dust 1.1s ease-out infinite;
+        }
+        .kicker {
+            margin: 0 0 12px;
+            color: var(--wine);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+        h1 {
+            margin: 0;
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: clamp(38px, 7vw, 64px);
+            font-weight: 600;
+            line-height: 1.04;
+            letter-spacing: -.025em;
+        }
+        .message {
+            max-width: 590px;
+            margin: 22px auto 0;
+            color: var(--muted);
+            font-size: clamp(16px, 2.5vw, 19px);
+            line-height: 1.65;
+        }
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 28px;
+            padding: 11px 17px;
+            border: 1px solid #ead8b9;
+            border-radius: 999px;
+            color: #66451f;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: .035em;
+            background: #fbf1df;
+        }
+        .pulse {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 0 0 rgba(200, 149, 72, .5);
+            animation: pulse 1.5s ease-out infinite;
+        }
+        @keyframes walk-across {
+            0%, 100% { transform: translateX(-58%); }
+            50% { transform: translateX(-42%); }
+        }
+        @keyframes bob { to { transform: translateY(-3px); } }
+        @keyframes step { to { transform: rotate(10deg); } }
+        @keyframes dust {
+            to { opacity: 0; transform: translate(-16px, -8px) scale(1.5); }
+        }
+        @keyframes pulse {
+            70% { box-shadow: 0 0 0 7px rgba(200, 149, 72, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(200, 149, 72, 0); }
+        }
+        @media (max-width: 600px) {
+            body { padding: 14px; }
+            .content { padding: 30px 22px 38px; }
+            .scene { height: 135px; margin-bottom: 18px; }
+            .boar { width: 160px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .boar, .boar-body, .leg-front, .leg-back, .ground::after, .pulse { animation: none; }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <header class="brand-bar">
+            <div class="mark">SS</div>
+            <div class="brand">Shipley Swine Genetics</div>
+        </header>
+        <section class="content">
+            <div class="scene" aria-hidden="true">
+                <div class="ground"></div>
+                <svg class="boar" viewBox="0 0 210 125" role="img">
+                    <g class="boar-body" fill="currentColor">
+                        <ellipse cx="96" cy="66" rx="65" ry="38"/>
+                        <path d="M145 46c16-16 40-11 52 5l-7 7 9 8-11 17-30-2-18-17z"/>
+                        <path d="M166 40l8-19 14 18zM181 43l18-11-5 20z"/>
+                        <ellipse cx="191" cy="64" rx="15" ry="11"/>
+                        <circle cx="183" cy="51" r="2.5" fill="#fffaf0"/>
+                        <path d="M32 49C13 40 11 24 21 20c9-4 16 7 9 14-4 4-9 1-7-3" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M46 88h18l-4 32H46z" class="leg-back"/>
+                        <path d="M75 91h17l4 29H80z" class="leg-front"/>
+                        <path d="M130 90h18l5 30h-16z" class="leg-back"/>
+                        <path d="M151 86h17l-1 34h-16z" class="leg-front"/>
+                    </g>
+                </svg>
+            </div>
+            <p class="kicker">Website update underway</p>
+            <h1>We&rsquo;ll be back shortly.</h1>
+            <p class="message">Updates are currently being deployed. We&rsquo;ll be back in a few minutes with the latest from Shipley Swine Genetics.</p>
+            <div class="status"><span class="pulse"></span> Deployment in progress</div>
+        </section>
+    </main>
+</body>
+</html>

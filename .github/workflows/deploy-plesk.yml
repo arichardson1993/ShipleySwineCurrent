@@ -88,7 +88,6 @@ jobs:
             /p:WebPublishMethod=Package `
             /p:PackageAsSingleFile=true `
             /p:DeployIisAppPath="shipleyswine.com" `
-            /p:EnableMSDeployAppOffline=true `
             /p:MSDeployUseChecksum=true `
             /p:SkipExtraFilesOnServer=true
 
@@ -100,6 +99,7 @@ jobs:
           $contactView = "$packageRoot\Views\Home\Contact.cshtml"
           $turnstileConfig = "$packageRoot\App_Data\turnstile.config"
           $applicationDll = "$packageRoot\bin\ShipleySwine.dll"
+          $maintenancePage = "$packageRoot\App_offline.htm"
 
           if (-not (Test-Path -LiteralPath $boarVideos) -or
               -not (Select-String -LiteralPath $boarVideos -SimpleMatch "BwUTgfIqATo" -Quiet)) {
@@ -119,11 +119,17 @@ jobs:
             throw "The deployment package does not contain ShipleySwine.dll."
           }
 
+          if (-not (Test-Path -LiteralPath $maintenancePage) -or
+              -not (Select-String -LiteralPath $maintenancePage -SimpleMatch "Deployment in progress" -Quiet)) {
+            throw "The deployment package does not contain the custom maintenance page."
+          }
+
       - name: Deploy package to Plesk
         shell: pwsh
         run: |
           $packagePath = "$PWD\ShipleySwine\obj\Release\Package\ShipleySwine.zip"
           $setParametersPath = "$PWD\ShipleySwine\obj\Release\Package\ShipleySwine.SetParameters.xml"
+          $maintenancePagePath = "$PWD\ShipleySwine\App_offline-template.htm"
           $pleskServer = "a2nwvpweb032.shr.prod.iad2.secureserver.net"
           $msDeploy = @(
             "$env:ProgramFiles\IIS\Microsoft Web Deploy V3\msdeploy.exe",
@@ -138,11 +144,26 @@ jobs:
             throw "MSBuild did not create the Web Deploy parameter file."
           }
 
+          if (-not (Test-Path -LiteralPath $maintenancePagePath)) {
+            throw "The custom maintenance page is missing."
+          }
+
           if ([string]::IsNullOrWhiteSpace($msDeploy)) {
             throw "msdeploy.exe is not installed on the GitHub runner."
           }
 
           $env:MSDeployPath = "$(Split-Path -Parent $msDeploy)\"
+
+          $destination = "contentPath=shipleyswine.com/App_offline.htm,computerName=https://${pleskServer}:8172/msdeploy.axd?site=shipleyswine.com,userName=$env:PLESK_USERNAME,password=$env:PLESK_PASSWORD,authtype=Basic,includeAcls=False"
+
+          & $msDeploy `
+            "-source:contentPath=$maintenancePagePath" `
+            "-dest:$destination" `
+            "-verb:sync"
+
+          if ($LASTEXITCODE -ne 0) {
+            throw "Could not place the site into maintenance mode."
+          }
 
           & $msDeploy `
             "-source:package=$packagePath" `
@@ -152,12 +173,19 @@ jobs:
             "-disableLink:ContentExtension" `
             "-disableLink:CertificateExtension" `
             "-setParamFile:$setParametersPath" `
-            "-enableRule:AppOffline" `
             "-enableRule:DoNotDeleteRule" `
             "-useChecksum"
 
           if ($LASTEXITCODE -ne 0) {
-            throw "Web Deploy failed with exit code $LASTEXITCODE."
+            throw "Web Deploy failed with exit code $LASTEXITCODE. The maintenance page remains active for safety."
+          }
+
+          & $msDeploy `
+            "-dest:$destination" `
+            "-verb:delete"
+
+          if ($LASTEXITCODE -ne 0) {
+            throw "Deployment succeeded, but the maintenance page could not be removed. Delete App_offline.htm in Plesk."
           }
 
       - name: Verify live site
