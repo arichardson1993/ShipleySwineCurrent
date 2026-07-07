@@ -6,7 +6,8 @@
 }
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Shipley Swine Genetics | New Boars";
+    ViewBag.MetaDescription = "See the latest featured boars from Shipley Swine Genetics.";
     string imgURL;
     int counter = 0;
     int count2 = 0;
@@ -15,7 +16,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index - My ASP.NET Application</title>
+    <title>Shipley Swine Genetics | New Boars</title>
 
     <link href="/Content" rel="stylesheet">
 
@@ -59,7 +60,7 @@
                     <div class="card-header text-center bg-secondary text-white"><h2 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h2></div>
                     <div class="flex-fill internet-ex-int">
                         <div style="padding-top:30px;" class="col-lg-12 col-md-12">
-                            <img style="height:initial; text-align:center; margin:auto; display:block;" src="@Url.Content(imgURL)" class="card-img" alt="Photo Didnt Load">
+                            <img style="height:initial; text-align:center; margin:auto; display:block;" src="@Url.Content(imgURL)" class="card-img" alt="@item.Name boar photo">
                         </div>
                         <div style="padding-top:20px;" class="col-lg-12 col-md-12 border-secondary">
                             <div class="card-body">
@@ -127,7 +128,7 @@
                     <div class="card-header text-center bg-secondary text-white"><h2 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h2></div>
                     <div class="flex-fill internet-ex-int">
                         <div style="padding-top:30px;" class="col-lg-12 col-md-12">
-                            <img style="height:initial; text-align:center; margin:auto; display:block;" src="@Url.Content(imgURL)" class="card-img" alt="Photo Didnt Load">
+                            <img style="height:initial; text-align:center; margin:auto; display:block;" src="@Url.Content(imgURL)" class="card-img" alt="@item.Name boar photo">
                         </div>
                         <div style="padding-top:20px;" class="col-lg-12 col-md-12 border-secondary">
                             <div class="card-body">

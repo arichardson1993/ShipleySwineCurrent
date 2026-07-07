@@ -2,7 +2,8 @@
 
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Shipley Swine Genetics | Boars";
+    ViewBag.MetaDescription = "Browse boars available from Shipley Swine Genetics.";
     string imgURL;
     int counter = 0;
     int count2 = 0;
@@ -32,7 +33,7 @@
         <div class="flex-fill internet-ex-int">
             @*col-lg-5*@
             <div style="padding-top:30px;"class="col-lg-12 col-md-12">
-                <img style="height:initial; text-align:center; margin:auto; display:block;" src="@Url.Content(imgURL)" class="card-img" alt="Photo Didnt Load">
+                <img style="height:initial; text-align:center; margin:auto; display:block;" src="@Url.Content(imgURL)" class="card-img" alt="@item.Name boar photo">
             </div>
             @*col-lg-7*@
             <div style="padding-top:20px;"class="col-lg-12 col-md-12 border-secondary">

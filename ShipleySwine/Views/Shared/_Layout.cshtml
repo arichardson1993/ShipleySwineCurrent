@@ -10,10 +10,32 @@
 
         gtag('config', 'UA-131382231-2');
     </script>
+    @{
+        var pageTitle = string.IsNullOrWhiteSpace(ViewBag.Title as string) ? "Shipley Swine Genetics" : ViewBag.Title.ToString();
+    var fullTitle = pageTitle.IndexOf("Shipley Swine Genetics", StringComparison.OrdinalIgnoreCase) >= 0
+        ? pageTitle
+        : pageTitle + " | Shipley Swine Genetics";
+        var metaDescription = ViewBag.MetaDescription as string ?? "Shipley Swine Genetics provides boar semen, new boars, bred gilts, and contact information for our farm in Newark, Ohio.";
+        var canonicalUrl = ViewBag.CanonicalUrl as string;
+        if (string.IsNullOrWhiteSpace(canonicalUrl) && Request != null && Request.Url != null)
+        {
+            canonicalUrl = Request.Url.GetLeftPart(UriPartial.Path);
+        }
+        var robotsMeta = ViewBag.RobotsMeta as string ?? "index,follow";
+    }
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:url" content="https://shipleyswinegenetics.lpages.co/shipley-swine/" />
-    <title>Shipley Swine Genetics - @ViewBag.Title</title>
+    <meta name="description" content="@metaDescription" />
+    <meta name="robots" content="@robotsMeta" />
+    @if (!string.IsNullOrWhiteSpace(canonicalUrl))
+    {
+        <link rel="canonical" href="@canonicalUrl" />
+        <meta property="og:url" content="@canonicalUrl" />
+    }
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@fullTitle" />
+    <meta property="og:description" content="@metaDescription" />
+    <title>@fullTitle</title>
     @* @Styles.Render("~/Content/css") *@
     @*@Styles.Render("~/Content")*@
     @Scripts.Render("~/bundles/modernizr")
@@ -50,6 +72,24 @@
     <script src="//static.leadpages.net/leadboxes/current/embed.js" async defer></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="~/Scripts/app.min.js"></script>
+    <script type="application/ld+json">
+        {
+          "@@context": "https://schema.org",
+          "@@type": "LocalBusiness",
+          "name": "Shipley Swine Genetics",
+          "url": "https://shipleyswine.com/",
+          "telephone": "+1-866-376-8986",
+          "email": "shipleyswine@yahoo.com",
+          "address": {
+            "@@type": "PostalAddress",
+            "streetAddress": "8086 Marion Rd",
+            "addressLocality": "Newark",
+            "addressRegion": "OH",
+            "postalCode": "43055",
+            "addressCountry": "US"
+          }
+        }
+    </script>
 
 </head>
                 <body>

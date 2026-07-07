@@ -1,9 +1,10 @@
 @{
-    ViewBag.Title = "BoarVideos";
+    ViewBag.Title = "Shipley Swine Genetics | Boar Videos";
+    ViewBag.MetaDescription = "Watch boar videos from Shipley Swine Genetics, including TD, Medicine Man, Boogie Shoes, Lightning, and more.";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>BoarVideos</h2>
+<h1>Boar Videos</h1>
 
 <div class="container pb-5 pt-5 mb-5 backgroundcolor">
     <div class="row videoBackgroundColor">
@@ -295,3 +296,34 @@
         </div>
     </div>
 </div>
+
+<script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "CollectionPage",
+      "name": "Shipley Swine Genetics Boar Videos",
+      "url": "https://shipleyswine.com/Boars/BoarVideos",
+      "hasPart": [
+        {
+          "@@type": "VideoObject",
+          "name": "TD",
+          "embedUrl": "https://www.youtube.com/embed/BwUTgfIqATo"
+        },
+        {
+          "@@type": "VideoObject",
+          "name": "Medicine Man",
+          "embedUrl": "https://www.youtube.com/embed/Xr_Yc1fuT9w"
+        },
+        {
+          "@@type": "VideoObject",
+          "name": "Boogie Shoes",
+          "embedUrl": "https://www.youtube.com/embed/kxdXFFPKMAA"
+        },
+        {
+          "@@type": "VideoObject",
+          "name": "Lightning",
+          "embedUrl": "https://www.youtube.com/embed/kQo98X9iAWc"
+        }
+      ]
+    }
+</script>

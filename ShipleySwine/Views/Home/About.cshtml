@@ -1,6 +1,7 @@
 ﻿@{
 
-    ViewBag.Title = "About";
+    ViewBag.Title = "Shipley Swine Genetics | About";
+    ViewBag.MetaDescription = "Learn about Shipley Swine Genetics, our family story, and the boars and genetics we raise in Newark, Ohio.";
 }
 
 <link href="~/Content/About.css" rel="stylesheet" />
@@ -57,6 +58,9 @@
     function carousel() {
         var i;
         var x = document.getElementsByClassName("mySlides");
+        if (!x || x.length === 0) {
+            return;
+        }
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
         }

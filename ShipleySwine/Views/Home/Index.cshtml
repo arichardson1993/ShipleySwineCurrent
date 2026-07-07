@@ -1,13 +1,9 @@
 ﻿@model ShipleySwine.ViewModels.HomePageViewModel
     @{
-        ViewBag.Title = "Home Page";
+        ViewBag.Title = "Shipley Swine Genetics | Home";
+        ViewBag.MetaDescription = "Shipley Swine Genetics offers boar semen, new boars, bred gilts, and show pig genetics in Newark, Ohio.";
         string imagesrc = "~/Boars/" + Model.NewBoars[Model.randomBoar].Breed + "/" + Model.NewBoars[Model.randomBoar].NameNoSpaces + "/Large/" + Model.NewBoars[Model.randomBoar].NameNoSpaces + 1 + ".jpg";
     }
-    
-<head>
-    <link rel=”stylesheet” href=”https://use.typekit.net/mwc5sqa.css”>
-</head>
-
 <body>
     <div class="col-lg hidden-md hidden-sm hidden-xs">
 
@@ -50,7 +46,7 @@
                             <div style="color:white; font-family: 'Anton', sans-serif; font-size:18px;">New Boar!</div>
                             <div style="color:white; font-family: 'Alegreya Sans SC', sans-serif; font-size:30px;">@Model.NewBoars[Model.randomBoar].Name</div>
                         </div>
-                        <img class="card-img-top h-100" src="@Url.Content(imagesrc)" alt="Card image cap">
+                        <img class="card-img-top h-100" src="@Url.Content(imagesrc)" alt="Shipley Swine boar photo">
                         <div style="color:white; font-size:14px; font-weight:100;" class="text-center mt-2">
                             <div>@Model.NewBoars[Model.randomBoar].Sire X @Model.NewBoars[Model.randomBoar].Dam</div>
                         </div>
@@ -201,7 +197,7 @@
                             <div style="color:white; font-family: 'Anton', sans-serif; font-size:18px;">New Boar!</div>
                             <div style="color:white; font-family: 'Alegreya Sans SC', sans-serif; font-size:30px;">@Model.NewBoars[Model.randomBoar].Name</div>
                         </div>
-                        <img class="card-img-top" src="@Url.Content(imagesrc)" alt="Card image cap">
+                        <img class="card-img-top" src="@Url.Content(imagesrc)" alt="Shipley Swine boar photo">
                         <div style="color:white; font-size:14px; font-weight:100;" class="text-center mt-2">
                             <div>@Model.NewBoars[Model.randomBoar].Sire X @Model.NewBoars[Model.randomBoar].Dam</div>
                         </div>
@@ -351,7 +347,7 @@
                             <div style="color:white; font-family: 'Anton', sans-serif; font-size:18px;">New Boar!</div>
                             <div style="color:white; font-family: 'Alegreya Sans SC', sans-serif; font-size:30px;">@Model.NewBoars[Model.randomBoar].Name</div>
                         </div>
-                        <img class="card-img-top" src="@Url.Content(imagesrc)" alt="Card image cap">
+                        <img class="card-img-top" src="@Url.Content(imagesrc)" alt="Shipley Swine boar photo">
                         <div style="color:white; font-size:14px; font-weight:100;" class="text-center mt-2">
                             <div>@Model.NewBoars[Model.randomBoar].Sire X @Model.NewBoars[Model.randomBoar].Dam</div>
                         </div>
@@ -507,7 +503,7 @@
                             <div style="color:white; font-family: 'Anton', sans-serif; font-size:18px;">New Boar!</div>
                             <div style="color:white; font-family: 'Alegreya Sans SC', sans-serif; font-size:30px;">@Model.NewBoars[Model.randomBoar].Name</div>
                         </div>
-                        <img class="card-img-top" src="@Url.Content(imagesrc)" alt="Card image cap">
+                        <img class="card-img-top" src="@Url.Content(imagesrc)" alt="Shipley Swine boar photo">
                         <div style="color:white; font-size:14px; font-weight:100;" class="text-center mt-2">
                             <div>@Model.NewBoars[Model.randomBoar].Sire X @Model.NewBoars[Model.randomBoar].Dam</div>
                         </div>

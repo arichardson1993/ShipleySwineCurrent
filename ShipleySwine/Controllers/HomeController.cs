@@ -34,6 +34,10 @@ namespace ShipleySwine.Controllers
 
         public ActionResult Index()
         {
+            SetSeo(
+                "Shipley Swine Genetics | Home",
+                "Shipley Swine Genetics offers boar semen, new boars, bred gilts, and show pig genetics in Newark, Ohio.");
+
             var fourMonthsAgo = DateTime.Now.AddDays(-120);
             Debug.WriteLine(fourMonthsAgo);
             var newBoars = db.Boars
@@ -75,6 +79,10 @@ namespace ShipleySwine.Controllers
 
         public ActionResult About()
         {
+            SetSeo(
+                "Shipley Swine Genetics | About",
+                "Learn about Shipley Swine Genetics, our family story, and the boars and genetics we raise in Newark, Ohio.");
+
             ViewData["AboutImage"] = Directory.EnumerateFiles(Server.MapPath("~/Assets/AboutUs/")).Select(fn => "~/Assets/AboutUs/"+ Path.GetFileName(fn)); ;
             foreach (var image in (IEnumerable<string>)ViewData["AboutImage"])
             {
@@ -87,6 +95,10 @@ namespace ShipleySwine.Controllers
 
         public ActionResult Contact()
         {
+            SetSeo(
+                "Shipley Swine Genetics | Contact",
+                "Contact Shipley Swine Genetics for boar semen, bred gilts, AI supplies, and farm sales in Newark, Ohio.");
+
             ViewBag.Message = "Your contact page.";
             TurnstileSettings turnstileSettings = LoadTurnstileSettings();
             ViewBag.TurnstileSiteKey = turnstileSettings.SiteKey;
@@ -97,6 +109,10 @@ namespace ShipleySwine.Controllers
 
         public ActionResult Catalog()
         {
+            SetSeo(
+                "Shipley Swine Genetics | Catalog",
+                "Browse the Shipley Swine Genetics catalog for boars, bred gilts, and related livestock genetics.");
+
             return View();
         }
 
@@ -385,6 +401,14 @@ namespace ShipleySwine.Controllers
             return normalized.StartsWith("www.", StringComparison.Ordinal) ? normalized.Substring(4) : normalized;
         }
 
+        private void SetSeo(string title, string description, string canonicalUrl = null)
+        {
+            ViewBag.Title = title;
+            ViewBag.MetaDescription = description;
+            ViewBag.CanonicalUrl = canonicalUrl ?? (Request?.Url == null ? null : Request.Url.GetLeftPart(UriPartial.Path));
+            ViewBag.RobotsMeta = "index,follow";
+        }
+
         private sealed class TurnstileSettings
         {
             public string SiteKey { get; set; }
@@ -412,11 +436,19 @@ namespace ShipleySwine.Controllers
 
         public ActionResult Winners()
         {
+            SetSeo(
+                "Shipley Swine Genetics | Winners",
+                "View winners and success stories from Shipley Swine Genetics.");
+
             return View();
         }
 
         public ActionResult Certificate()
         {
+            SetSeo(
+                "Shipley Swine Genetics | Certificate",
+                "Request your Shipley Swine Genetics AI certificate.");
+
             return View();
         }
 
@@ -468,6 +500,10 @@ namespace ShipleySwine.Controllers
 
         public ActionResult Supplies()
         {
+            SetSeo(
+                "Shipley Swine Genetics | AI Supplies",
+                "Order AI supplies from Shipley Swine Genetics, including spirettes rods, foam tip rods, lubricant, and more.");
+
             return View();
         }
     }

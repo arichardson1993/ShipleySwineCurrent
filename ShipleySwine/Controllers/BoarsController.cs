@@ -23,12 +23,20 @@ namespace ShipleySwine.Controllers
         // GET: Boars
         public ActionResult Index()
         {
+            SetSeo(
+                "Shipley Swine Genetics | Boars",
+                "Browse boars available from Shipley Swine Genetics.");
+
             //return View(db.Boars.SqlQuery("SELECT [b].*, STUFF((SELECT '* ' + [sp2].[SellingPoint] FROM[dbo].[SellingPoints] AS[sp2] WHERE[sp2].[SellingPoints_Id] = [sp].[SellingPoints_Id] ORDER BY[sp2].[SellingPoint] ASC FOR XML PATH('')), 1, 0, '') AS[AllSellingPoints] FROM[dbo].[Boars] AS[b] INNER JOIN[dbo].[SellingPoint] AS[sp] ON[sp].[Boar_Id] = [b].[Boar_Id]").ToList());
             return View(db.Boars.ToList());
         }
 
         public ActionResult BoarVideos()
         {
+            SetSeo(
+                "Shipley Swine Genetics | Boar Videos",
+                "Watch boar videos from Shipley Swine Genetics, including TD, Medicine Man, Boogie Shoes, Lightning, and more.");
+
             return View();
         }
         public ActionResult SelectBoar(String selectedBreed)
@@ -36,6 +44,10 @@ namespace ShipleySwine.Controllers
             List<String> breeds = new List<string>() { "Yorkshire", "Duroc", "Berkshire", "Exotic", "Hampshire" };
             List<Boar> boars;
             Debug.WriteLine(selectedBreed);
+            SetSeo(
+                "Shipley Swine Genetics | Boar Selection",
+                "Select a boar by breed from Shipley Swine Genetics.");
+
             if (!breeds.Contains(selectedBreed))
             {
 
@@ -55,6 +67,10 @@ namespace ShipleySwine.Controllers
 
         public ActionResult NewBoars()
         {
+            SetSeo(
+                "Shipley Swine Genetics | New Boars",
+                "See the latest featured boars from Shipley Swine Genetics.");
+
             // var fourMonthsAgo = DateTime.Now.AddDays(-120);
             // Debug.WriteLine(fourMonthsAgo);
             //var newBoars = db.Boars.Where(createDate => createDate.CreateDate > fourMonthsAgo).ToList();
@@ -85,6 +101,10 @@ namespace ShipleySwine.Controllers
             {
                 return HttpNotFound();
             }
+            SetSeo(
+                boar == null ? "Shipley Swine Genetics | Boar Details" : "Shipley Swine Genetics | " + boar.Name,
+                boar == null ? "Boar details from Shipley Swine Genetics." : boar.Description ?? ("Learn more about " + boar.Name + " from Shipley Swine Genetics."),
+                boar == null ? null : Request?.Url == null ? null : Request.Url.GetLeftPart(UriPartial.Path));
             return View(boar);
         }
 
@@ -108,6 +128,14 @@ namespace ShipleySwine.Controllers
                 return RedirectToAction("Login", "Authentication");
             }
 
+        }
+
+        private void SetSeo(string title, string description, string canonicalUrl = null)
+        {
+            ViewBag.Title = title;
+            ViewBag.MetaDescription = description;
+            ViewBag.CanonicalUrl = canonicalUrl ?? (Request?.Url == null ? null : Request.Url.GetLeftPart(UriPartial.Path));
+            ViewBag.RobotsMeta = "index,follow";
         }
 
         // POST: Boars/Create
