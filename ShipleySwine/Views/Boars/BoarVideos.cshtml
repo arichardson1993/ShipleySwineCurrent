@@ -1,12 +1,45 @@
 @{
     ViewBag.Title = "Shipley Swine Genetics | Boar Videos";
-    ViewBag.MetaDescription = "Watch boar videos from Shipley Swine Genetics, including TD, Medicine Man, Boogie Shoes, Lightning, and more.";
+    ViewBag.MetaDescription = "Watch boar videos from Shipley Swine Genetics, including Heat Wave, TD, Medicine Man, Boogie Shoes, Lightning, and more.";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Boar Videos</h1>
 
-<div class="container pb-5 pt-5 mb-5 backgroundcolor">
+<style>
+    .boar-video-grid {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .boar-video-grid > .row {
+        display: contents;
+    }
+
+    .boar-video-grid .sm-video {
+        flex: 0 0 50%;
+        max-width: 50%;
+        width: 100%;
+    }
+
+    @@media (max-width: 767.98px) {
+        .boar-video-grid .sm-video {
+            flex-basis: 100%;
+            max-width: 100%;
+        }
+    }
+</style>
+
+<div class="container pb-5 pt-5 mb-5 backgroundcolor boar-video-grid">
+    <div class="row videoBackgroundColor">
+        <div class="col-lg-6 col-md-6 col-sm-12 sm-video mb-3 mt-3">
+            <h2 class="videoText">Heat Wave</h2>
+            <div class="iframe-container">
+                <iframe class="embed-responsive-item videoMargin" src="https://www.youtube.com/embed/7hb-6S8Riqg?si=_ilaZrj8Ambs6XSi" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
     <div class="row videoBackgroundColor">
         <div class="col-lg-6 col-md-6 col-sm-12 sm-video mb-3 mt-3">
             <h2 class="videoText">TD</h2>
@@ -304,6 +337,11 @@
       "name": "Shipley Swine Genetics Boar Videos",
       "url": "https://shipleyswine.com/Boars/BoarVideos",
       "hasPart": [
+        {
+          "@@type": "VideoObject",
+          "name": "Heat Wave",
+          "embedUrl": "https://www.youtube.com/embed/7hb-6S8Riqg"
+        },
         {
           "@@type": "VideoObject",
           "name": "TD",
