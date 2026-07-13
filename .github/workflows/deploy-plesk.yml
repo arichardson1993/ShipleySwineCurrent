@@ -100,6 +100,7 @@ jobs:
           $turnstileConfig = "$packageRoot\App_Data\turnstile.config"
           $applicationDll = "$packageRoot\bin\ShipleySwine.dll"
           $maintenancePage = "$packageRoot\App_offline.htm"
+          $webConfig = "$packageRoot\Web.config"
 
           if (-not (Test-Path -LiteralPath $boarVideos) -or
               -not (Select-String -LiteralPath $boarVideos -SimpleMatch "BwUTgfIqATo" -Quiet)) {
@@ -122,6 +123,11 @@ jobs:
           if (-not (Test-Path -LiteralPath $maintenancePage) -or
               -not (Select-String -LiteralPath $maintenancePage -SimpleMatch "Deployment in progress" -Quiet)) {
             throw "The deployment package does not contain the custom maintenance page."
+          }
+
+          if (-not (Test-Path -LiteralPath $webConfig) -or
+              -not (Select-String -LiteralPath $webConfig -SimpleMatch 'runAllManagedModulesForAllRequests="true"' -Quiet)) {
+            throw "The deployment package does not enable MVC routing for sitemap.xml."
           }
 
       - name: Deploy package to Plesk
@@ -231,18 +237,27 @@ jobs:
       - name: Verify live sitemap
         shell: pwsh
         run: |
-          $sitemap = & curl.exe `
-            --fail `
-            --silent `
-            --show-error `
-            --location `
-            --max-time 30 `
-            "https://www.shipleyswine.com/sitemap.xml?deploymentCheck=${{ github.run_id }}"
+          $sitemapUrl = "https://www.shipleyswine.com/sitemap.xml?deploymentCheck=${{ github.run_id }}"
 
-          if ($LASTEXITCODE -ne 0 -or
-              $sitemap -notmatch '<urlset' -or
-              $sitemap -notmatch '/Boars/Details/') {
-            throw "The live dynamic sitemap failed verification."
+          for ($attempt = 1; $attempt -le 6; $attempt++) {
+            $sitemap = & curl.exe `
+              --fail `
+              --silent `
+              --show-error `
+              --location `
+              --max-time 30 `
+              $sitemapUrl
+
+            if ($LASTEXITCODE -eq 0 -and
+                $sitemap -match '<urlset' -and
+                $sitemap -match '/Boars/Details/') {
+              Write-Host "Live dynamic sitemap verification passed."
+              exit 0
+            }
+
+            Write-Warning "Sitemap verification attempt $attempt failed."
+
+            Start-Sleep -Seconds 10
           }
 
-          Write-Host "Live dynamic sitemap verification passed."
+          throw "The live dynamic sitemap failed verification."
