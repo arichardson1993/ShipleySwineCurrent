@@ -16,6 +16,7 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using ShipleySwine.Models;
 using System.Xml;
+using System.Xml.Linq;
 using Newtonsoft.Json;
 
 namespace ShipleySwine.Controllers
@@ -114,6 +115,57 @@ namespace ShipleySwine.Controllers
                 "Browse the Shipley Swine Genetics catalog for boars, bred gilts, and related livestock genetics.");
 
             return View();
+        }
+
+        [OutputCache(Duration = 3600, VaryByParam = "none")]
+        public ActionResult Sitemap()
+        {
+            const string siteRoot = "https://www.shipleyswine.com";
+            XNamespace sitemapNamespace = "http://www.sitemaps.org/schemas/sitemap/0.9";
+            var urlSet = new XElement(sitemapNamespace + "urlset");
+
+            Action<string, string> addUrl = (path, lastModified) =>
+            {
+                var url = new XElement(sitemapNamespace + "url",
+                    new XElement(sitemapNamespace + "loc", siteRoot + path));
+
+                if (!string.IsNullOrWhiteSpace(lastModified))
+                {
+                    url.Add(new XElement(sitemapNamespace + "lastmod", lastModified));
+                }
+
+                urlSet.Add(url);
+            };
+
+            addUrl("/", null);
+            addUrl("/Home/About", null);
+            addUrl("/Home/Contact", null);
+            addUrl("/Home/Supplies", null);
+            addUrl("/FAQs", null);
+            addUrl("/Boars/BoarVideos", null);
+            addUrl("/Boars/NewBoars", null);
+            addUrl("/BredGilts", null);
+
+            string[] breeds = { "Yorkshire", "Duroc", "Berkshire", "Exotic", "Hampshire", "Other" };
+            foreach (string breed in breeds)
+            {
+                addUrl("/Boars/SelectBoar?selectedBreed=" + Uri.EscapeDataString(breed), null);
+            }
+
+            var boars = db.Boars
+                .Select(boar => new { boar.Boar_Id, boar.CreateDate })
+                .ToList();
+
+            foreach (var boar in boars)
+            {
+                string lastModified = boar.CreateDate.HasValue
+                    ? boar.CreateDate.Value.ToString("yyyy-MM-dd")
+                    : null;
+                addUrl("/Boars/Details/" + boar.Boar_Id, lastModified);
+            }
+
+            var document = new XDocument(new XDeclaration("1.0", "utf-8", null), urlSet);
+            return Content(document.ToString(), "application/xml", Encoding.UTF8);
         }
 
         //[HttpPost]
@@ -405,8 +457,18 @@ namespace ShipleySwine.Controllers
         {
             ViewBag.Title = title;
             ViewBag.MetaDescription = description;
-            ViewBag.CanonicalUrl = canonicalUrl ?? (Request?.Url == null ? null : Request.Url.GetLeftPart(UriPartial.Path));
+            ViewBag.CanonicalUrl = canonicalUrl ?? GetCanonicalUrl();
             ViewBag.RobotsMeta = "index,follow";
+        }
+
+        private string GetCanonicalUrl()
+        {
+            if (Request?.Url == null)
+            {
+                return null;
+            }
+
+            return "https://www.shipleyswine.com" + Request.Url.AbsolutePath;
         }
 
         private sealed class TurnstileSettings

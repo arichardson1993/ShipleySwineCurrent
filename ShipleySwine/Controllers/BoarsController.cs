@@ -45,8 +45,9 @@ namespace ShipleySwine.Controllers
             List<Boar> boars;
             Debug.WriteLine(selectedBreed);
             SetSeo(
-                "Shipley Swine Genetics | Boar Selection",
-                "Select a boar by breed from Shipley Swine Genetics.");
+                "Shipley Swine Genetics | " + (string.IsNullOrWhiteSpace(selectedBreed) ? "Boar Selection" : selectedBreed + " Boars"),
+                "Browse " + (string.IsNullOrWhiteSpace(selectedBreed) ? "available" : selectedBreed) + " boars from Shipley Swine Genetics.",
+                "https://www.shipleyswine.com/Boars/SelectBoar?selectedBreed=" + HttpUtility.UrlEncode(string.IsNullOrWhiteSpace(selectedBreed) ? "Other" : selectedBreed));
 
             if (!breeds.Contains(selectedBreed))
             {
@@ -104,7 +105,7 @@ namespace ShipleySwine.Controllers
             SetSeo(
                 boar == null ? "Shipley Swine Genetics | Boar Details" : "Shipley Swine Genetics | " + boar.Name,
                 boar == null ? "Boar details from Shipley Swine Genetics." : boar.Description ?? ("Learn more about " + boar.Name + " from Shipley Swine Genetics."),
-                boar == null ? null : Request?.Url == null ? null : Request.Url.GetLeftPart(UriPartial.Path));
+                boar == null ? null : "https://www.shipleyswine.com/Boars/Details/" + boar.Boar_Id);
             return View(boar);
         }
 
@@ -134,7 +135,7 @@ namespace ShipleySwine.Controllers
         {
             ViewBag.Title = title;
             ViewBag.MetaDescription = description;
-            ViewBag.CanonicalUrl = canonicalUrl ?? (Request?.Url == null ? null : Request.Url.GetLeftPart(UriPartial.Path));
+            ViewBag.CanonicalUrl = canonicalUrl ?? (Request?.Url == null ? null : "https://www.shipleyswine.com" + Request.Url.AbsolutePath);
             ViewBag.RobotsMeta = "index,follow";
         }
 

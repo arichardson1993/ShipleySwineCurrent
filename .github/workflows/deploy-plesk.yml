@@ -155,6 +155,7 @@ jobs:
           $env:MSDeployPath = "$(Split-Path -Parent $msDeploy)\"
 
           $destination = "contentPath=shipleyswine.com/App_offline.htm,computerName=https://${pleskServer}:8172/msdeploy.axd?site=shipleyswine.com,userName=$env:PLESK_USERNAME,password=$env:PLESK_PASSWORD,authtype=Basic,includeAcls=False"
+          $legacySitemapDestination = "contentPath=shipleyswine.com/sitemap.xml,computerName=https://${pleskServer}:8172/msdeploy.axd?site=shipleyswine.com,userName=$env:PLESK_USERNAME,password=$env:PLESK_PASSWORD,authtype=Basic,includeAcls=False"
 
           & $msDeploy `
             "-source:contentPath=$maintenancePagePath" `
@@ -178,6 +179,16 @@ jobs:
 
           if ($LASTEXITCODE -ne 0) {
             throw "Web Deploy failed with exit code $LASTEXITCODE. The maintenance page remains active for safety."
+          }
+
+          # Older deployments installed a static sitemap. Remove it so the new
+          # database-backed /sitemap.xml MVC route receives the request.
+          & $msDeploy `
+            "-dest:$legacySitemapDestination" `
+            "-verb:delete"
+
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "No legacy static sitemap needed removal."
           }
 
           & $msDeploy `
@@ -216,3 +227,22 @@ jobs:
           }
 
           throw "Deployment completed, but the live-site health check failed. Redeploy the previous known-good commit SHA."
+
+      - name: Verify live sitemap
+        shell: pwsh
+        run: |
+          $sitemap = & curl.exe `
+            --fail `
+            --silent `
+            --show-error `
+            --location `
+            --max-time 30 `
+            "https://www.shipleyswine.com/sitemap.xml?deploymentCheck=${{ github.run_id }}"
+
+          if ($LASTEXITCODE -ne 0 -or
+              $sitemap -notmatch '<urlset' -or
+              $sitemap -notmatch '/Boars/Details/') {
+            throw "The live dynamic sitemap failed verification."
+          }
+
+          Write-Host "Live dynamic sitemap verification passed."

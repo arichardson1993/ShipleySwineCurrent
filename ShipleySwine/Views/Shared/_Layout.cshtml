@@ -19,9 +19,19 @@
         var canonicalUrl = ViewBag.CanonicalUrl as string;
         if (string.IsNullOrWhiteSpace(canonicalUrl) && Request != null && Request.Url != null)
         {
-            canonicalUrl = Request.Url.GetLeftPart(UriPartial.Path);
+            canonicalUrl = "https://www.shipleyswine.com" + Request.Url.AbsolutePath;
         }
-        var robotsMeta = ViewBag.RobotsMeta as string ?? "index,follow";
+        var controllerName = Request == null ? string.Empty : Convert.ToString(Request.RequestContext.RouteData.Values["controller"]);
+        var actionName = Request == null ? string.Empty : Convert.ToString(Request.RequestContext.RouteData.Values["action"]);
+        var privateController = controllerName.Equals("Admin", StringComparison.OrdinalIgnoreCase)
+            || controllerName.Equals("Authentication", StringComparison.OrdinalIgnoreCase);
+        var privateAction = actionName.Equals("Create", StringComparison.OrdinalIgnoreCase)
+            || actionName.Equals("Edit", StringComparison.OrdinalIgnoreCase)
+            || actionName.Equals("Delete", StringComparison.OrdinalIgnoreCase)
+            || actionName.StartsWith("Email", StringComparison.OrdinalIgnoreCase);
+        var robotsMeta = privateController || privateAction
+            ? "noindex,nofollow"
+            : ViewBag.RobotsMeta as string ?? "index,follow";
     }
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,6 +45,12 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="@fullTitle" />
     <meta property="og:description" content="@metaDescription" />
+    <meta property="og:site_name" content="Shipley Swine Genetics" />
+    <meta property="og:image" content="https://www.shipleyswine.com/Assets/Images/ssHeader.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@fullTitle" />
+    <meta name="twitter:description" content="@metaDescription" />
+    <meta name="twitter:image" content="https://www.shipleyswine.com/Assets/Images/ssHeader.png" />
     <title>@fullTitle</title>
     @* @Styles.Render("~/Content/css") *@
     @*@Styles.Render("~/Content")*@
@@ -77,7 +93,7 @@
           "@@context": "https://schema.org",
           "@@type": "LocalBusiness",
           "name": "Shipley Swine Genetics",
-          "url": "https://shipleyswine.com/",
+          "url": "https://www.shipleyswine.com/",
           "telephone": "+1-866-376-8986",
           "email": "shipleyswine@yahoo.com",
           "address": {
