@@ -1,6 +1,6 @@
 @{
     ViewBag.Title = "Shipley Swine Genetics | Boar Videos";
-    ViewBag.MetaDescription = "Watch boar videos from Shipley Swine Genetics, including Heat Wave, TD, Medicine Man, Boogie Shoes, Lightning, and more.";
+    ViewBag.MetaDescription = "Watch boar videos from Shipley Swine Genetics, including Trailer Trash, Charge It, Heat Wave, TD, Medicine Man, and more.";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,15 +12,15 @@
         flex-wrap: wrap;
     }
 
-    .boar-video-grid > .row {
-        display: contents;
-    }
+        .boar-video-grid > .row {
+            display: contents;
+        }
 
-    .boar-video-grid .sm-video {
-        flex: 0 0 50%;
-        max-width: 50%;
-        width: 100%;
-    }
+        .boar-video-grid .sm-video {
+            flex: 0 0 50%;
+            max-width: 50%;
+            width: 100%;
+        }
 
     @@media (max-width: 767.98px) {
         .boar-video-grid .sm-video {
@@ -31,6 +31,21 @@
 </style>
 
 <div class="container pb-5 pt-5 mb-5 backgroundcolor boar-video-grid">
+    <div class="row videoBackgroundColor">
+        <div class="col-lg-6 col-md-6 col-sm-12 sm-video mb-3 mt-3">
+            <h2 class="videoText">Trailer Trash</h2>
+            <div class="iframe-container">
+                <iframe class="embed-responsive-item videoMargin" src="https://www.youtube.com/embed/b1RQX-Ua8t0?si=WSkTRVi3HL0ZOy3g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 sm-video mb-3 mt-3">
+            <h2 class="videoText">Charge It</h2>
+            <div class="iframe-container">
+                <iframe class="embed-responsive-item videoMargin" src="https://www.youtube.com/embed/g0NuKviSJrY?si=a0RsAAiJOijK5qK1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
     <div class="row videoBackgroundColor">
         <div class="col-lg-6 col-md-6 col-sm-12 sm-video mb-3 mt-3">
             <h2 class="videoText">Heat Wave</h2>
@@ -337,6 +352,16 @@
       "name": "Shipley Swine Genetics Boar Videos",
       "url": "https://shipleyswine.com/Boars/BoarVideos",
       "hasPart": [
+        {
+          "@@type": "VideoObject",
+          "name": "Trailer Trash",
+          "embedUrl": "https://www.youtube.com/embed/b1RQX-Ua8t0"
+        },
+        {
+          "@@type": "VideoObject",
+          "name": "Charge It",
+          "embedUrl": "https://www.youtube.com/embed/g0NuKviSJrY"
+        },
         {
           "@@type": "VideoObject",
           "name": "Heat Wave",
