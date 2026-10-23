@@ -18,4 +18,154 @@
     width: 50px;
 }
 
+.bred-gilt-list {
+    background: #fff;
+    color: #282828;
+    padding: 28px 36px 36px;
+}
+
+.bred-gilt-list-header {
+    border-bottom: 2px solid #742333;
+    margin-bottom: 4px;
+    padding-bottom: 16px;
+}
+
+.bred-gilt-list-header h2 {
+    color: #282828;
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0 0 4px;
+}
+
+.bred-gilt-list-header p {
+    color: #606060;
+    font-size: 14px;
+    margin: 0;
+}
+
+.bred-gilt-card {
+    border-bottom: 1px solid #dedede;
+    font-size: 15px;
+    line-height: 1.45;
+    padding: 25px 0 27px;
+}
+
+.bred-gilt-card:last-child {
+    border-bottom: 0;
+}
+
+.bred-gilt-card-header {
+    align-items: flex-start;
+    display: flex;
+    gap: 24px;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.bred-gilt-card h3 {
+    color: #272727;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0 0 5px;
+}
+
+.bred-gilt-identity {
+    color: #555;
+    font-size: 14px;
+}
+
+.bred-gilt-identity span + span::before {
+    color: #aaa;
+    content: " | ";
+    padding: 0 8px;
+}
+
+.bred-gilt-due {
+    min-width: 135px;
+    text-align: right;
+}
+
+.bred-gilt-due span {
+    color: #666;
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.bred-gilt-due strong {
+    color: #742333;
+    display: block;
+    font-size: 19px;
+    font-weight: 600;
+    margin: 1px 0 0 !important;
+}
+
+.bred-gilt-details {
+    display: grid;
+    gap: 17px 25px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0 0 22px;
+}
+
+.bred-gilt-details div {
+    min-width: 0;
+}
+
+.bred-gilt-details dt {
+    color: #666;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.bred-gilt-details dd {
+    color: #252525;
+    font-size: 15px;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.bred-gilt-interest {
+    background: #742333;
+    border: 1px solid #742333;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 18px;
+    text-decoration: none;
+}
+
+.bred-gilt-interest:hover,
+.bred-gilt-interest:focus {
+    background: #551927;
+    border-color: #551927;
+    color: #fff;
+    text-decoration: none;
+}
+
+@media (max-width: 767px) {
+    .bred-gilt-list {
+        padding: 22px 18px;
+    }
+
+    .bred-gilt-details {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 420px) {
+    .bred-gilt-card-header {
+        display: block;
+    }
+
+    .bred-gilt-due {
+        margin-top: 14px;
+        text-align: left;
+    }
+}
+
 

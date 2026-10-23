@@ -104,40 +104,46 @@
     <!-- ./Tabs -->
 
 
-    <div class="bred-gilt-list mt-4">
-        <h2 class="text-center mb-1">Available Bred Gilts</h2>
-        <p class="text-center text-muted mb-4">Listed by due date, earliest first.</p>
+    <section class="bred-gilt-list mt-4" aria-labelledby="available-bred-gilts">
+        <header class="bred-gilt-list-header">
+            <h2 id="available-bred-gilts">Available Bred Gilts</h2>
+            <p>Listed by due date, earliest first.</p>
+        </header>
 
         @if (Model.Gilts.Count == 0)
         {
-            <p class="text-center">No bred gilts are currently listed.</p>
+            <p>No bred gilts are currently listed.</p>
         }
         else
         {
             foreach (var gilt in Model.Gilts)
             {
-                <div class="bred-gilt-card">
-                    <h3 class="text-center bredgiltheader">@gilt.Breed</h3>
-                    <div class="text-center bredgiltsprice">$@gilt.Price</div>
-                    <div class="text-center bredgiltsEN">EN: @gilt.EarNotch</div>
-                    <div class="row text-center mt-4">
-                        <div class="col-6 col-md-3 mb-3"><strong>Sired By:</strong><div>@gilt.Sire</div></div>
-                        <div class="col-6 col-md-3 mb-3"><strong>Sire of Dam:</strong><div>@gilt.SireOfDam</div></div>
-                        <div class="col-6 col-md-3 mb-3"><strong>Farrowed:</strong><div>@(gilt.DOB.HasValue ? gilt.DOB.Value.ToString("M/d/yyyy") : "—")</div></div>
-                        <div class="col-6 col-md-3 mb-3"><strong>Litter Of:</strong><div>@gilt.LitterSize</div></div>
+                <article class="bred-gilt-card">
+                    <div class="bred-gilt-card-header">
+                        <div>
+                            <h3>@gilt.Breed</h3>
+                            <div class="bred-gilt-identity">
+                                <span>Ear notch: @gilt.EarNotch</span>
+                                <span>@(gilt.Price.HasValue ? gilt.Price.Value.ToString("C0") : "Call for price")</span>
+                            </div>
+                        </div>
+                        <div class="bred-gilt-due">
+                            <span>Due date</span>
+                            <strong>@(gilt.DueDate.HasValue ? gilt.DueDate.Value.ToString("MMM d, yyyy") : "Ask for date")</strong>
+                        </div>
                     </div>
-                    <hr />
-                    <div class="row text-center mb-3">
-                        <div class="col-6 col-md-3 mb-3"><strong>Bred To:</strong><div>@gilt.SvcSire</div></div>
-                        <div class="col-6 col-md-3 mb-3"><strong>Date Bred:</strong><div>@(gilt.DateBred.HasValue ? gilt.DateBred.Value.ToString("M/d/yyyy") : "—")</div></div>
-                        <div class="col-6 col-md-3 mb-3"><strong>Date Due:</strong><div>@(gilt.DueDate.HasValue ? gilt.DueDate.Value.ToString("M/d/yyyy") : "—")</div></div>
-                        <div class="col-6 col-md-3 mb-3"><strong>EN of Dam:</strong><div>@gilt.DamEN</div></div>
-                    </div>
-                    <div class="text-center mb-2">
-                        <a class="btn btn-info" href="@Url.Action("Email", "BredGilts", new { number = gilt.BredGuiltId })">I'm Interested</a>
-                    </div>
-                </div>
+                    <dl class="bred-gilt-details">
+                        <div><dt>Bred to</dt><dd>@gilt.SvcSire</dd></div>
+                        <div><dt>Date bred</dt><dd>@(gilt.DateBred.HasValue ? gilt.DateBred.Value.ToString("MMM d, yyyy") : "—")</dd></div>
+                        <div><dt>Sired by</dt><dd>@gilt.Sire</dd></div>
+                        <div><dt>Sire of dam</dt><dd>@gilt.SireOfDam</dd></div>
+                        <div><dt>Farrowed</dt><dd>@(gilt.DOB.HasValue ? gilt.DOB.Value.ToString("MMM d, yyyy") : "—")</dd></div>
+                        <div><dt>Litter of</dt><dd>@gilt.LitterSize</dd></div>
+                        <div><dt>EN of dam</dt><dd>@gilt.DamEN</dd></div>
+                    </dl>
+                    <a class="bred-gilt-interest" href="@Url.Action("Email", "BredGilts", new { number = gilt.BredGuiltId })">I'm Interested</a>
+                </article>
             }
         }
-    </div>
+    </section>
 </div>
