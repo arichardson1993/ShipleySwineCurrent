@@ -1,5 +1,5 @@
-﻿@media (min-width: 320px) and (max-width: 480px) {
-    .phonetextsize{
+@media (min-width: 320px) and (max-width: 480px) {
+    .phonetextsize {
         font-size: 1.3rem;
     }
 }
@@ -18,154 +18,227 @@
     width: 50px;
 }
 
+/* A sale catalog treatment for the bred gilt listings. */
 .bred-gilt-list {
-    background: #fff;
-    color: #282828;
-    padding: 28px 36px 36px;
+    background: #f2ecdf;
+    color: #342b24;
+    padding: 32px 36px 36px;
 }
 
 .bred-gilt-list-header {
-    border-bottom: 2px solid #742333;
-    margin-bottom: 4px;
+    border-bottom: 1px solid #b8a98f;
+    margin-bottom: 24px;
     padding-bottom: 16px;
 }
 
 .bred-gilt-list-header h2 {
-    color: #282828;
-    font-size: 26px;
-    font-weight: 600;
-    margin: 0 0 4px;
+    color: #3b2b24;
+    font-family: Georgia, serif;
+    font-size: 32px;
+    font-weight: normal;
+    margin: 0 0 5px;
 }
 
 .bred-gilt-list-header p {
-    color: #606060;
-    font-size: 14px;
+    color: #62594d;
+    font-size: 15px;
     margin: 0;
 }
 
 .bred-gilt-card {
-    border-bottom: 1px solid #dedede;
-    font-size: 15px;
-    line-height: 1.45;
-    padding: 25px 0 27px;
-}
-
-.bred-gilt-card:last-child {
-    border-bottom: 0;
-}
-
-.bred-gilt-card-header {
-    align-items: flex-start;
-    display: flex;
-    gap: 24px;
-    justify-content: space-between;
+    background: #fffdf8;
+    border: 1px solid #d9cdb8;
+    border-top: 4px solid #7b3033;
+    color: #342b24;
     margin-bottom: 22px;
 }
 
-.bred-gilt-card h3 {
-    color: #272727;
-    font-size: 22px;
-    font-weight: 600;
-    line-height: 1.2;
-    margin: 0 0 5px;
+.bred-gilt-card:last-child {
+    margin-bottom: 0;
 }
 
-.bred-gilt-identity {
-    color: #555;
-    font-size: 14px;
-}
-
-.bred-gilt-identity span + span::before {
-    color: #aaa;
-    content: " | ";
-    padding: 0 8px;
-}
-
-.bred-gilt-due {
-    min-width: 135px;
-    text-align: right;
-}
-
-.bred-gilt-due span {
-    color: #666;
-    display: block;
+.bred-gilt-card-top {
+    background: #eee5d5;
+    color: #594e42;
+    display: flex;
     font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.04em;
+    justify-content: space-between;
+    letter-spacing: 0.03em;
+    padding: 10px 24px;
     text-transform: uppercase;
 }
 
-.bred-gilt-due strong {
-    color: #742333;
-    display: block;
-    font-size: 19px;
-    font-weight: 600;
-    margin: 1px 0 0 !important;
-}
-
-.bred-gilt-details {
+.bred-gilt-card-body {
     display: grid;
-    gap: 17px 25px;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    margin: 0 0 22px;
+    grid-template-columns: minmax(0, 1fr) 220px;
 }
 
-.bred-gilt-details div {
-    min-width: 0;
+.bred-gilt-story {
+    padding: 25px 30px 28px;
 }
 
-.bred-gilt-details dt {
-    color: #666;
-    font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 2px;
+.bred-gilt-title {
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    margin-bottom: 17px;
 }
 
-.bred-gilt-details dd {
-    color: #252525;
-    font-size: 15px;
+.bred-gilt-title h3 {
+    color: #3b2b24;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    font-weight: normal;
+    line-height: 1.2;
     margin: 0;
-    overflow-wrap: anywhere;
+}
+
+.bred-gilt-price {
+    color: #7b3033;
+    font-family: Georgia, serif;
+    font-size: 22px;
+}
+
+.bred-gilt-mating {
+    color: #3b2b24;
+    font-family: Georgia, serif;
+    font-size: 19px;
+    line-height: 1.35;
+    margin: 0 0 4px;
+}
+
+.bred-gilt-mating strong,
+.bred-gilt-pedigree strong {
+    font-weight: 600;
+    margin: 0 !important;
+}
+
+.bred-gilt-breeding-date {
+    color: #6a5e50;
+    font-size: 14px;
+    margin: 0 0 18px;
+}
+
+.bred-gilt-pedigree {
+    color: #4d453b;
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0 0 5px;
 }
 
 .bred-gilt-interest {
-    background: #742333;
-    border: 1px solid #742333;
+    background: #7b3033;
+    border: 1px solid #7b3033;
     color: #fff;
     display: inline-block;
     font-size: 14px;
     font-weight: 600;
-    padding: 8px 18px;
+    margin-top: 17px;
+    padding: 9px 17px;
     text-decoration: none;
 }
 
 .bred-gilt-interest:hover,
 .bred-gilt-interest:focus {
-    background: #551927;
-    border-color: #551927;
+    background: #592124;
+    border-color: #592124;
     color: #fff;
     text-decoration: none;
 }
 
+.bred-gilt-due {
+    align-items: center;
+    background: #f8f3e9;
+    border-left: 1px solid #e0d4bf;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px 18px;
+    text-align: center;
+}
+
+.bred-gilt-due span {
+    color: #685949;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.bred-gilt-due strong {
+    color: #7b3033;
+    font-family: Georgia, serif;
+    font-size: 32px;
+    font-weight: normal;
+    line-height: 1.2;
+    margin: 8px 0 0 !important;
+}
+
+.bred-gilt-due small {
+    color: #685949;
+    font-family: Georgia, serif;
+    font-size: 19px;
+}
+
 @media (max-width: 767px) {
     .bred-gilt-list {
+        padding: 22px 15px;
+    }
+
+    .bred-gilt-list-header h2 {
+        font-size: 28px;
+    }
+
+    .bred-gilt-card-top {
+        padding: 10px 16px;
+    }
+
+    .bred-gilt-card-body {
+        grid-template-columns: 1fr;
+    }
+
+    .bred-gilt-story {
         padding: 22px 18px;
     }
 
-    .bred-gilt-details {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .bred-gilt-due {
+        border-left: 0;
+        border-top: 1px solid #e0d4bf;
+        display: block;
+        padding: 13px 18px;
+    }
+
+    .bred-gilt-due span {
+        display: block;
+        margin-bottom: 3px;
+    }
+
+    .bred-gilt-due strong {
+        display: inline-block;
+        font-size: 24px;
+        margin: 0 !important;
+        white-space: nowrap;
+    }
+
+    .bred-gilt-due small {
+        display: inline-block;
+        font-size: 17px;
+        margin-left: 5px;
     }
 }
 
 @media (max-width: 420px) {
-    .bred-gilt-card-header {
+    .bred-gilt-card-top {
         display: block;
     }
 
-    .bred-gilt-due {
-        margin-top: 14px;
-        text-align: left;
+    .bred-gilt-card-top span {
+        display: block;
+    }
+
+    .bred-gilt-card-top span + span {
+        margin-top: 3px;
     }
 }
-
-
