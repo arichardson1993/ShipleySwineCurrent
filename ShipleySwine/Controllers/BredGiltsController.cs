@@ -21,23 +21,15 @@ namespace ShipleySwine.Controllers
         // GET: BredGilts
         public ActionResult Index()
         {
-            string[] breeds = { "BERKSHIRE", "DUROC", "EXOTIC", "HAMPSHIRE", "YORKSHIRE" };
             BredGiltsIndexViewModel vm = new BredGiltsIndexViewModel()
             {
-                berkshireGilts = db.BredGilts.Where(breed => breed.Breed.ToUpper() == "BERKSHIRE").OrderByDescending(price => price.Price).ToList(),
-                durocGilts = db.BredGilts.Where(breed => breed.Breed.ToUpper() == "DUROC").OrderByDescending(price => price.Price).ToList(),
-                exoticGilts = db.BredGilts.Where(breed => breed.Breed.ToUpper() == "EXOTIC").OrderByDescending(price => price.Price).ToList(),
-                hampshireGilts = db.BredGilts.Where(breed => breed.Breed.ToUpper() == "HAMPSHIRE").OrderByDescending(price => price.Price).ToList(),
-                yorkshireGilts = db.BredGilts.Where(breed => breed.Breed.ToUpper() == "YORKSHIRE").OrderByDescending(price => price.Price).ToList(),
-                otherGilts = db.BredGilts.Where(breed => !breeds.Contains(breed.Breed.ToUpper())).OrderByDescending(price => price.Price).ToList(),
-                berkCount = db.BredGilts.Where(breed => breed.Breed.ToUpper() == "BERKSHIRE").Count(),
-                durocCount = db.BredGilts.Where(breed => breed.Breed.ToUpper() == "DUROC").Count(),
-                exoticCount = db.BredGilts.Where(breed => breed.Breed.ToUpper() == "EXOTIC").Count(),
-                hampCount = db.BredGilts.Where(breed => breed.Breed.ToUpper() == "HAMPSHIRE").Count(),
-                yorkCount = db.BredGilts.Where(breed => breed.Breed.ToUpper() == "YORKSHIRE").Count(),
-                otherCount = db.BredGilts.Where(breed => !breeds.Contains(breed.Breed.ToUpper())).Count()
+                Gilts = db.BredGilts
+                    .OrderBy(gilt => gilt.DueDate == null)
+                    .ThenBy(gilt => gilt.DueDate)
+                    .ThenBy(gilt => gilt.Breed)
+                    .ThenBy(gilt => gilt.BredGuiltId)
+                    .ToList()
             };
-            //db.BredGilts.ToList().OrderBy(breed => breed.Breed).ThenByDescending(price => price.Price)
             return View(vm);
         }
 

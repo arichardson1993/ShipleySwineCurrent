@@ -27,6 +27,24 @@
     text-decoration: underline;
 }
 
+.bred-gilt-list {
+    background-color: #fff;
+    color: #212529;
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.bred-gilt-card {
+    background-color: #fff;
+    border-bottom: 1px solid #d8dde2;
+    padding: 1rem 0;
+    font-size: 0.95rem;
+}
+
+.bred-gilt-card:last-child {
+    border-bottom: 0;
+}
+
 .caroselimage{
     height: 100%;
     width: auto;
