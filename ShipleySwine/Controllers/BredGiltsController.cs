@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using ShipleySwine;
@@ -30,7 +32,45 @@ namespace ShipleySwine.Controllers
                     .ThenBy(gilt => gilt.BredGuiltId)
                     .ToList()
             };
+            var availableBoars = db.Boars.AsNoTracking().ToList()
+                .Where(boar => !string.IsNullOrWhiteSpace(boar.Name)
+                    && !string.IsNullOrWhiteSpace(boar.Breed)
+                    && !string.IsNullOrWhiteSpace(boar.NameNoSpaces)
+                    && Directory.Exists(Server.MapPath("~/Boars/" + boar.Breed + "/" + boar.NameNoSpaces + "/Large/")))
+                .ToList();
+            var exactBoars = availableBoars
+                .GroupBy(boar => NormalizeBoarName(boar.Name, false))
+                .Where(group => group.Count() == 1)
+                .ToDictionary(group => group.Key, group => group.Single().Boar_Id);
+            var boarsWithoutEarNotch = availableBoars
+                .GroupBy(boar => NormalizeBoarName(boar.Name, true))
+                .Where(group => group.Count() == 1)
+                .ToDictionary(group => group.Key, group => group.Single().Boar_Id);
+
+            foreach (var name in vm.Gilts.SelectMany(gilt => new[] { gilt.SvcSire, gilt.Sire, gilt.SireOfDam })
+                .Where(name => !string.IsNullOrWhiteSpace(name))
+                .Distinct(StringComparer.OrdinalIgnoreCase))
+            {
+                var key = NormalizeBoarName(name, false);
+                decimal boarId;
+                if (exactBoars.TryGetValue(key, out boarId) || boarsWithoutEarNotch.TryGetValue(key, out boarId))
+                {
+                    vm.BoarLinks[name] = boarId;
+                }
+            }
             return View(vm);
+        }
+
+        private static string NormalizeBoarName(string name, bool removeEarNotch)
+        {
+            var normalized = Regex.Replace(name.Trim(),
+                @"\s*\((?:hamp|hampshire|exotic|berkshire|duroc|yorkshire)\)\s*$", "",
+                RegexOptions.IgnoreCase);
+            if (removeEarNotch)
+            {
+                normalized = Regex.Replace(normalized, @"\s+\d+-\d+\s*$", "");
+            }
+            return Regex.Replace(normalized, @"[^A-Za-z0-9]", "").ToUpperInvariant();
         }
 
         public ActionResult Email(decimal? number)

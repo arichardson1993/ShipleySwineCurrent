@@ -118,6 +118,9 @@
         {
             foreach (var gilt in Model.Gilts)
             {
+                var serviceSireId = Model.FindBoarId(gilt.SvcSire);
+                var sireId = Model.FindBoarId(gilt.Sire);
+                var sireOfDamId = Model.FindBoarId(gilt.SireOfDam);
                 <article class="bred-gilt-card">
                     <div class="bred-gilt-heading">
                         <div>
@@ -126,10 +129,40 @@
                         </div>
                         <strong class="bred-gilt-price">@(gilt.Price.HasValue ? gilt.Price.Value.ToString("C0") : "Call for price")</strong>
                     </div>
-                    <p class="bred-gilt-mating">Bred to <strong>@gilt.SvcSire</strong><span class="bred-gilt-separator">·</span>Due <strong>@(gilt.DueDate.HasValue ? gilt.DueDate.Value.ToString("MMM d, yyyy") : "date available on request")</strong></p>
-                    <p class="bred-gilt-pedigree">Sired by @gilt.Sire. Dam EN @gilt.DamEN by @gilt.SireOfDam.</p>
+                    <p class="bred-gilt-mating">
+                        Bred to
+                        @if (serviceSireId.HasValue)
+                        {
+                            <a class="bred-gilt-boar-link" href="@Url.Action("Details", "Boars", new { id = serviceSireId.Value })">@gilt.SvcSire</a>
+                        }
+                        else
+                        {
+                            <strong>@gilt.SvcSire</strong>
+                        }
+                        <span class="bred-gilt-separator">·</span>Due <strong>@(gilt.DueDate.HasValue ? gilt.DueDate.Value.ToString("MMM d, yyyy") : "date available on request")</strong>
+                    </p>
+                    <p class="bred-gilt-pedigree">
+                        Sired by
+                        @if (sireId.HasValue)
+                        {
+                            <a class="bred-gilt-boar-link" href="@Url.Action("Details", "Boars", new { id = sireId.Value })">@gilt.Sire</a>
+                        }
+                        else
+                        {
+                            @gilt.Sire
+                        }
+                        <span class="bred-gilt-separator">·</span>Dam EN @gilt.DamEN by
+                        @if (sireOfDamId.HasValue)
+                        {
+                            <a class="bred-gilt-boar-link" href="@Url.Action("Details", "Boars", new { id = sireOfDamId.Value })">@gilt.SireOfDam</a>
+                        }
+                        else
+                        {
+                            @gilt.SireOfDam
+                        }
+                    </p>
                     <p class="bred-gilt-meta">Bred @(gilt.DateBred.HasValue ? gilt.DateBred.Value.ToString("MMM d, yyyy") : "date available on request")<span class="bred-gilt-separator">·</span>Farrowed @(gilt.DOB.HasValue ? gilt.DOB.Value.ToString("MMM d, yyyy") : "date available on request")<span class="bred-gilt-separator">·</span>Litter of @gilt.LitterSize</p>
-                    <a class="bred-gilt-interest" href="@Url.Action("Email", "BredGilts", new { number = gilt.BredGuiltId })">Ask about this gilt</a>
+                    <a class="bred-gilt-interest" href="@Url.Action("Email", "BredGilts", new { number = gilt.BredGuiltId })">I'm Interested</a>
                 </article>
             }
         }

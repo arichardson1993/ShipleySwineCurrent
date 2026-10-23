@@ -94,6 +94,19 @@
     margin: 0 !important;
 }
 
+.bred-gilt-boar-link {
+    border-bottom: 1px solid currentColor;
+    color: #793238;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.bred-gilt-boar-link:hover,
+.bred-gilt-boar-link:focus {
+    color: #4d1e24;
+    text-decoration: none;
+}
+
 .bred-gilt-pedigree {
     color: #49433c;
 }
@@ -108,20 +121,22 @@
 }
 
 .bred-gilt-interest {
-    border-bottom: 1px solid #793238;
-    color: #793238;
+    background: #793238;
+    border: 1px solid #793238;
+    color: #fff;
     display: inline-block;
     font-size: 14px;
     font-weight: 600;
-    margin-top: 6px;
-    padding-bottom: 2px;
+    margin-top: 9px;
+    padding: 9px 18px;
     text-decoration: none;
 }
 
 .bred-gilt-interest:hover,
 .bred-gilt-interest:focus {
-    border-color: #4d1e24;
-    color: #4d1e24;
+    background: #5b252a;
+    border-color: #5b252a;
+    color: #fff;
     text-decoration: none;
 }
 
