@@ -107,7 +107,7 @@
     <section class="bred-gilt-list mt-4" aria-labelledby="available-bred-gilts">
         <header class="bred-gilt-list-header">
             <h2 id="available-bred-gilts">Available Bred Gilts</h2>
-            <p>Find the right gilt for your herd. Listed by expected farrowing date.</p>
+            <p>Listed by expected farrowing date.</p>
         </header>
 
         @if (Model.Gilts.Count == 0)
@@ -119,31 +119,17 @@
             foreach (var gilt in Model.Gilts)
             {
                 <article class="bred-gilt-card">
-                    <div class="bred-gilt-card-top">
-                        <span>Shipley Bred Gilt</span>
-                        <span>Ear notch @gilt.EarNotch</span>
-                    </div>
-                    <div class="bred-gilt-card-body">
-                        <div class="bred-gilt-story">
-                            <div class="bred-gilt-title">
-                                <h3>@gilt.Breed</h3>
-                                <span class="bred-gilt-price">@(gilt.Price.HasValue ? gilt.Price.Value.ToString("C0") : "Call for price")</span>
-                            </div>
-                            <p class="bred-gilt-mating">Bred to <strong>@gilt.SvcSire</strong></p>
-                            <p class="bred-gilt-breeding-date">Bred @(gilt.DateBred.HasValue ? gilt.DateBred.Value.ToString("MMMM d, yyyy") : "date available on request")</p>
-                            <p class="bred-gilt-pedigree">Sired by <strong>@gilt.Sire</strong>. Dam EN <strong>@gilt.DamEN</strong> by <strong>@gilt.SireOfDam</strong>.</p>
-                            <p class="bred-gilt-pedigree">Farrowed @(gilt.DOB.HasValue ? gilt.DOB.Value.ToString("MMMM d, yyyy") : "date available on request") · Litter of @gilt.LitterSize</p>
-                            <a class="bred-gilt-interest" href="@Url.Action("Email", "BredGilts", new { number = gilt.BredGuiltId })">Ask about this gilt</a>
+                    <div class="bred-gilt-heading">
+                        <div>
+                            <h3>@gilt.Breed</h3>
+                            <span class="bred-gilt-ear-notch">Ear notch @gilt.EarNotch</span>
                         </div>
-                        <div class="bred-gilt-due">
-                            <span>Expected farrowing</span>
-                            <strong>@(gilt.DueDate.HasValue ? gilt.DueDate.Value.ToString("MMM d") : "Ask for date")</strong>
-                            @if (gilt.DueDate.HasValue)
-                            {
-                                <small>@gilt.DueDate.Value.Year</small>
-                            }
-                        </div>
+                        <strong class="bred-gilt-price">@(gilt.Price.HasValue ? gilt.Price.Value.ToString("C0") : "Call for price")</strong>
                     </div>
+                    <p class="bred-gilt-mating">Bred to <strong>@gilt.SvcSire</strong><span class="bred-gilt-separator">·</span>Due <strong>@(gilt.DueDate.HasValue ? gilt.DueDate.Value.ToString("MMM d, yyyy") : "date available on request")</strong></p>
+                    <p class="bred-gilt-pedigree">Sired by @gilt.Sire. Dam EN @gilt.DamEN by @gilt.SireOfDam.</p>
+                    <p class="bred-gilt-meta">Bred @(gilt.DateBred.HasValue ? gilt.DateBred.Value.ToString("MMM d, yyyy") : "date available on request")<span class="bred-gilt-separator">·</span>Farrowed @(gilt.DOB.HasValue ? gilt.DOB.Value.ToString("MMM d, yyyy") : "date available on request")<span class="bred-gilt-separator">·</span>Litter of @gilt.LitterSize</p>
+                    <a class="bred-gilt-interest" href="@Url.Action("Email", "BredGilts", new { number = gilt.BredGuiltId })">Ask about this gilt</a>
                 </article>
             }
         }

@@ -18,227 +18,139 @@
     width: 50px;
 }
 
-/* A sale catalog treatment for the bred gilt listings. */
 .bred-gilt-list {
-    background: #f2ecdf;
-    color: #342b24;
-    padding: 32px 36px 36px;
+    background: #fffdf9;
+    color: #332f2b;
+    padding: 30px 38px 38px;
 }
 
 .bred-gilt-list-header {
-    border-bottom: 1px solid #b8a98f;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
+    padding-bottom: 20px;
 }
 
 .bred-gilt-list-header h2 {
-    color: #3b2b24;
+    color: #332f2b;
     font-family: Georgia, serif;
-    font-size: 32px;
+    font-size: 30px;
     font-weight: normal;
     margin: 0 0 5px;
 }
 
 .bred-gilt-list-header p {
-    color: #62594d;
+    color: #675f55;
     font-size: 15px;
     margin: 0;
 }
 
 .bred-gilt-card {
-    background: #fffdf8;
-    border: 1px solid #d9cdb8;
-    border-top: 4px solid #7b3033;
-    color: #342b24;
-    margin-bottom: 22px;
+    border-top: 1px solid #d8d0c4;
+    padding: 24px 0 26px;
 }
 
-.bred-gilt-card:last-child {
-    margin-bottom: 0;
-}
-
-.bred-gilt-card-top {
-    background: #eee5d5;
-    color: #594e42;
-    display: flex;
-    font-size: 12px;
-    font-weight: 600;
-    justify-content: space-between;
-    letter-spacing: 0.03em;
-    padding: 10px 24px;
-    text-transform: uppercase;
-}
-
-.bred-gilt-card-body {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 220px;
-}
-
-.bred-gilt-story {
-    padding: 25px 30px 28px;
-}
-
-.bred-gilt-title {
+.bred-gilt-heading {
     align-items: baseline;
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px 22px;
-    margin-bottom: 17px;
+    gap: 18px;
+    justify-content: space-between;
+    margin-bottom: 13px;
 }
 
-.bred-gilt-title h3 {
-    color: #3b2b24;
+.bred-gilt-heading h3 {
+    color: #342d28;
+    display: inline;
     font-family: Georgia, serif;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: normal;
-    line-height: 1.2;
-    margin: 0;
+    margin: 0 12px 0 0;
+}
+
+.bred-gilt-ear-notch {
+    color: #70685d;
+    font-size: 14px;
 }
 
 .bred-gilt-price {
-    color: #7b3033;
+    color: #793238;
     font-family: Georgia, serif;
-    font-size: 22px;
+    font-size: 21px;
+    font-weight: normal;
+    margin: 0 !important;
+    white-space: nowrap;
+}
+
+.bred-gilt-card p {
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0 0 7px;
 }
 
 .bred-gilt-mating {
-    color: #3b2b24;
-    font-family: Georgia, serif;
-    font-size: 19px;
-    line-height: 1.35;
-    margin: 0 0 4px;
+    color: #332f2b;
 }
 
-.bred-gilt-mating strong,
-.bred-gilt-pedigree strong {
+.bred-gilt-mating strong {
+    color: #793238;
     font-weight: 600;
     margin: 0 !important;
 }
 
-.bred-gilt-breeding-date {
-    color: #6a5e50;
-    font-size: 14px;
-    margin: 0 0 18px;
+.bred-gilt-pedigree {
+    color: #49433c;
 }
 
-.bred-gilt-pedigree {
-    color: #4d453b;
-    font-size: 15px;
-    line-height: 1.5;
-    margin: 0 0 5px;
+.bred-gilt-meta {
+    color: #70685d;
+}
+
+.bred-gilt-separator {
+    color: #a99b8c;
+    padding: 0 9px;
 }
 
 .bred-gilt-interest {
-    background: #7b3033;
-    border: 1px solid #7b3033;
-    color: #fff;
+    border-bottom: 1px solid #793238;
+    color: #793238;
     display: inline-block;
     font-size: 14px;
     font-weight: 600;
-    margin-top: 17px;
-    padding: 9px 17px;
+    margin-top: 6px;
+    padding-bottom: 2px;
     text-decoration: none;
 }
 
 .bred-gilt-interest:hover,
 .bred-gilt-interest:focus {
-    background: #592124;
-    border-color: #592124;
-    color: #fff;
+    border-color: #4d1e24;
+    color: #4d1e24;
     text-decoration: none;
-}
-
-.bred-gilt-due {
-    align-items: center;
-    background: #f8f3e9;
-    border-left: 1px solid #e0d4bf;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 24px 18px;
-    text-align: center;
-}
-
-.bred-gilt-due span {
-    color: #685949;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-.bred-gilt-due strong {
-    color: #7b3033;
-    font-family: Georgia, serif;
-    font-size: 32px;
-    font-weight: normal;
-    line-height: 1.2;
-    margin: 8px 0 0 !important;
-}
-
-.bred-gilt-due small {
-    color: #685949;
-    font-family: Georgia, serif;
-    font-size: 19px;
 }
 
 @media (max-width: 767px) {
     .bred-gilt-list {
-        padding: 22px 15px;
-    }
-
-    .bred-gilt-list-header h2 {
-        font-size: 28px;
-    }
-
-    .bred-gilt-card-top {
-        padding: 10px 16px;
-    }
-
-    .bred-gilt-card-body {
-        grid-template-columns: 1fr;
-    }
-
-    .bred-gilt-story {
         padding: 22px 18px;
     }
 
-    .bred-gilt-due {
-        border-left: 0;
-        border-top: 1px solid #e0d4bf;
-        display: block;
-        padding: 13px 18px;
+    .bred-gilt-heading {
+        align-items: flex-start;
     }
 
-    .bred-gilt-due span {
+    .bred-gilt-heading h3 {
         display: block;
         margin-bottom: 3px;
     }
 
-    .bred-gilt-due strong {
-        display: inline-block;
-        font-size: 24px;
-        margin: 0 !important;
-        white-space: nowrap;
-    }
-
-    .bred-gilt-due small {
-        display: inline-block;
-        font-size: 17px;
-        margin-left: 5px;
+    .bred-gilt-card {
+        padding: 21px 0 23px;
     }
 }
 
 @media (max-width: 420px) {
-    .bred-gilt-card-top {
+    .bred-gilt-heading {
         display: block;
     }
 
-    .bred-gilt-card-top span {
+    .bred-gilt-price {
         display: block;
-    }
-
-    .bred-gilt-card-top span + span {
-        margin-top: 3px;
+        margin-top: 5px !important;
     }
 }
